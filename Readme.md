@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть» [![Build status][travis-image]][travis-url]
 
 * Студент: [Roman Boychuk](https://up.htmlacademy.ru/react/6/user/345721).
-* Наставник: `Неизвестно`.
+* Наставник: [Jura Zubach](https://htmlacademy.ru/profile/id95078).
 
 ---
 
