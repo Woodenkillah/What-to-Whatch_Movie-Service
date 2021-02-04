@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Main from '../main';
+import Main from '../main/main';
 
 const App = (props) => {
   return (
@@ -11,8 +11,8 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  promoFilm: PropTypes.object.isRequired,
-  films: PropTypes.array.isRequired
+  moviePromo: PropTypes.object.isRequired,
+  movieItemsData: PropTypes.array.isRequired
 };
 
 export default App;
