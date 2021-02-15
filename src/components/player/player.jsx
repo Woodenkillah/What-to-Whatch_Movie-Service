@@ -1,12 +1,26 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {useParams, useHistory} from 'react-router-dom';
 
-const Player = () => {
+const Player = (props) => {
+
+  const targetFilmId = parseFloat(useParams().id);
+
+  const generalFilmsData = [...props.filmsData, ...props.promoFilm];
+  const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
+
+  const history = useHistory();
+
+  const handlePlayerExit = () => {
+    history.go(-1);
+  };
+
   return (
     <React.Fragment>
       <div className="player">
-        <video src="#" className="player__video" poster="img/player-poster.jpg"></video>
+        <video src={targetFilm.videoLink} className="player__video" poster={targetFilm.posterImage} controls autoPlay></video>
 
-        <button type="button" className="player__exit">Exit</button>
+        <button type="button" className="player__exit" onClick={handlePlayerExit}>Exit</button>
 
         <div className="player__controls">
           <div className="player__controls-row">
@@ -37,6 +51,51 @@ const Player = () => {
       </div>
     </React.Fragment>
   );
+};
+
+Player.propTypes = {
+  promoFilm: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        posterImage: PropTypes.string,
+        previewImage: PropTypes.string,
+        backgroundImage: PropTypes.string,
+        backgroundColor: PropTypes.string,
+        videoLink: PropTypes.string,
+        previewVideoLink: PropTypes.string,
+        description: PropTypes.string,
+        rating: PropTypes.number,
+        scoresCount: PropTypes.number,
+        director: PropTypes.string,
+        starring: PropTypes.string,
+        runTime: PropTypes.number,
+        gerne: PropTypes.string,
+        released: PropTypes.number,
+        isFavorite: PropTypes.bool
+      }).isRequired,
+  ),
+  filmsData: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        posterImage: PropTypes.string,
+        previewImage: PropTypes.string,
+        backgroundImage: PropTypes.string,
+        backgroundColor: PropTypes.string,
+        videoLink: PropTypes.string,
+        previewVideoLink: PropTypes.string,
+        description: PropTypes.string,
+        rating: PropTypes.number,
+        scoresCount: PropTypes.number,
+        director: PropTypes.string,
+        starring: PropTypes.string,
+        runTime: PropTypes.number,
+        gerne: PropTypes.string,
+        released: PropTypes.number,
+        isFavorite: PropTypes.bool
+      }).isRequired,
+  )
 };
 
 export default Player;

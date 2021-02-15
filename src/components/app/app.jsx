@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {generalPropValidation} from '../../props-validation/props-validation';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -13,14 +14,22 @@ const App = (props) => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path='/' exact>
-          <Main {...props}/>
+        <Route exact path='/'>
+          <Main filmsData={props.filmsData} promoFilm={props.promoFilm}/>
         </Route>
-        <Route path='/login' exact component={SignIn}/>
-        <Route path='/mylist' exact component={MyList}/>
-        <Route path='/films/:id' exact component={Film}/>
-        <Route path='/films/:id/review' exact component={AddReview}/>
-        <Route path='/player/:id' exact component={Player}/>
+        <Route exact path='/login' component={SignIn}/>
+        <Route exact path='/mylist'>
+          <MyList filmsData={props.filmsData} featuredFilmsIdList={props.featuredFilmsIdList}/>
+        </Route>
+        <Route exact path='/films/:id'>
+          <Film filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+        </Route>
+        <Route exact path='/films/:id/review'>
+          <AddReview filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+        </Route>
+        <Route exact path='/player/:id'>
+          <Player filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+        </Route>
         <Route component={Page404}/>
       </Switch>
     </BrowserRouter>
@@ -28,8 +37,13 @@ const App = (props) => {
 };
 
 App.propTypes = {
-  moviePromo: PropTypes.object.isRequired,
-  movieItemsData: PropTypes.array.isRequired
+  promoFilm: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ).isRequired,
+  filmsData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ).isRequired,
+  featuredFilmsIdList: PropTypes.arrayOf(PropTypes.number.isRequired)
 };
 
 export default App;

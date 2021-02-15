@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import MoviesList from './movies-list/movies-list';
-import MoviePromo from './movie-promo/movie-promo';
+import {generalPropValidation} from '../../props-validation/props-validation';
+import FilmsList from './films-list/films-list';
+import PromoFilm from './promo-film/promo-film';
+import Footer from '../../aux-components/footer';
 
 const Main = (props) => {
 
@@ -32,7 +34,9 @@ const Main = (props) => {
         </header>
 
         <div className="movie-card__wrap">
-          <MoviePromo moviePromo={props.moviePromo}/>
+
+          <PromoFilm promoFilm={props.promoFilm}/>
+
         </div>
       </section >
 
@@ -74,7 +78,7 @@ const Main = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            <MoviesList movieItemsData={props.movieItemsData}/>
+            <FilmsList filmsData={props.filmsData} promoFilm={props.promoFilm}/>
           </div>
 
           <div className="catalog__more">
@@ -82,19 +86,8 @@ const Main = (props) => {
           </div>
         </section>
 
-        <footer className="page-footer">
-          <div className="logo">
-            <a className="logo__link logo__link--light">
-              <span className="logo__letter logo__letter--1">W</span>
-              <span className="logo__letter logo__letter--2">T</span>
-              <span className="logo__letter logo__letter--3">W</span>
-            </a>
-          </div>
+        <Footer/>
 
-          <div className="copyright">
-            <p>© 2019 What to watch Ltd.</p>
-          </div>
-        </footer>
       </div>
     </React.Fragment >
   );
@@ -102,8 +95,12 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  moviePromo: PropTypes.object.isRequired,
-  movieItemsData: PropTypes.array.isRequired
+  promoFilm: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ).isRequired,
+  filmsData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ).isRequired
 };
 
 export default Main;
