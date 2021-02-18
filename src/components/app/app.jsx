@@ -11,6 +11,8 @@ import Player from '../player/player';
 import Page404 from '../404-page/404-page';
 
 const App = (props) => {
+  const [reviews, setReviews] = React.useState({});
+
   return (
     <BrowserRouter>
       <Switch>
@@ -19,13 +21,21 @@ const App = (props) => {
         </Route>
         <Route exact path='/login' component={SignIn}/>
         <Route exact path='/mylist'>
-          <MyList filmsData={props.filmsData} featuredFilmsIdList={props.featuredFilmsIdList}/>
+          <MyList filmsData={props.filmsData} promoFilm={props.promoFilm}/>
         </Route>
         <Route exact path='/films/:id'>
-          <Film filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+          <Film
+            filmsData={props.filmsData}
+            promoFilm={props.promoFilm}
+            reviews={reviews}
+          />
         </Route>
         <Route exact path='/films/:id/review'>
-          <AddReview filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+          <AddReview
+            filmsData={props.filmsData}
+            promoFilm={props.promoFilm}
+            setReviews={setReviews}
+          />
         </Route>
         <Route exact path='/player/:id'>
           <Player filmsData={props.filmsData} promoFilm={props.promoFilm}/>

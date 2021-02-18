@@ -1,5 +1,5 @@
 const promoFilm = [{
-  id: 20,
+  id: 21,
   name: `The Grand Budapest Hotel`,
   posterImage: `img/the-grand-budapest-hotel-poster.jpg`,
   previewImage: `img/the-grand-budapest-hotel-poster.jpg`,
@@ -12,7 +12,7 @@ const promoFilm = [{
   director: `some famous guy`,
   starring: `some famous guys`,
   runTime: 100,
-  gerne: `Drama`,
+  genre: `Drama`,
   released: 1970,
   isFavorite: false
 }];

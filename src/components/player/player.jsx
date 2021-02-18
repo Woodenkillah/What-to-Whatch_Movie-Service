@@ -4,7 +4,7 @@ import {useParams, useHistory} from 'react-router-dom';
 
 const Player = (props) => {
 
-  const targetFilmId = parseFloat(useParams().id);
+  const targetFilmId = Number(useParams().id);
 
   const generalFilmsData = [...props.filmsData, ...props.promoFilm];
   const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);

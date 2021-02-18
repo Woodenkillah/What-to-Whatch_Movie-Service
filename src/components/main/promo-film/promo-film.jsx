@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {generalPropValidation} from '../../../props-validation/props-validation';
 import PromoPoster from './film-promo-poster';
 import {useHistory} from 'react-router-dom';
 
@@ -22,7 +23,7 @@ const PromoFilm = (props) => {
         <div className="movie-card__desc">
           <h2 className="movie-card__title">{targetFilm.name}</h2>
           <p className="movie-card__meta">
-            <span className="movie-card__genre">{targetFilm.gerne}</span>
+            <span className="movie-card__genre">{targetFilm.genre}</span>
             <span className="movie-card__year">{targetFilm.released}</span>
           </p>
 
@@ -52,26 +53,8 @@ const PromoFilm = (props) => {
 
 PromoFilm.propTypes = {
   promoFilm: PropTypes.arrayOf(
-      PropTypes.shape({
-        id: PropTypes.number,
-        name: PropTypes.string,
-        posterImage: PropTypes.string,
-        previewImage: PropTypes.string,
-        backgroundImage: PropTypes.string,
-        backgroundColor: PropTypes.string,
-        videoLink: PropTypes.string,
-        previewVideoLink: PropTypes.string,
-        description: PropTypes.string,
-        rating: PropTypes.number,
-        scoresCount: PropTypes.number,
-        director: PropTypes.string,
-        starring: PropTypes.string,
-        runTime: PropTypes.number,
-        gerne: PropTypes.string,
-        released: PropTypes.number,
-        isFavorite: PropTypes.bool
-      }).isRequired,
-  ).isRequired
+      PropTypes.shape(generalPropValidation).isRequired,
+  )
 };
 
 export default PromoFilm;

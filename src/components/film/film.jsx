@@ -1,16 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import {useParams, useHistory, Link, Switch, Route} from 'react-router-dom';
-import FilmOverview from './film-overview';
-import FilmDetails from './film-details';
-import FilmReviews from './film-reviews';
+import {useParams, useHistory, Link} from 'react-router-dom';
+import classNames from 'classnames';
+import FilmOverview from './film-tabs/film-overview';
+import FilmDetails from './film-tabs/film-details';
+import FilmReviews from './film-tabs/film-reviews';
 import Logo from '../../aux-components/logo';
+import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
+import Tabs from '../../aux-components/tabs';
 
 const Film = (props) => {
 
-  const targetFilmId = parseFloat(useParams().id);
+  const TAB_INDEX = {
+    OVERVIEW: 0,
+    DETAILS: 1,
+    REVIEW: 2
+  };
+
+  const [activeTab, setActiveTab] = React.useState(TAB_INDEX.OVERVIEW);
+
+  const handleTabChange = (tabIndex) => (evt) => {
+    evt.preventDefault();
+    setActiveTab(tabIndex);
+  };
+
+  const targetFilmId = Number(useParams().id);
 
   const generalFilmsData = [...props.filmsData, ...props.promoFilm];
   const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
@@ -32,21 +48,15 @@ const Film = (props) => {
           <h1 className="visually-hidden">WTW</h1>
 
           <header className="page-header movie-card__head">
-
             <Logo/>
-
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </div>
+            <UserAvatar/>
           </header>
 
           <div className="movie-card__wrap">
             <div className="movie-card__desc">
               <h2 className="movie-card__title">{targetFilm.name}</h2>
               <p className="movie-card__meta">
-                <span className="movie-card__genre">{targetFilm.gerne}</span>
+                <span className="movie-card__genre">{targetFilm.genre}</span>
                 <span className="movie-card__year">{targetFilm.released}</span>
               </p>
 
@@ -63,7 +73,7 @@ const Film = (props) => {
                   </svg>
                   <span>My list</span>
                 </button>
-                <a href="add-review.html" className="btn movie-card__button">Add review</a>
+                <Link to={{pathname: `/films/${targetFilmId}/review`}} className="btn movie-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -78,35 +88,41 @@ const Film = (props) => {
             <div className="movie-card__desc">
               <nav className="movie-nav movie-card__nav">
                 <ul className="movie-nav__list">
-                  <li className="movie-nav__item movie-nav__item--active">
-                    <Link to={`/films/${targetFilmId}`} className="movie-nav__link">Overview</Link>
+                  <li className={classNames(`movie-nav__item`, {"movie-nav__item--active": activeTab === TAB_INDEX.OVERVIEW})}
+                    onClick={handleTabChange(TAB_INDEX.OVERVIEW)}
+                  >
+                    <a href='#' className="movie-nav__link">Overview</a>
                   </li>
-                  <li className="movie-nav__item">
-                    <Link to={`/films/${targetFilmId}/details`} className="movie-nav__link">Details</Link>
+                  <li className={classNames(`movie-nav__item`, {"movie-nav__item--active": activeTab === TAB_INDEX.DETAILS})}
+                    onClick={handleTabChange(TAB_INDEX.DETAILS)}>
+                    <a href='#' className="movie-nav__link">Details</a>
                   </li>
-                  <li className="movie-nav__item">
-                    <Link to={`/films/${targetFilmId}/reviews`} className="movie-nav__link">Reviews</Link>
+                  <li className={classNames(`movie-nav__item`, {"movie-nav__item--active": activeTab === TAB_INDEX.REVIEW})}
+                    onClick={handleTabChange(TAB_INDEX.REVIEW)}>
+                    <a href='#' className="movie-nav__link">Reviews</a>
                   </li>
                 </ul>
               </nav>
-
-              <Switch>
-                <Route path='/films/:id'>
-                  <FilmOverview
-                    rating={targetFilm.rating}
-                    scoresCount={targetFilm.scoresCount}
-                    director={targetFilm.director}
-                    starring={targetFilm.starring}
-                  />
-                </Route>
-                <Route exact path='/films/:id/details'>
-                  <FilmDetails />
-                </Route>
-                <Route exact path='/films/:id/reviews'>
-                  <FilmReviews/>
-                </Route>
-              </Switch>
-
+              <Tabs activeTab={activeTab}>
+                <FilmOverview
+                  description={targetFilm.description}
+                  rating={targetFilm.rating}
+                  scoresCount={targetFilm.scoresCount}
+                  director={targetFilm.director}
+                  starring={targetFilm.starring}
+                />
+                <FilmDetails
+                  director={targetFilm.director}
+                  starring={targetFilm.starring}
+                  runTime={targetFilm.runTime}
+                  genre={targetFilm.genre}
+                  released={targetFilm.released}
+                />
+                <FilmReviews
+                  targetFilmId={targetFilmId}
+                  reviews={props.reviews}
+                />
+              </Tabs>
             </div>
           </div>
         </div>
@@ -154,9 +170,7 @@ const Film = (props) => {
             </article>
           </div>
         </section>
-
         <Footer/>
-
       </div>
     </React.Fragment>
   );
@@ -168,7 +182,8 @@ Film.propTypes = {
   ),
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
-  )
+  ),
+  reviews: PropTypes.objectOf(PropTypes.array).isRequired
 };
 
 export default Film;

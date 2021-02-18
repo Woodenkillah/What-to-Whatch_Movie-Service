@@ -3,55 +3,56 @@ import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmCard from '../film-card/film-card';
 import Logo from '../../aux-components/logo';
+import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 
-const MyList = (props) => {
+const MyList = ({filmsData, promoFilm}) => {
 
-  const featuredFilms = React.useState({featuredFilmsIds: props.featuredFilmsIdList})[0];
-  const {featuredFilmsIds} = featuredFilms;
+  const generalFilmsData = [...filmsData, ...promoFilm];
+  const favoriteFilms = generalFilmsData.filter(({isFavorite}) => isFavorite);
 
-  const featuredFilmsList = props.filmsData.map((item, index) => {
-    return featuredFilmsIds.includes(item.id)
-      ? <FilmCard name={item.name} posterImage={item.posterImage} id={item.id} key={item.id + index}/>
-      : null;
+  const favoriteFilmsList = favoriteFilms.map((item, index) => {
+    return (
+      <FilmCard
+        name={item.name}
+        posterImage={item.posterImage}
+        id={item.id}
+        key={item.id + index}
+      />
+    );
   });
 
   return (
-    <React.Fragment>
-      <div className="user-page">
-        <header className="page-header user-page__head">
+    <div className="user-page">
+      <header className="page-header user-page__head">
+        <Logo/>
+        <UserAvatar/>
+      </header>
 
-          <Logo/>
+      <section className="catalog">
+        <h2 className="catalog__title visually-hidden">Catalog</h2>
+        <div className="catalog__movies-list">
+          {
+            favoriteFilmsList.length > 0
+              ? favoriteFilmsList
+              : <h1>The favorite films list is empty.</h1>
+          }
+        </div>
+      </section>
 
-          <h1 className="page-title user-page__title">My list</h1>
+      <Footer/>
 
-          <div className="user-block">
-            <div className="user-block__avatar">
-              <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-            </div>
-          </div>
-        </header>
-
-        <section className="catalog">
-          <h2 className="catalog__title visually-hidden">Catalog</h2>
-
-          <div className="catalog__movies-list">
-            {featuredFilmsList}
-          </div>
-        </section>
-
-        <Footer/>
-
-      </div>
-    </React.Fragment>
+    </div>
   );
 };
 
 MyList.propTypes = {
-  filmsData: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired
+  promoFilm: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
   ).isRequired,
-  featuredFilmsIdList: PropTypes.arrayOf(PropTypes.number.isRequired)
+  filmsData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ).isRequired
 };
 
 export default MyList;
