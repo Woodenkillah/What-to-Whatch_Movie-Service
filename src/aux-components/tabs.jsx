@@ -2,22 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Tabs = ({children, activeTab}) => {
-
-  const tabs = React.Children.toArray(children);
-
-  const activeTabContent = tabs.map((child, index) => {
-    if (index === activeTab) {
-      return child;
-    } else {
-      return null;
-    }
-  });
-
-  return (
-    <React.Fragment>
-      {activeTabContent}
-    </React.Fragment>
-  );
+  const childrenTabs = React.Children.toArray(children);
+  return childrenTabs[activeTab] || null;
 };
 
 Tabs.propTypes = {

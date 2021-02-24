@@ -7,10 +7,9 @@ import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 
-const Main = (props) => {
+const Main = ({generalFilmsData, promoFilmId}) => {
 
   return (
-
     <React.Fragment>
       <section className="movie-card">
         <div className="movie-card__bg">
@@ -26,7 +25,7 @@ const Main = (props) => {
 
         <div className="movie-card__wrap">
 
-          <PromoFilm promoFilm={props.promoFilm}/>
+          <PromoFilm generalFilmsData={generalFilmsData} promoFilmId={promoFilmId}/>
 
         </div>
       </section >
@@ -69,7 +68,7 @@ const Main = (props) => {
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList filmsData={props.filmsData} promoFilm={props.promoFilm}/>
+            <FilmsList generalFilmsData={generalFilmsData}/>
           </div>
 
           <div className="catalog__more">
@@ -86,12 +85,10 @@ const Main = (props) => {
 };
 
 Main.propTypes = {
-  promoFilm: PropTypes.arrayOf(
+  generalFilmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
-  ).isRequired,
-  filmsData: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  ).isRequired
+  ),
+  promoFilmId: PropTypes.number.isRequired
 };
 
 export default Main;

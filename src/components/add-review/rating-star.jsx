@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RatingStar = ({starNumber, handleReviewRating}) => {
+const RatingStar = ({starNumber, handleReviewRating, defaultCheckedStar}) => {
   return (
     <React.Fragment>
       <input
@@ -10,6 +10,7 @@ const RatingStar = ({starNumber, handleReviewRating}) => {
         type="radio"
         name="rating"
         value={`${starNumber}`}
+        defaultChecked={defaultCheckedStar === starNumber}
       />
       <label
         className="rating__label"
@@ -24,5 +25,6 @@ export default RatingStar;
 
 RatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
+  defaultCheckedStar: PropTypes.number.isRequired,
   handleReviewRating: PropTypes.func.isRequired
 };

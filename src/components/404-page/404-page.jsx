@@ -13,17 +13,15 @@ const Page404 = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className="user-page">
-        <header className="page-header user-page__head">
+    <div className="user-page">
+      <header className="page-header user-page__head">
 
-          <Logo/>
+        <Logo/>
 
-          <h1 className="page-title user-page__title">404 - Page is not found!</h1>
-          <p style={message404}>Please check the correctness of URL or contact to an administrator, whoever he is...</p>
-        </header>
-      </div>
-    </React.Fragment>
+        <h1 className="page-title user-page__title">404 - Page is not found!</h1>
+        <p style={message404}>Please check the correctness of URL or contact to an administrator, whoever he is...</p>
+      </header>
+    </div>
   );
 };
 

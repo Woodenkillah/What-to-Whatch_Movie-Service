@@ -3,34 +3,42 @@ import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../../props-validation/props-validation';
 import FilmCard from '../../film-card/film-card';
 
-const FilmsList = (props) => {
+const FilmsList = ({generalFilmsData}) => {
 
-  const state = React.useState({avtiveFilmId: ``});
-  const setActiveFilm = state[1];
+  const [, setActiveFilm] = React.useState({activeFilmId: null});
 
   const filmHoverHandler = (filmId) => {
     setActiveFilm({
-      avtiveFilmId: filmId
+      activeFilmId: filmId
     });
   };
 
-  const generalFilmsData = [...props.filmsData, ...props.promoFilm];
-  const filmsList = generalFilmsData.map((item, index) => {
-    return <FilmCard name={item.name} posterImage={item.posterImage} id={item.id} key={item.id + index} onFilmHover={filmHoverHandler}/>;
-  });
+  const renderFilmsList = () => {
 
-  return (
-    <React.Fragment>
-      {filmsList}
-    </React.Fragment>
-  );
+    if (generalFilmsData.length > 0) {
+
+      const filmsList = generalFilmsData.map((item, index) => {
+        return <FilmCard
+          name={item.name}
+          posterImage={item.posterImage}
+          id={item.id}
+          key={item.id + index}
+          onFilmHover={filmHoverHandler}
+        />;
+      });
+      return filmsList;
+
+    } else {
+      return <h2>The were no films added to the databse yet.</h2>;
+    }
+
+  };
+
+  return renderFilmsList();
 };
 
 FilmsList.propTypes = {
-  promoFilm: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  ),
-  filmsData: PropTypes.arrayOf(
+  generalFilmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   )
 };

@@ -5,14 +5,34 @@ import {useHistory, useParams, Link} from 'react-router-dom';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
+import Page404 from '../404-page/404-page';
 
-const AddReview = (props) => {
+const AddReview = ({generalFilmsData, setReviews}) => {
   const history = useHistory();
 
-  const [formState, setFormState] = React.useState({rating: 8, text: ``, date: String(new Date(Date.now())), user: `unknown`});
+  const [formState, setFormState] = React.useState({
+    rating: 1,
+    text: ``,
+    date: ``,
+    user: `Unknown author`
+  });
 
-  const targetFilmId = Number(useParams().id);
-  const generalFilmsData = [...props.filmsData, ...props.promoFilm];
+  React.useEffect(() => {
+    const handleDate = () => {
+      const rawDate = new Date(Date.now());
+      const monthsList = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+      const monthNumber = rawDate.getMonth();
+      const day = rawDate.getDate();
+      const year = rawDate.getFullYear();
+
+      const date = `${monthsList[monthNumber]} ${day}, ${year}`;
+      setFormState((prevState) => ({...prevState, date})
+      );
+    };
+    handleDate();
+  }, [formState.text]);
+
+  const targetFilmId = parseInt((useParams().id), 10);
   const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
 
   const handleReviewRating = (rating) => () => setFormState((prevState) => ({...prevState, rating}));
@@ -32,7 +52,7 @@ const AddReview = (props) => {
       user: formState.user
     };
 
-    props.setReviews((prevReviews) => {
+    setReviews((prevReviews) => {
       const prevReviewPerFilm = prevReviews[targetFilmId] || [];
       const reviewsList = [...prevReviewPerFilm, newReview];
 
@@ -42,54 +62,61 @@ const AddReview = (props) => {
     history.push({pathname: `/films/${targetFilmId}`});
   };
 
-  return (
-    <section className="movie-card movie-card--full">
-      <div className="movie-card__header">
-        <div className="movie-card__bg">
-          <img src={targetFilm.backgroundImage} alt={targetFilm.name}/>
-        </div>
+  const renderAddReview = () => {
 
-        <h1 className="visually-hidden">WTW</h1>
+    if (targetFilm) {
+      return (
+        <section className="movie-card movie-card--full">
+          <div className="movie-card__header">
+            <div className="movie-card__bg">
+              <img src={targetFilm.backgroundImage} alt={targetFilm.name} />
+            </div>
 
-        <header className="page-header">
+            <h1 className="visually-hidden">WTW</h1>
 
-          <Logo/>
+            <header className="page-header">
 
-          <nav className="breadcrumbs">
-            <ul className="breadcrumbs__list">
-              <li className="breadcrumbs__item">
-                <Link to={{pathname: `/films/${targetFilmId}`}} className="breadcrumbs__link">{targetFilm.name}</Link>
-              </li>
-              <li className="breadcrumbs__item">
-                <a className="breadcrumbs__link">Add review</a>
-              </li>
-            </ul>
-          </nav>
+              <Logo />
 
-          <UserAvatar/>
-        </header>
+              <nav className="breadcrumbs">
+                <ul className="breadcrumbs__list">
+                  <li className="breadcrumbs__item">
+                    <Link to={{pathname: `/films/${targetFilmId}`}} className="breadcrumbs__link">{targetFilm.name}</Link>
+                  </li>
+                  <li className="breadcrumbs__item">
+                    <a className="breadcrumbs__link">Add review</a>
+                  </li>
+                </ul>
+              </nav>
 
-        <div className="movie-card__poster movie-card__poster--small">
-          <img src={targetFilm.posterImage} alt={`${targetFilm.name} poster`} width="218" height="327"/>
-        </div>
-      </div>
+              <UserAvatar />
+            </header>
 
-      <ReviewForm
-        handleReviewRating={handleReviewRating}
-        handleReviewText={handleReviewText}
-        handleFormSubmit={handleFormSubmit}
-        formState={formState}
-      />
+            <div className="movie-card__poster movie-card__poster--small">
+              <img src={targetFilm.posterImage} alt={`${targetFilm.name} poster`} width="218" height="327" />
+            </div>
+          </div>
 
-    </section>
-  );
+          <ReviewForm
+            handleReviewRating={handleReviewRating}
+            handleReviewText={handleReviewText}
+            handleFormSubmit={handleFormSubmit}
+            formState={formState}
+          />
+        </section>
+      );
+
+    } else {
+      return <Page404/>;
+    }
+
+  };
+
+  return renderAddReview();
 };
 
 AddReview.propTypes = {
-  promoFilm: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  ),
-  filmsData: PropTypes.arrayOf(
+  generalFilmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   setReviews: PropTypes.func.isRequired

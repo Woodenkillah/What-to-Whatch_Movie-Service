@@ -4,38 +4,39 @@ import ReviewItem from './review-item';
 
 const FilmReviews = ({reviews, targetFilmId}) => {
 
-  let reviewsList = [];
+  const renderReviewsList = () => {
 
-  if (Object.keys(reviews).length > 0) {
-
+    let reviewsList = [];
     const targetFilmReviews = reviews[targetFilmId];
 
-    reviewsList = targetFilmReviews.map((review, index) => {
-      const {rating, text, date, user} = review;
+    if (Object.keys(reviews).length > 0 && targetFilmReviews) {
+
+      reviewsList = targetFilmReviews.map((review, index) => {
+        const {rating, text, date, user} = review;
+        return (
+          <ReviewItem
+            key={`rev-itm-${index}`}
+            rating={rating}
+            text={text}
+            date={date}
+            user={user}
+          />
+        );
+      });
+      return reviewsList;
+    } else {
       return (
-        <ReviewItem
-          key={`rev-itm-${index}`}
-          rating={rating}
-          text={text}
-          date={date}
-          user={user}
-        />
+        <h2>There are no reviews yet.</h2>
       );
-    });
-  }
+    }
+  };
 
   return (
-    <React.Fragment>
-      <div className="movie-card__reviews movie-card__row">
-        <div className="movie-card__reviews-col">
-          {
-            reviewsList.length > 0
-              ? reviewsList
-              : <h2>There are no reviews yet.</h2>
-          }
-        </div>
+    <div className="movie-card__reviews movie-card__row">
+      <div className="movie-card__reviews-col">
+        {renderReviewsList()}
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -13,7 +13,9 @@ const FilmDetails = ({director, starring, runTime, genre, released}) => {
           </p>
           <p className="movie-card__details-item">
             <strong className="movie-card__details-name">Starring</strong>
+
             {/* когда будет доступен список, нужно будет отрендерить по одному имени в строке */}
+
             <span className="movie-card__details-value">{starring}</span>
           </p>
         </div>
