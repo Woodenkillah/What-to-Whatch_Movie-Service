@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/app/app';
-import {movieItemsData} from './mocks/movie-items';
-import {moviePromo} from './mocks/movie-promo';
+import {filmsData} from './mocks/films';
+import {promoFilm} from './mocks/promo-film';
 
 const container = document.getElementById(`root`);
 
 ReactDOM.render(
-    <App moviePromo={moviePromo} movieItemsData={movieItemsData}/>,
+    <App filmsData={filmsData} promoFilm={promoFilm}/>,
     container
 );

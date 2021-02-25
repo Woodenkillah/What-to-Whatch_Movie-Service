@@ -1,97 +1,125 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import {generalPropValidation} from '../../props-validation/props-validation';
+import {useHistory, useParams, Link} from 'react-router-dom';
+import Logo from '../../aux-components/logo';
+import UserAvatar from '../../aux-components/user-avatar';
+import ReviewForm from './review-form';
+import Page404 from '../404-page/404-page';
 
-const AddReview = () => {
-  return (
-    <React.Fragment>
-      <section className="movie-card movie-card--full">
-        <div className="movie-card__header">
-          <div className="movie-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+const AddReview = ({generalFilmsData, setReviews}) => {
+  const history = useHistory();
+
+  const [formState, setFormState] = React.useState({
+    rating: 1,
+    text: ``,
+    date: ``,
+    user: `Unknown author`
+  });
+
+  React.useEffect(() => {
+    const handleDate = () => {
+      const rawDate = new Date(Date.now());
+      const monthsList = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+      const monthNumber = rawDate.getMonth();
+      const day = rawDate.getDate();
+      const year = rawDate.getFullYear();
+
+      const date = `${monthsList[monthNumber]} ${day}, ${year}`;
+      setFormState((prevState) => ({...prevState, date})
+      );
+    };
+    handleDate();
+  }, [formState.text]);
+
+  const targetFilmId = parseInt((useParams().id), 10);
+  const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
+
+  const handleReviewRating = (rating) => () => setFormState((prevState) => ({...prevState, rating}));
+
+  const handleReviewText = (evt) => {
+    const text = String(evt.target.value).trim();
+    setFormState((prevState) => ({...prevState, text}));
+  };
+
+  const handleFormSubmit = (evt) => {
+    evt.preventDefault();
+
+    const newReview = {
+      rating: formState.rating,
+      text: formState.text,
+      date: formState.date,
+      user: formState.user
+    };
+
+    setReviews((prevReviews) => {
+      const prevReviewPerFilm = prevReviews[targetFilmId] || [];
+      const reviewsList = [...prevReviewPerFilm, newReview];
+
+      return {...prevReviews, [targetFilmId]: reviewsList};
+    });
+
+    history.push({pathname: `/films/${targetFilmId}`});
+  };
+
+  const renderAddReview = () => {
+
+    if (targetFilm) {
+      return (
+        <section className="movie-card movie-card--full">
+          <div className="movie-card__header">
+            <div className="movie-card__bg">
+              <img src={targetFilm.backgroundImage} alt={targetFilm.name} />
+            </div>
+
+            <h1 className="visually-hidden">WTW</h1>
+
+            <header className="page-header">
+
+              <Logo />
+
+              <nav className="breadcrumbs">
+                <ul className="breadcrumbs__list">
+                  <li className="breadcrumbs__item">
+                    <Link to={{pathname: `/films/${targetFilmId}`}} className="breadcrumbs__link">{targetFilm.name}</Link>
+                  </li>
+                  <li className="breadcrumbs__item">
+                    <a className="breadcrumbs__link">Add review</a>
+                  </li>
+                </ul>
+              </nav>
+
+              <UserAvatar />
+            </header>
+
+            <div className="movie-card__poster movie-card__poster--small">
+              <img src={targetFilm.posterImage} alt={`${targetFilm.name} poster`} width="218" height="327" />
+            </div>
           </div>
 
-          <h1 className="visually-hidden">WTW</h1>
+          <ReviewForm
+            handleReviewRating={handleReviewRating}
+            handleReviewText={handleReviewText}
+            handleFormSubmit={handleFormSubmit}
+            formState={formState}
+          />
+        </section>
+      );
 
-          <header className="page-header">
-            <div className="logo">
-              <a href="main.html" className="logo__link">
-                <span className="logo__letter logo__letter--1">W</span>
-                <span className="logo__letter logo__letter--2">T</span>
-                <span className="logo__letter logo__letter--3">W</span>
-              </a>
-            </div>
+    } else {
+      return <Page404/>;
+    }
 
-            <nav className="breadcrumbs">
-              <ul className="breadcrumbs__list">
-                <li className="breadcrumbs__item">
-                  <a href="movie-page.html" className="breadcrumbs__link">The Grand Budapest Hotel</a>
-                </li>
-                <li className="breadcrumbs__item">
-                  <a className="breadcrumbs__link">Add review</a>
-                </li>
-              </ul>
-            </nav>
+  };
 
-            <div className="user-block">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </div>
-          </header>
+  return renderAddReview();
+};
 
-          <div className="movie-card__poster movie-card__poster--small">
-            <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
-          </div>
-        </div>
-
-        <div className="add-review">
-          <form action="#" className="add-review__form">
-            <div className="rating">
-              <div className="rating__stars">
-                <input className="rating__input" id="star-1" type="radio" name="rating" value="1"/>
-                <label className="rating__label" htmlFor="star-1">Rating 1</label>
-
-                <input className="rating__input" id="star-2" type="radio" name="rating" value="2" />
-                <label className="rating__label" htmlFor="star-2">Rating 2</label>
-
-                <input className="rating__input" id="star-3" type="radio" name="rating" value="3" checked />
-                <label className="rating__label" htmlFor="star-3">Rating 3</label>
-
-                <input className="rating__input" id="star-4" type="radio" name="rating" value="4" />
-                <label className="rating__label" htmlFor="star-4">Rating 4</label>
-
-                <input className="rating__input" id="star-5" type="radio" name="rating" value="5" />
-                <label className="rating__label" htmlFor="star-5">Rating 5</label>
-
-                <input className="rating__input" id="star-6" type="radio" name="rating" value="6"/>
-                <label className="rating__label" htmlFor="star-6">Rating 6</label>
-
-                <input className="rating__input" id="star-7" type="radio" name="rating" value="7" />
-                <label className="rating__label" htmlFor="star-7">Rating 7</label>
-
-                <input className="rating__input" id="star-8" type="radio" name="rating" value="8" checked />
-                <label className="rating__label" htmlFor="star-8">Rating 8</label>
-
-                <input className="rating__input" id="star-9" type="radio" name="rating" value="9" />
-                <label className="rating__label" htmlFor="star-9">Rating 9</label>
-
-                <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
-                <label className="rating__label" htmlFor="star-10">Rating 10</label>
-              </div>
-            </div>
-
-            <div className="add-review__text">
-              <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
-              <div className="add-review__submit">
-                <button className="add-review__btn" type="submit">Post</button>
-              </div>
-
-            </div>
-          </form>
-        </div>
-
-      </section>
-    </React.Fragment>
-  );
+AddReview.propTypes = {
+  generalFilmsData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ),
+  setReviews: PropTypes.func.isRequired
 };
 
 export default AddReview;
