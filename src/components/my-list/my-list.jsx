@@ -10,6 +10,14 @@ const MyList = ({generalFilmsData}) => {
 
   const favoriteFilms = generalFilmsData.filter(({isFavorite}) => isFavorite);
 
+  const [activeFilm, setActiveFilm] = React.useState({activeFilmId: null});
+
+  const handleFilmHover = (filmId) => {
+    setActiveFilm({
+      activeFilmId: filmId
+    });
+  };
+
   const renderFavoriteFilms = () => {
 
     if (favoriteFilms.length > 0) {
@@ -19,7 +27,10 @@ const MyList = ({generalFilmsData}) => {
             name={item.name}
             posterImage={item.posterImage}
             id={item.id}
+            src={item.videoLink}
             key={item.id + index}
+            handleFilmHover={handleFilmHover}
+            activeFilmId={activeFilm.activeFilmId}
           />
         );
       });

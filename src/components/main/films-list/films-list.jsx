@@ -5,9 +5,9 @@ import FilmCard from '../../film-card/film-card';
 
 const FilmsList = ({generalFilmsData}) => {
 
-  const [, setActiveFilm] = React.useState({activeFilmId: null});
+  const [activeFilm, setActiveFilm] = React.useState({activeFilmId: null});
 
-  const filmHoverHandler = (filmId) => {
+  const handleFilmHover = (filmId) => {
     setActiveFilm({
       activeFilmId: filmId
     });
@@ -22,8 +22,10 @@ const FilmsList = ({generalFilmsData}) => {
           name={item.name}
           posterImage={item.posterImage}
           id={item.id}
+          src={item.videoLink}
           key={item.id + index}
-          onFilmHover={filmHoverHandler}
+          handleFilmHover={handleFilmHover}
+          activeFilmId={activeFilm.activeFilmId}
         />;
       });
       return filmsList;
