@@ -7,6 +7,14 @@ import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 
+const rawDate = new Date(Date.now());
+const monthsList = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+const monthNumber = rawDate.getMonth();
+const day = rawDate.getDate();
+const year = rawDate.getFullYear();
+
+const currentDate = `${monthsList[monthNumber]} ${day}, ${year}`;
+
 const AddReview = ({generalFilmsData, setReviews}) => {
   const history = useHistory();
 
@@ -29,22 +37,11 @@ const AddReview = ({generalFilmsData, setReviews}) => {
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
-    const handleDate = () => {
-      const rawDate = new Date(Date.now());
-      const monthsList = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
-      const monthNumber = rawDate.getMonth();
-      const day = rawDate.getDate();
-      const year = rawDate.getFullYear();
-
-      const date = `${monthsList[monthNumber]} ${day}, ${year}`;
-      return date;
-    };
-
     const newReview = {
       rating: formState.rating,
       text: formState.text,
       user: formState.user,
-      date: handleDate()
+      date: currentDate
     };
 
     setReviews((prevReviews) => {

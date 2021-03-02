@@ -3,15 +3,15 @@ import {Link, useHistory} from 'react-router-dom';
 import VideoElement from '../player/video-element';
 import PropTypes from 'prop-types';
 
+let previewVideoTimeout = null;
+
 const FilmCard = ({id, name, posterImage, src, handleFilmHover, activeFilmId}) => {
 
   const history = useHistory();
 
   const [isHovered, setIsHovered] = React.useState(false);
 
-  let previewVideoTimeout = null;
-
-  const showPreviewVideo = () => {
+  const showPreviewVideo = () => () => {
     previewVideoTimeout = setTimeout(() => {
       setIsHovered(true);
     }, 1000);
@@ -53,8 +53,8 @@ const FilmCard = ({id, name, posterImage, src, handleFilmHover, activeFilmId}) =
   return (
     <article
       className="small-movie-card catalog__movies-card"
-      onMouseEnter={handleFilmHover ? () => handleFilmHover(id) : null}
-      onMouseOver={() => showPreviewVideo()}
+      onMouseEnter={handleFilmHover(id)}
+      onMouseOver={showPreviewVideo()}
       onMouseOut={cancelPreviewVideo}
       onClick={handleFilmCardOpener}
     >
