@@ -7,30 +7,16 @@ import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 
+const MONTHS_LIST = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+
 const AddReview = ({generalFilmsData, setReviews}) => {
   const history = useHistory();
 
   const [formState, setFormState] = React.useState({
     rating: 1,
     text: ``,
-    date: ``,
     user: `Unknown author`
   });
-
-  React.useEffect(() => {
-    const handleDate = () => {
-      const rawDate = new Date(Date.now());
-      const monthsList = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
-      const monthNumber = rawDate.getMonth();
-      const day = rawDate.getDate();
-      const year = rawDate.getFullYear();
-
-      const date = `${monthsList[monthNumber]} ${day}, ${year}`;
-      setFormState((prevState) => ({...prevState, date})
-      );
-    };
-    handleDate();
-  }, [formState.text]);
 
   const targetFilmId = parseInt((useParams().id), 10);
   const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
@@ -45,11 +31,17 @@ const AddReview = ({generalFilmsData, setReviews}) => {
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
+    const rawDate = new Date(Date.now());
+    const monthNumber = rawDate.getMonth();
+    const day = rawDate.getDate();
+    const year = rawDate.getFullYear();
+    const currentDate = `${MONTHS_LIST[monthNumber]} ${day}, ${year}`;
+
     const newReview = {
       rating: formState.rating,
       text: formState.text,
-      date: formState.date,
-      user: formState.user
+      user: formState.user,
+      date: currentDate
     };
 
     setReviews((prevReviews) => {

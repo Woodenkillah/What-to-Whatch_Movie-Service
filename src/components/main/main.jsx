@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import FilmsList from './films-list/films-list';
+import FilmsList from '../films-list/films-list';
 import PromoFilm from './promo-film/promo-film';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
@@ -68,7 +68,7 @@ const Main = ({generalFilmsData, promoFilmId}) => {
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList generalFilmsData={generalFilmsData}/>
+            <FilmsList filmsListData={generalFilmsData}/>
           </div>
 
           <div className="catalog__more">

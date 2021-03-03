@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import {useParams, useHistory} from 'react-router-dom';
+import VideoElement from './video-element';
 import Page404 from '../404-page/404-page';
 
 const Player = ({generalFilmsData}) => {
@@ -20,12 +21,11 @@ const Player = ({generalFilmsData}) => {
     if (targetFilm) {
       return (
         <div className="player">
-          <video
+
+          <VideoElement
             src={targetFilm.videoLink}
-            className="player__video"
             poster={targetFilm.posterImage}
-            controls autoPlay>
-          </video>
+          />
 
           <button type="button" className="player__exit" onClick={handlePlayerExit}>Exit</button>
 
