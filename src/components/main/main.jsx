@@ -6,8 +6,18 @@ import PromoFilm from './promo-film/promo-film';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
+import GenresList from './genres-list/genres-list';
+import {connect} from 'react-redux';
 
-const Main = ({generalFilmsData, promoFilmId}) => {
+const Main = ({generalFilmsData, promoFilmId, defaultGenre, activeGenre, filmsData}) => {
+
+  let filteredFilmsList = [];
+
+  if (filmsData.length && activeGenre !== defaultGenre) {
+    filteredFilmsList = filmsData.filter(({genre}) => genre === activeGenre);
+  } else if (filmsData.length) {
+    filteredFilmsList = filmsData;
+  }
 
   return (
     <React.Fragment>
@@ -24,9 +34,7 @@ const Main = ({generalFilmsData, promoFilmId}) => {
         </header>
 
         <div className="movie-card__wrap">
-
           <PromoFilm generalFilmsData={generalFilmsData} promoFilmId={promoFilmId}/>
-
         </div>
       </section >
 
@@ -35,40 +43,11 @@ const Main = ({generalFilmsData, promoFilmId}) => {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <li className="catalog__genres-item catalog__genres-item--active">
-              <a href="#" className="catalog__genres-link">All genres</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Comedies</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Crime</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Documentary</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Dramas</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Horror</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Kids & Family</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Romance</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Sci-Fi</a>
-            </li>
-            <li className="catalog__genres-item">
-              <a href="#" className="catalog__genres-link">Thrillers</a>
-            </li>
+            <GenresList/>
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList filmsListData={generalFilmsData}/>
+            <FilmsList filmsListData={filteredFilmsList} activeGenre={activeGenre}/>
           </div>
 
           <div className="catalog__more">
@@ -88,7 +67,18 @@ Main.propTypes = {
   generalFilmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  promoFilmId: PropTypes.number.isRequired
+  promoFilmId: PropTypes.number.isRequired,
+  defaultGenre: PropTypes.string.isRequired,
+  activeGenre: PropTypes.string.isRequired,
+  filmsData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  )
 };
 
-export default Main;
+const mapStateToProps = (state) => ({
+  defaultGenre: state.defaultGenre,
+  activeGenre: state.activeGenre,
+  filmsData: state.filmsData
+});
+
+export default connect(mapStateToProps, null)(Main);
