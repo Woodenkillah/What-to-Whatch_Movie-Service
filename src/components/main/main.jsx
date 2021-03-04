@@ -9,15 +9,7 @@ import Footer from '../../aux-components/footer';
 import GenresList from './genres-list/genres-list';
 import {connect} from 'react-redux';
 
-const Main = ({generalFilmsData, promoFilmId, defaultGenre, activeGenre, filmsData}) => {
-
-  let filteredFilmsList = [];
-
-  if (filmsData.length && activeGenre !== defaultGenre) {
-    filteredFilmsList = filmsData.filter(({genre}) => genre === activeGenre);
-  } else if (filmsData.length) {
-    filteredFilmsList = filmsData;
-  }
+const Main = ({generalFilmsData, promoFilmId, filteredFilmsList}) => {
 
   return (
     <React.Fragment>
@@ -47,7 +39,7 @@ const Main = ({generalFilmsData, promoFilmId, defaultGenre, activeGenre, filmsDa
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList filmsListData={filteredFilmsList} activeGenre={activeGenre}/>
+            <FilmsList filmsListData={filteredFilmsList}/>
           </div>
 
           <div className="catalog__more">
@@ -68,17 +60,13 @@ Main.propTypes = {
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   promoFilmId: PropTypes.number.isRequired,
-  defaultGenre: PropTypes.string.isRequired,
-  activeGenre: PropTypes.string.isRequired,
-  filmsData: PropTypes.arrayOf(
+  filteredFilmsList: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   )
 };
 
 const mapStateToProps = (state) => ({
-  defaultGenre: state.defaultGenre,
-  activeGenre: state.activeGenre,
-  filmsData: state.filmsData
+  filteredFilmsList: state.filteredFilmsList
 });
 
 export default connect(mapStateToProps, null)(Main);

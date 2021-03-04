@@ -5,28 +5,22 @@ import GenreItem from './genre-item';
 import {connect} from 'react-redux';
 import {ActionCreator} from '../../../store/actions';
 
-const GenresList = ({filmsData, defaultGenre, activeGenre, changeGenre}) => {
+const GenresList = ({activeGenre, changeGenre, updateFilteredFilmsList, genresList}) => {
 
-  if (!filmsData.length) {
+  if (!genresList.length) {
     return (
       <h2>There are no filters currently available.</h2>
     );
   }
 
-  const genresList = filmsData
-    .map(({genre}) => genre)
-    .filter((item, index, array) => array.indexOf(item) === index)
-    .sort();
-
-  const uniqueGenresList = [defaultGenre, ...genresList];
-
-  return uniqueGenresList.map((item, index) => {
+  return genresList.map((item, index) => {
     return (
       <GenreItem
         key={`gnr-${index}`}
         title={item}
         activeGenre={activeGenre}
         changeGenre={changeGenre}
+        updateFilteredFilmsList={updateFilteredFilmsList}
       />
     );
   });
@@ -39,14 +33,16 @@ GenresList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  defaultGenre: state.defaultGenre,
   activeGenre: state.activeGenre,
-  filmsData: state.filmsData
+  genresList: state.genresList
 });
 
 const mapDispatchToProps = (dispatch) => ({
   changeGenre(genre) {
     dispatch(ActionCreator.changeGenre(genre));
+  },
+  updateFilteredFilmsList() {
+    dispatch(ActionCreator.updateFilteredFilmsList());
   }
 });
 
