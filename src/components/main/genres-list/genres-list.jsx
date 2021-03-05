@@ -1,48 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {generalPropValidation} from '../../../props-validation/props-validation';
 import GenreItem from './genre-item';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../store/actions';
+import {ActionCreator} from '../../../redux/actions';
 
-const GenresList = ({activeGenre, changeGenre, updateFilteredFilmsList, genresList}) => {
+const GenresList = ({genresList, activeGenre, onChangeGenre}) => {
 
-  if (!genresList.length) {
-    return (
-      <h2>There are no filters currently available.</h2>
-    );
-  }
-
-  return genresList.map((item, index) => {
+  return genresList.map((title, idx) => {
     return (
       <GenreItem
-        key={`gnr-${index}`}
-        title={item}
+        key={`gnr-${idx}`}
+        title={title}
         activeGenre={activeGenre}
-        changeGenre={changeGenre}
-        updateFilteredFilmsList={updateFilteredFilmsList}
+        onChangeGenre={onChangeGenre}
       />
     );
   });
 };
 
 GenresList.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  )
+  genresList: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  genresList: state.genresList
-});
+const mapStateToProps = (state) => ({activeGenre: state.activeGenre});
 
 const mapDispatchToProps = (dispatch) => ({
-  changeGenre(genre) {
-    dispatch(ActionCreator.changeGenre(genre));
-  },
-  updateFilteredFilmsList() {
-    dispatch(ActionCreator.updateFilteredFilmsList());
+  onChangeGenre(genre) {
+    dispatch(ActionCreator.handleChangeGenre(genre));
   }
 });
 

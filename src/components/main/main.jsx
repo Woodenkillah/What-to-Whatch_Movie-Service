@@ -8,8 +8,13 @@ import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 import GenresList from './genres-list/genres-list';
 import {connect} from 'react-redux';
+import {DEFAULT_GENRE} from '../../constants';
 
-const Main = ({generalFilmsData, promoFilmId, filteredFilmsList}) => {
+const Main = ({generalFilmsData, promoFilmId, genresList, activeGenre}) => {
+
+  const filteredFilms = activeGenre === DEFAULT_GENRE
+    ? generalFilmsData
+    : generalFilmsData.filter(({genre}) => genre === activeGenre);
 
   return (
     <React.Fragment>
@@ -35,11 +40,11 @@ const Main = ({generalFilmsData, promoFilmId, filteredFilmsList}) => {
           <h2 className="catalog__title visually-hidden">Catalog</h2>
 
           <ul className="catalog__genres-list">
-            <GenresList/>
+            <GenresList genresList={genresList}/>
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList filmsListData={filteredFilmsList}/>
+            <FilmsList filmsListData={filteredFilms}/>
           </div>
 
           <div className="catalog__more">
@@ -60,13 +65,12 @@ Main.propTypes = {
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   promoFilmId: PropTypes.number.isRequired,
-  filteredFilmsList: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  )
+  genresList: PropTypes.array.isRequired,
+  activeGenre: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  filteredFilmsList: state.filteredFilmsList
+  activeGenre: state.activeGenre
 });
 
 export default connect(mapStateToProps, null)(Main);

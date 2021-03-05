@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 let previewVideoTimeout = null;
 
-const FilmCard = ({id, name, posterImage, src, handleFilmHover, activeFilmId}) => {
+const FilmCard = ({id, name, posterImage, src, onFilmHover, activeFilmId}) => {
 
   const history = useHistory();
 
@@ -53,7 +53,7 @@ const FilmCard = ({id, name, posterImage, src, handleFilmHover, activeFilmId}) =
   return (
     <article
       className="small-movie-card catalog__movies-card"
-      onMouseEnter={handleFilmHover(id)}
+      onMouseEnter={onFilmHover(id)}
       onMouseOver={showPreviewVideo()}
       onMouseOut={cancelPreviewVideo}
       onClick={handleFilmCardOpener}
@@ -69,7 +69,7 @@ FilmCard.propTypes = {
   name: PropTypes.string.isRequired,
   posterImage: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
-  handleFilmHover: PropTypes.func.isRequired,
+  onFilmHover: PropTypes.func.isRequired,
   activeFilmId: PropTypes.number
 };
 

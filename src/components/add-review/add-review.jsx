@@ -90,9 +90,9 @@ const AddReview = ({generalFilmsData, setReviews}) => {
           </div>
 
           <ReviewForm
-            handleReviewRating={handleReviewRating}
-            handleReviewText={handleReviewText}
-            handleFormSubmit={handleFormSubmit}
+            onReviewRating={handleReviewRating}
+            onReviewText={handleReviewText}
+            onFormSubmit={handleFormSubmit}
             formState={formState}
           />
         </section>

@@ -20,7 +20,7 @@ const FilmsList = ({filmsListData}) => {
         id={item.id}
         src={item.videoLink}
         key={item.id + index}
-        handleFilmHover={handleFilmHover}
+        onFilmHover={handleFilmHover}
         activeFilmId={activeFilmId}
       />
     );
