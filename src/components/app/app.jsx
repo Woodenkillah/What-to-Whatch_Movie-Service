@@ -10,7 +10,7 @@ import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Page404 from '../404-page/404-page';
 
-const App = ({filmsData, promoFilm}) => {
+const App = ({filmsData, genresList, promoFilm}) => {
   const [reviews, setReviews] = React.useState({});
 
   let promoFilmId = null;
@@ -25,7 +25,7 @@ const App = ({filmsData, promoFilm}) => {
     <BrowserRouter>
       <Switch>
         <Route exact path='/'>
-          <Main generalFilmsData={generalFilmsData} promoFilmId={promoFilmId}/>
+          <Main generalFilmsData={generalFilmsData} genresList={genresList} promoFilmId={promoFilmId}/>
         </Route>
         <Route exact path='/login' component={SignIn}/>
         <Route exact path='/mylist'>
@@ -53,7 +53,7 @@ App.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ).isRequired,
-  featuredFilmsIdList: PropTypes.arrayOf(PropTypes.number.isRequired)
+  genresList: PropTypes.array.isRequired
 };
 
 export default App;

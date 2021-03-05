@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import RatingStar from './rating-star';
 
-const ReviewForm = ({handleReviewRating, handleReviewText, handleFormSubmit, formState}) => {
+const ReviewForm = ({onReviewRating, onReviewText, onFormSubmit, formState}) => {
 
   const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const defaultCheckedStar = formState.rating;
@@ -12,7 +12,7 @@ const ReviewForm = ({handleReviewRating, handleReviewText, handleFormSubmit, for
       <RatingStar
         starNumber={starNumber}
         key={`str-${starNumber}`}
-        handleReviewRating={handleReviewRating}
+        handleReviewRating={onReviewRating}
         defaultCheckedStar={defaultCheckedStar}
       />
     );
@@ -20,7 +20,7 @@ const ReviewForm = ({handleReviewRating, handleReviewText, handleFormSubmit, for
 
   return (
     <div className="add-review">
-      <form action="#" className="add-review__form" onSubmit={handleFormSubmit} >
+      <form action="#" className="add-review__form" onSubmit={onFormSubmit} >
         <div className="rating">
           <div className="rating__stars" >
             {ratingStarsList}
@@ -34,7 +34,7 @@ const ReviewForm = ({handleReviewRating, handleReviewText, handleFormSubmit, for
             placeholder="Review text"
             minLength={50}
             maxLength={400}
-            onChange={handleReviewText}
+            onChange={onReviewText}
           >
           </textarea>
           <div className="add-review__submit">
@@ -52,9 +52,9 @@ const ReviewForm = ({handleReviewRating, handleReviewText, handleFormSubmit, for
 };
 
 ReviewForm.propTypes = {
-  handleReviewRating: PropTypes.func.isRequired,
-  handleReviewText: PropTypes.func.isRequired,
-  handleFormSubmit: PropTypes.func.isRequired,
+  onReviewRating: PropTypes.func.isRequired,
+  onReviewText: PropTypes.func.isRequired,
+  onFormSubmit: PropTypes.func.isRequired,
   formState: PropTypes.object.isRequired
 };
 
