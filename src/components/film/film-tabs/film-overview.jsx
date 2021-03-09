@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const FilmOverview = ({description, rating, scoresCount, director, starring}) => {
+
+  const starringList = starring.join(`, `);
+
   return (
     <React.Fragment>
       <div className="movie-rating">
@@ -17,7 +20,12 @@ const FilmOverview = ({description, rating, scoresCount, director, starring}) =>
 
         <p className="movie-card__director"><strong>Director: {director}</strong></p>
 
-        <p className="movie-card__starring"><strong>Starring: {starring}</strong></p>
+        <p className="movie-card__starring">
+          <strong>
+            {`Starring: ${starringList}`}
+          </strong>
+
+        </p>
       </div>
     </React.Fragment>
   );
@@ -28,7 +36,7 @@ FilmOverview.propTypes = {
   rating: PropTypes.number.isRequired,
   scoresCount: PropTypes.number.isRequired,
   director: PropTypes.string.isRequired,
-  starring: PropTypes.string.isRequired
+  starring: PropTypes.array.isRequired
 };
 
 export default FilmOverview;

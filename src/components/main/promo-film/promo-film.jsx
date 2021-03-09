@@ -4,29 +4,27 @@ import {generalPropValidation} from '../../../props-validation/props-validation'
 import PromoPoster from './film-promo-poster';
 import {useHistory} from 'react-router-dom';
 
-const PromoFilm = ({generalFilmsData, promoFilmId}) => {
+const PromoFilm = ({promoData}) => {
 
   const history = useHistory();
 
   const handleFilmPlayerOpener = () => {
-    history.push({pathname: `/player/${targetFilm.id}`});
+    history.push({pathname: `/player/${promoData.id}`});
   };
-
-  const targetFilm = generalFilmsData.find(({id}) => id === promoFilmId);
 
   const renderPromoFilm = () => {
 
-    if (targetFilm) {
+    if (promoData) {
       return (
         <div className="movie-card__info">
 
-          <PromoPoster name={targetFilm.name} posterImage={targetFilm.posterImage}/>
+          <PromoPoster name={promoData.name} posterImage={promoData.poster_image}/>
 
           <div className="movie-card__desc">
-            <h2 className="movie-card__title">{targetFilm.name}</h2>
+            <h2 className="movie-card__title">{promoData.name}</h2>
             <p className="movie-card__meta">
-              <span className="movie-card__genre">{targetFilm.genre}</span>
-              <span className="movie-card__year">{targetFilm.released}</span>
+              <span className="movie-card__genre">{promoData.genre}</span>
+              <span className="movie-card__year">{promoData.released}</span>
             </p>
 
             <div className="movie-card__buttons">
@@ -60,10 +58,7 @@ const PromoFilm = ({generalFilmsData, promoFilmId}) => {
 };
 
 PromoFilm.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  ),
-  promoFilmId: PropTypes.number.isRequired
+  promoData: PropTypes.shape(generalPropValidation).isRequired
 };
 
 export default PromoFilm;

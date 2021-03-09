@@ -4,8 +4,9 @@ import {generalPropValidation} from '../../props-validation/props-validation';
 import {useParams, useHistory} from 'react-router-dom';
 import VideoElement from './video-element';
 import Page404 from '../404-page/404-page';
+import {connect} from 'react-redux';
 
-const Player = ({generalFilmsData}) => {
+const Player = ({filmsData}) => {
 
   const history = useHistory();
   const handlePlayerExit = () => {
@@ -16,15 +17,15 @@ const Player = ({generalFilmsData}) => {
 
   const renderVideoPlayer = () => {
 
-    const targetFilm = generalFilmsData.find((item) => item.id === targetFilmId);
+    const targetFilm = filmsData.find((item) => item.id === targetFilmId);
 
     if (targetFilm) {
       return (
         <div className="player">
 
           <VideoElement
-            src={targetFilm.videoLink}
-            poster={targetFilm.posterImage}
+            src={targetFilm.video_link}
+            poster={targetFilm.poster_image}
           />
 
           <button type="button" className="player__exit" onClick={handlePlayerExit}>Exit</button>
@@ -66,9 +67,13 @@ const Player = ({generalFilmsData}) => {
 };
 
 Player.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
+  filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   )
 };
 
-export default Player;
+const mapStateToProps = (state) => ({
+  filmsData: state.filmsData
+});
+
+export default connect(mapStateToProps, null)(Player);

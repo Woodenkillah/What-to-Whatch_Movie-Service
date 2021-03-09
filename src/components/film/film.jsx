@@ -11,8 +11,9 @@ import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 import Tabs from '../../aux-components/tabs';
 import Page404 from '../404-page/404-page';
+import {connect} from 'react-redux';
 
-const Film = ({generalFilmsData, reviews}) => {
+const Film = ({filmsData, reviews}) => {
 
   const TAB_INDEX = {
     OVERVIEW: 0,
@@ -34,7 +35,7 @@ const Film = ({generalFilmsData, reviews}) => {
   };
 
   const targetFilmId = parseInt((useParams().id), 10);
-  const targetFilm = generalFilmsData.find(({id}) => id === targetFilmId);
+  const targetFilm = filmsData.find(({id}) => id === targetFilmId);
 
   const renderTargetFilm = () => {
     if (targetFilm) {
@@ -43,7 +44,7 @@ const Film = ({generalFilmsData, reviews}) => {
           <section className="movie-card movie-card--full">
             <div className="movie-card__hero">
               <div className="movie-card__bg">
-                <img src={targetFilm.backgroundImage} alt={targetFilm.name} />
+                <img src={targetFilm.background_image} alt={targetFilm.name} />
               </div>
 
               <h1 className="visually-hidden">WTW</h1>
@@ -83,7 +84,7 @@ const Film = ({generalFilmsData, reviews}) => {
             <div className="movie-card__wrap movie-card__translate-top">
               <div className="movie-card__info">
                 <div className="movie-card__poster movie-card__poster--big">
-                  <img src={targetFilm.posterImage} alt={targetFilm.name} width="218" height="327" />
+                  <img src={targetFilm.poster_image} alt={targetFilm.name} width="218" height="327" />
                 </div>
 
                 <div className="movie-card__desc">
@@ -108,14 +109,14 @@ const Film = ({generalFilmsData, reviews}) => {
                     <FilmOverview
                       description={targetFilm.description}
                       rating={targetFilm.rating}
-                      scoresCount={targetFilm.scoresCount}
+                      scoresCount={targetFilm.scores_count}
                       director={targetFilm.director}
                       starring={targetFilm.starring}
                     />
                     <FilmDetails
                       director={targetFilm.director}
                       starring={targetFilm.starring}
-                      runTime={targetFilm.runTime}
+                      runTime={targetFilm.run_time}
                       genre={targetFilm.genre}
                       released={targetFilm.released}
                     />
@@ -184,10 +185,14 @@ const Film = ({generalFilmsData, reviews}) => {
 };
 
 Film.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
+  filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   reviews: PropTypes.objectOf(PropTypes.array).isRequired
 };
 
-export default Film;
+const mapStateToProps = (state) => ({
+  filmsData: state.filmsData
+});
+
+export default connect(mapStateToProps, null)(Film);

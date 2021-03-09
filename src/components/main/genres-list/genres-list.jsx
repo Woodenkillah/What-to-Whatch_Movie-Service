@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GenreItem from './genre-item';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../redux/actions';
+import {ActionCreator} from '../../../redux/actions/actions';
 
 const GenresList = ({genresList, activeGenre, onChangeGenre}) => {
 

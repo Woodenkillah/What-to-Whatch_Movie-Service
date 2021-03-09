@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const RatingStar = ({starNumber, onReviewRating, defaultCheckedStar}) => {
+const RatingStar = ({starNumber, handleReviewRating, defaultCheckedStar}) => {
   return (
     <React.Fragment>
       <input
@@ -15,7 +15,7 @@ const RatingStar = ({starNumber, onReviewRating, defaultCheckedStar}) => {
       <label
         className="rating__label"
         htmlFor={`star-${starNumber}`}
-        onClick={onReviewRating(starNumber)}
+        onClick={handleReviewRating(starNumber)}
       >Rating {starNumber}</label>
     </React.Fragment>
   );
@@ -26,5 +26,5 @@ export default RatingStar;
 RatingStar.propTypes = {
   starNumber: PropTypes.number.isRequired,
   defaultCheckedStar: PropTypes.number.isRequired,
-  onReviewRating: PropTypes.func.isRequired
+  handleReviewRating: PropTypes.func.isRequired
 };

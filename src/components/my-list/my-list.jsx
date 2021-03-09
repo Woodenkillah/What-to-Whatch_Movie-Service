@@ -5,10 +5,11 @@ import FilmsList from '../films-list/films-list';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
+import {connect} from 'react-redux';
 
-const MyList = ({generalFilmsData}) => {
+const MyList = ({filmsData}) => {
 
-  const favoriteFilms = generalFilmsData.filter(({isFavorite}) => isFavorite);
+  const favoriteFilms = filmsData.filter(({isFavorite}) => isFavorite);
 
   return (
     <div className="user-page">
@@ -31,9 +32,13 @@ const MyList = ({generalFilmsData}) => {
 };
 
 MyList.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
+  filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   )
 };
 
-export default MyList;
+const mapStateToProps = (state) => ({
+  filmsData: state.filmsData
+});
+
+export default connect(mapStateToProps, null)(MyList);
