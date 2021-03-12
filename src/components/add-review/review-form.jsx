@@ -12,7 +12,7 @@ const ReviewForm = ({onReviewRating, onReviewText, onFormSubmit, formState}) => 
       <RatingStar
         starNumber={starNumber}
         key={`str-${starNumber}`}
-        handleReviewRating={onReviewRating}
+        onReviewRating={onReviewRating}
         defaultCheckedStar={defaultCheckedStar}
       />
     );

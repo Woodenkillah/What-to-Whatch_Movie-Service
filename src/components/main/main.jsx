@@ -9,12 +9,18 @@ import Footer from '../../aux-components/footer';
 import GenresList from './genres-list/genres-list';
 import {connect} from 'react-redux';
 import {DEFAULT_GENRE} from '../../constants';
+import {getGenresList} from '../../helpers';
+import Spinner from '../../aux-components/spinner';
+import {getActiveGenreSelector, getFilmsLoadingSelector, getFilmsDataSelector} from '../../redux/film/selectors';
+import {getPromoLoadingSelector, getPromoDataSelector} from '../../redux/promo/selectors';
 
-const Main = ({generalFilmsData, promoFilmId, genresList, activeGenre}) => {
+const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadingStatus}) => {
 
   const filteredFilms = activeGenre === DEFAULT_GENRE
-    ? generalFilmsData
-    : generalFilmsData.filter(({genre}) => genre === activeGenre);
+    ? filmsData
+    : filmsData.filter(({genre}) => genre === activeGenre);
+
+  const genresList = getGenresList(filmsData);
 
   return (
     <React.Fragment>
@@ -31,7 +37,9 @@ const Main = ({generalFilmsData, promoFilmId, genresList, activeGenre}) => {
         </header>
 
         <div className="movie-card__wrap">
-          <PromoFilm generalFilmsData={generalFilmsData} promoFilmId={promoFilmId}/>
+          <Spinner loadingStatus={promoLoadingStatus}>
+            <PromoFilm promoData={promoData}/>
+          </Spinner>
         </div>
       </section >
 
@@ -44,7 +52,9 @@ const Main = ({generalFilmsData, promoFilmId, genresList, activeGenre}) => {
           </ul>
 
           <div className="catalog__movies-list">
-            <FilmsList filmsListData={filteredFilms}/>
+            <Spinner loadingStatus={filmsLoadingStatus}>
+              <FilmsList filmsListData={filteredFilms}/>
+            </Spinner>
           </div>
 
           <div className="catalog__more">
@@ -61,16 +71,21 @@ const Main = ({generalFilmsData, promoFilmId, genresList, activeGenre}) => {
 };
 
 Main.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
+  filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  promoFilmId: PropTypes.number.isRequired,
-  genresList: PropTypes.array.isRequired,
-  activeGenre: PropTypes.string.isRequired
+  activeGenre: PropTypes.string.isRequired,
+  promoData: PropTypes.shape(generalPropValidation).isRequired,
+  promoLoadingStatus: PropTypes.string.isRequired,
+  filmsLoadingStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre
+  activeGenre: getActiveGenreSelector(state),
+  filmsLoadingStatus: getFilmsLoadingSelector(state),
+  filmsData: getFilmsDataSelector(state),
+  promoLoadingStatus: getPromoLoadingSelector(state),
+  promoData: getPromoDataSelector(state)
 });
 
 export default connect(mapStateToProps, null)(Main);

@@ -4,66 +4,57 @@ import {generalPropValidation} from '../../../props-validation/props-validation'
 import PromoPoster from './film-promo-poster';
 import {useHistory} from 'react-router-dom';
 
-const PromoFilm = ({generalFilmsData, promoFilmId}) => {
+const PromoFilm = ({promoData}) => {
+
+  if (!promoData) {
+    return <h2>There is no promo film currently available.</h2>;
+  }
 
   const history = useHistory();
 
   const handleFilmPlayerOpener = () => {
-    history.push({pathname: `/player/${targetFilm.id}`});
+    history.push({pathname: `/player/${promoData.id}`});
   };
 
-  const targetFilm = generalFilmsData.find(({id}) => id === promoFilmId);
+  return (
+    <div className="movie-card__info">
 
-  const renderPromoFilm = () => {
+      <PromoPoster name={promoData.name} posterImage={promoData.poster_image}/>
 
-    if (targetFilm) {
-      return (
-        <div className="movie-card__info">
+      <div className="movie-card__desc">
+        <h2 className="movie-card__title">{promoData.name}</h2>
+        <p className="movie-card__meta">
+          <span className="movie-card__genre">{promoData.genre}</span>
+          <span className="movie-card__year">{promoData.released}</span>
+        </p>
 
-          <PromoPoster name={targetFilm.name} posterImage={targetFilm.posterImage}/>
-
-          <div className="movie-card__desc">
-            <h2 className="movie-card__title">{targetFilm.name}</h2>
-            <p className="movie-card__meta">
-              <span className="movie-card__genre">{targetFilm.genre}</span>
-              <span className="movie-card__year">{targetFilm.released}</span>
-            </p>
-
-            <div className="movie-card__buttons">
-              <button
-                className="btn btn--play movie-card__button"
-                type="button"
-                onClick={handleFilmPlayerOpener}
-              >
-                <svg viewBox="0 0 19 19" width="19" height="19">
-                  <use xlinkHref="#play-s"></use>
-                </svg>
-                <span>Play</span>
-              </button>
-              <button className="btn btn--list movie-card__button" type="button">
-                <svg viewBox="0 0 19 20" width="19" height="20">
-                  <use xlinkHref="#add"></use>
-                </svg>
-                <span>My list</span>
-              </button>
-            </div>
-          </div>
+        <div className="movie-card__buttons">
+          <button
+            className="btn btn--play movie-card__button"
+            type="button"
+            onClick={handleFilmPlayerOpener}
+          >
+            <svg viewBox="0 0 19 19" width="19" height="19">
+              <use xlinkHref="#play-s"></use>
+            </svg>
+            <span>Play</span>
+          </button>
+          <button className="btn btn--list movie-card__button" type="button">
+            <svg viewBox="0 0 19 20" width="19" height="20">
+              <use xlinkHref="#add"></use>
+            </svg>
+            <span>My list</span>
+          </button>
         </div>
-      );
-    } else {
-      return <h2>There is no promo film currently available.</h2>;
-    }
+      </div>
+    </div>
+  );
 
-  };
-
-  return renderPromoFilm();
 };
 
+
 PromoFilm.propTypes = {
-  generalFilmsData: PropTypes.arrayOf(
-      PropTypes.shape(generalPropValidation).isRequired,
-  ),
-  promoFilmId: PropTypes.number.isRequired
+  promoData: PropTypes.shape(generalPropValidation).isRequired
 };
 
 export default PromoFilm;

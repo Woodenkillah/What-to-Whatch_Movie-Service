@@ -13,7 +13,7 @@ export const generalPropValidation = {
   rating: PropTypes.number,
   scoresCount: PropTypes.number,
   director: PropTypes.string,
-  starring: PropTypes.string,
+  starring: PropTypes.array,
   runTime: PropTypes.number,
   gerne: PropTypes.string,
   released: PropTypes.number,

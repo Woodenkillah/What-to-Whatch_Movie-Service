@@ -10,8 +10,8 @@ const PromoPoster = ({name, posterImage}) => {
 };
 
 PromoPoster.propTypes = {
-  name: PropTypes.string.isRequired,
-  posterImage: PropTypes.string.isRequired
+  name: PropTypes.string,
+  posterImage: PropTypes.string
 };
 
 export default PromoPoster;
