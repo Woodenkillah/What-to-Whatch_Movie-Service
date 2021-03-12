@@ -12,7 +12,7 @@ import Footer from '../../aux-components/footer';
 import Tabs from '../../aux-components/tabs';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
-import {getFilmsData} from '../../redux/film/selectors';
+import {getFilmsDataSelector} from '../../redux/film/selectors';
 
 const Film = ({filmsData, reviews}) => {
 
@@ -190,7 +190,7 @@ Film.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsData(state)
+  filmsData: getFilmsDataSelector(state)
 });
 
 export default connect(mapStateToProps, null)(Film);

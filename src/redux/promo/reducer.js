@@ -1,9 +1,10 @@
 import {actionType} from './action-types';
+import {LoadingStatuses} from '../../constants';
 
 const initialState = {
   promo: {
     promoData: {},
-    isPromoLoaded: false
+    promoLoadingStatus: LoadingStatuses.PENDING
   }
 };
 
@@ -13,8 +14,17 @@ const promoReducer = (state = initialState, action) => {
       return {
         ...state,
         promo: {
-          promoData: action.payload,
-          isPromoLoaded: true
+          ...state.promo,
+          promoData: action.payload
+        }
+      };
+
+    case actionType.SET_LOADING:
+      return {
+        ...state,
+        promo: {
+          ...state.promo,
+          isPromoLoaded: action.payload
         }
       };
 

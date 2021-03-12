@@ -5,7 +5,7 @@ import {useParams, useHistory} from 'react-router-dom';
 import VideoElement from './video-element';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
-import {getFilmsData} from '../../redux/film/selectors';
+import {getFilmsDataSelector} from '../../redux/film/selectors';
 
 const Player = ({filmsData}) => {
 
@@ -69,7 +69,7 @@ Player.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsData(state)
+  filmsData: getFilmsDataSelector(state)
 });
 
 export default connect(mapStateToProps, null)(Player);

@@ -1,2 +1,2 @@
-export const getIsPromoLoaded = (state) => state.promo.promo.isPromoLoaded;
-export const getPromoData = (state) => state.promo.promo.promoData;
+export const getPromoLoadingSelector = (state) => state.promo.promo.isPromoLoaded;
+export const getPromoDataSelector = (state) => state.promo.promo.promoData;

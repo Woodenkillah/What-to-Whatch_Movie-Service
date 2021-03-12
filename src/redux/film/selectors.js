@@ -1,3 +1,3 @@
-export const getActiveGenre = (state) => state.films.activeGenre;
-export const getIsDataLoaded = (state) => state.films.films.isDataLoaded;
-export const getFilmsData = (state) => state.films.films.filmsData;
+export const getActiveGenreSelector = (state) => state.films.activeGenre;
+export const getFilmsLoadingSelector = (state) => state.films.films.filmsLoadingStatus;
+export const getFilmsDataSelector = (state) => state.films.films.filmsData;

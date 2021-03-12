@@ -9,5 +9,10 @@ export const ActionCreator = {
   loadFilms: (films) => ({
     type: actionType.LOAD_FILMS,
     payload: films
+  }),
+
+  setLoading: (status) => ({
+    type: actionType.SET_LOADING,
+    payload: status
   })
 };

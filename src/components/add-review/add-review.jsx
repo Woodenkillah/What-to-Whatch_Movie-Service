@@ -7,7 +7,7 @@ import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
-import {getFilmsData} from '../../redux/film/selectors';
+import {getFilmsDataSelector} from '../../redux/film/selectors';
 
 const MONTHS_LIST = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
 
@@ -111,7 +111,7 @@ AddReview.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsData(state)
+  filmsData: getFilmsDataSelector(state)
 });
 
 export default connect(mapStateToProps, null)(AddReview);

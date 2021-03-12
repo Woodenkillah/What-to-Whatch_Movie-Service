@@ -1,17 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import LoadingProcess from './loading-process';
+import LoadingFail from './loading-fail';
+import {LoadingStatuses} from '../constants';
 
-const Spinner = ({isLoaded, children}) => {
-
-  if (!isLoaded) {
-    return <h2>Loading data...</h2>;
+const Spinner = ({loadingStatus, children}) => {
+  if (loadingStatus === LoadingStatuses.LOADING || loadingStatus === LoadingStatuses.PENDING) {
+    return <LoadingProcess/>;
+  } else if (loadingStatus === LoadingStatuses.FAILED) {
+    return <LoadingFail/>;
+  } else {
+    return children;
   }
-
-  return children;
 };
 
 Spinner.propTypes = {
-  isLoaded: PropTypes.bool.isRequired,
+  loadingStatus: PropTypes.string.isRequired,
   children: PropTypes.object.isRequired
 };
 
