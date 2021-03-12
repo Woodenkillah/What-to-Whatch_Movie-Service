@@ -1,13 +1,18 @@
 import {applyMiddleware, createStore} from 'redux';
-import {reducer} from '../reducers/reducer';
+import {filmsReducer} from '../film/reducer';
+import {promoReducer} from '../promo/reducer';
+import {combineReducers} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import {createAPI} from '../../axios/axios';
 
-const api = createAPI(() => store.dispatch());
+const api = createAPI();
 
 export const store = createStore(
-    reducer,
+    combineReducers({
+      films: filmsReducer,
+      promo: promoReducer
+    }),
     composeWithDevTools(
         applyMiddleware(thunk.withExtraArgument(api))
     )

@@ -6,6 +6,7 @@ import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 import {connect} from 'react-redux';
+import {getFilmsData} from '../../redux/film/selectors';
 
 const MyList = ({filmsData}) => {
 
@@ -38,7 +39,7 @@ MyList.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: state.filmsData
+  filmsData: getFilmsData(state)
 });
 
 export default connect(mapStateToProps, null)(MyList);

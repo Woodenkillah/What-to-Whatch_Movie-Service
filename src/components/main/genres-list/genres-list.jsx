@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GenreItem from './genre-item';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../redux/actions/actions';
+import {ActionCreator} from '../../../redux/film/actions';
 
 const GenresList = ({genresList, activeGenre, onChangeGenre}) => {
 
@@ -22,7 +22,7 @@ GenresList.propTypes = {
   genresList: PropTypes.array.isRequired
 };
 
-const mapStateToProps = (state) => ({activeGenre: state.activeGenre});
+const mapStateToProps = (state) => ({activeGenre: state.films.activeGenre});
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeGenre(genre) {

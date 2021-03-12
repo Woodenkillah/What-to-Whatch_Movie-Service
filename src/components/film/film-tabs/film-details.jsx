@@ -3,10 +3,7 @@ import PropTypes from 'prop-types';
 
 const FilmDetails = ({director, starring, runTime, genre, released}) => {
 
-  // console.log(starring)
-
   const starringList = starring.join(`, `);
-
 
   return (
     <React.Fragment>

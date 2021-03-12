@@ -1,6 +1,5 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {BrowserRouter, Switch, Route} from 'react-router-dom';
-import PropTypes from 'prop-types';
 import Main from '../main/main';
 import SignIn from '../sign-in/sign-in';
 import MyList from '../my-list/my-list';
@@ -8,24 +7,10 @@ import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Page404 from '../404-page/404-page';
-import {connect} from 'react-redux';
-import {fetchFilmsList, fetchPromoFilm} from '../../redux/actions/api-actions';
 
-const App = ({isDataLoaded, isPromoLoaded, onLoadFilmsData, onLoadPromoData}) => {
+const App = () => {
 
   const [reviews, setReviews] = React.useState({});
-
-  useEffect(() => {
-    if (!isDataLoaded) {
-      onLoadFilmsData();
-    }
-  }, [isDataLoaded]);
-
-  useEffect(() => {
-    if (!isPromoLoaded) {
-      onLoadPromoData();
-    }
-  }, [isPromoLoaded]);
 
   return (
     <BrowserRouter>
@@ -52,26 +37,5 @@ const App = ({isDataLoaded, isPromoLoaded, onLoadFilmsData, onLoadPromoData}) =>
   );
 };
 
-App.propTypes = {
-  isDataLoaded: PropTypes.bool.isRequired,
-  isPromoLoaded: PropTypes.bool.isRequired,
-  onLoadPromoData: PropTypes.func.isRequired,
-  onLoadFilmsData: PropTypes.func.isRequired
-};
 
-const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  isDataLoaded: state.isDataLoaded,
-  isPromoLoaded: state.isDataLoaded
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onLoadFilmsData() {
-    dispatch(fetchFilmsList());
-  },
-  onLoadPromoData() {
-    dispatch(fetchPromoFilm());
-  }
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

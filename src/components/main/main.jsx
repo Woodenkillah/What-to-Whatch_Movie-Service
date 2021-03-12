@@ -11,6 +11,8 @@ import {connect} from 'react-redux';
 import {DEFAULT_GENRE} from '../../constants';
 import {getGenresList} from '../../helpers';
 import Spinner from '../../aux-components/spinner';
+import {getActiveGenre, getIsDataLoaded, getFilmsData} from '../../redux/film/selectors';
+import {getIsPromoLoaded, getPromoData} from '../../redux/promo/selectors';
 
 const Main = ({activeGenre, filmsData, promoData, isPromoLoaded, isDataLoaded}) => {
 
@@ -35,11 +37,9 @@ const Main = ({activeGenre, filmsData, promoData, isPromoLoaded, isDataLoaded}) 
         </header>
 
         <div className="movie-card__wrap">
-          {
-            isPromoLoaded
-              ? <PromoFilm promoData={promoData}/>
-              : <Spinner/>
-          }
+          <Spinner isLoaded={isPromoLoaded}>
+            <PromoFilm promoData={promoData}/>
+          </Spinner>
         </div>
       </section >
 
@@ -52,11 +52,9 @@ const Main = ({activeGenre, filmsData, promoData, isPromoLoaded, isDataLoaded}) 
           </ul>
 
           <div className="catalog__movies-list">
-            {
-              isDataLoaded
-                ? <FilmsList filmsListData={filteredFilms}/>
-                : <Spinner/>
-            }
+            <Spinner isLoaded={isDataLoaded}>
+              <FilmsList filmsListData={filteredFilms}/>
+            </Spinner>
           </div>
 
           <div className="catalog__more">
@@ -83,11 +81,11 @@ Main.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: state.activeGenre,
-  isDataLoaded: state.isDataLoaded,
-  filmsData: state.filmsData,
-  isPromoLoaded: state.isDataLoaded,
-  promoData: state.promoData
+  activeGenre: getActiveGenre(state),
+  isDataLoaded: getIsDataLoaded(state),
+  filmsData: getFilmsData(state),
+  isPromoLoaded: getIsPromoLoaded(state),
+  promoData: getPromoData(state)
 });
 
 export default connect(mapStateToProps, null)(Main);
