@@ -4,7 +4,7 @@ import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
 import PromoFilm from './promo-film/promo-film';
 import Logo from '../../aux-components/logo';
-import UserAvatar from '../../aux-components/user-avatar';
+import AuthHolder from '../auth-holder/auth-holder';
 import Footer from '../../aux-components/footer';
 import GenresList from './genres-list/genres-list';
 import {connect} from 'react-redux';
@@ -33,7 +33,7 @@ const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadi
 
         <header className="page-header movie-card__head">
           <Logo/>
-          <UserAvatar/>
+          <AuthHolder/>
         </header>
 
         <div className="movie-card__wrap">

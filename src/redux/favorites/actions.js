@@ -1,9 +1,9 @@
 import {ActionType} from './action-types';
 
 export const ActionCreator = {
-  loadPromo: (promo) => ({
-    type: ActionType.LOAD_PROMO,
-    payload: promo
+  loadFavorites: (favorites) => ({
+    type: ActionType.LOAD_FAVORITES,
+    payload: favorites
   }),
 
   setLoading: (status) => ({

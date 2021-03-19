@@ -1,16 +1,16 @@
 import React from 'react';
 import Logo from '../../aux-components/logo';
 
-const Page404 = () => {
+const message404 = {
+  color: `#C9B37E`,
+  position: `absolute`,
+  left: `200px`,
+  right: `200px`,
+  textAlign: `center`,
+  top: `75%`
+};
 
-  const message404 = {
-    color: `#C9B37E`,
-    position: `absolute`,
-    left: `200px`,
-    right: `200px`,
-    textAlign: `center`,
-    top: `75%`
-  };
+const Page404 = () => {
 
   return (
     <div className="user-page">

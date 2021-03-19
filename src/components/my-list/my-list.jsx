@@ -1,16 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
+import Spinner from '../../aux-components/spinner';
 import {connect} from 'react-redux';
-import {getFilmsDataSelector} from '../../redux/film/selectors';
+import {getFavoritesDataSelector, getFavoritesLoadingStatus} from '../../redux/favorites/selectors';
+import {fetchFavoritesList} from '../../redux/favorites/api-actions';
 
-const MyList = ({filmsData}) => {
+const MyList = ({favoritesData, onLoadFavorites, favoritesLoadingStatus}) => {
 
-  const favoriteFilms = filmsData.filter(({isFavorite}) => isFavorite);
+  useEffect(() => {
+    onLoadFavorites();
+  }, []);
 
   return (
     <div className="user-page">
@@ -22,7 +26,9 @@ const MyList = ({filmsData}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
-          <FilmsList filmsListData={favoriteFilms}/>
+          <Spinner loadingStatus={favoritesLoadingStatus}>
+            <FilmsList filmsListData={favoritesData}/>
+          </Spinner>
         </div>
       </section>
 
@@ -33,13 +39,21 @@ const MyList = ({filmsData}) => {
 };
 
 MyList.propTypes = {
-  filmsData: PropTypes.arrayOf(
+  favoritesData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
-  )
+  ),
+  onLoadFavorites: PropTypes.func.isRequired,
+  getFavoritesLoadingStatus: PropTypes.bool.isRequired,
+  favoritesLoadingStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsDataSelector(state)
+  favoritesData: getFavoritesDataSelector(state),
+  favoritesLoadingStatus: getFavoritesLoadingStatus(state)
 });
 
-export default connect(mapStateToProps, null)(MyList);
+const mapDispatchToProps = {
+  onLoadFavorites: fetchFavoritesList
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MyList);

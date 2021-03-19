@@ -1,9 +1,9 @@
 import {ActionType} from './action-types';
 
 export const ActionCreator = {
-  loadPromo: (promo) => ({
-    type: ActionType.LOAD_PROMO,
-    payload: promo
+  loadReviews: (reviews) => ({
+    type: ActionType.LOAD_REVIEWS,
+    payload: reviews
   }),
 
   setLoading: (status) => ({

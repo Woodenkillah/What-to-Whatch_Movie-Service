@@ -25,3 +25,16 @@ export const getFilmRating = (rating) => {
 
   return textRating;
 };
+
+export const getCurrentDate = (date) => {
+
+  const MONTHS_LIST = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
+
+  const rawDate = new Date(date);
+  const monthNumber = rawDate.getMonth();
+  const day = rawDate.getDate();
+  const year = rawDate.getFullYear();
+  const currentDate = `${MONTHS_LIST[monthNumber]} ${day}, ${year}`;
+
+  return currentDate;
+};

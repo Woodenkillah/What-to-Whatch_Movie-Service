@@ -1,4 +1,4 @@
-import {actionType} from './action-types';
+import {ActionType} from './action-types';
 import {LoadingStatuses} from '../../constants';
 
 const initialState = {
@@ -10,7 +10,7 @@ const initialState = {
 
 const promoReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.LOAD_PROMO:
+    case ActionType.LOAD_PROMO:
       return {
         ...state,
         promo: {
@@ -19,7 +19,7 @@ const promoReducer = (state = initialState, action) => {
         }
       };
 
-    case actionType.SET_LOADING:
+    case ActionType.SET_LOADING:
       return {
         ...state,
         promo: {
