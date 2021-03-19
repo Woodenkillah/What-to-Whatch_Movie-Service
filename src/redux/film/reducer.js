@@ -1,5 +1,5 @@
 import {DEFAULT_GENRE} from '../../constants.js';
-import {actionType} from './action-types.js';
+import {ActionType} from './action-types.js';
 import {LoadingStatuses} from '../../constants';
 
 const initialState = {
@@ -12,13 +12,13 @@ const initialState = {
 
 const filmsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionType.CHANGE_GENRE:
+    case ActionType.CHANGE_GENRE:
       return {
         ...state,
         activeGenre: action.payload
       };
 
-    case actionType.LOAD_FILMS:
+    case ActionType.LOAD_FILMS:
       return {
         ...state,
         films: {
@@ -27,7 +27,7 @@ const filmsReducer = (state = initialState, action) => {
         }
       };
 
-    case actionType.SET_LOADING:
+    case ActionType.SET_LOADING:
       return {
         ...state,
         films: {

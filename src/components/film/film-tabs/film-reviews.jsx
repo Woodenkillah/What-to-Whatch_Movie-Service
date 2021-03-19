@@ -1,43 +1,63 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReviewItem from './review-item';
 import ReviewsList from './reviews-list';
+import Spinner from '../../../aux-components/spinner';
+import {connect} from 'react-redux';
+import {fetchReviewsList} from '../../../redux/reviews/api-actions';
+import {getReviewsListSelector, getReviewsLoadingStatusSelector} from '../../../redux/reviews/selectors';
 
-const FilmReviews = ({reviews, targetFilmId}) => {
+const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsLoadingStatus}) => {
 
-  let reviewsList = [];
-  const targetFilmReviews = reviews[targetFilmId];
+  useEffect(() => {
+    onLoadReviews(targetFilmId);
+  }, [targetFilmId]);
 
-  if (Object.keys(reviews).length > 0 && targetFilmReviews) {
+  let targetReviewsList = [];
 
-    reviewsList = targetFilmReviews.map((review, index) => {
-      const {rating, text, date, user} = review;
+  if (reviewsList.length > 0) {
+    targetReviewsList = reviewsList.map((review, idx) => {
+      const {id, user, rating, comment, date} = review;
       return (
         <ReviewItem
-          key={`rev-itm-${index}`}
+          key={`${id}-${idx}`}
+          user={user.name}
           rating={rating}
-          text={text}
+          comment={comment}
           date={date}
-          user={user}
         />
       );
     });
+
   }
 
   return (
     <div className="movie-card__reviews movie-card__row">
       <div className="movie-card__reviews-col">
-        <ReviewsList>
-          {reviewsList}
-        </ReviewsList>
+        <Spinner loadingStatus={reviewsLoadingStatus}>
+          <ReviewsList>
+            {targetReviewsList}
+          </ReviewsList>
+        </Spinner>
       </div>
     </div>
   );
 };
 
 FilmReviews.propTypes = {
-  reviews: PropTypes.objectOf(PropTypes.array).isRequired,
-  targetFilmId: PropTypes.number.isRequired
+  reviewsList: PropTypes.array.isRequired,
+  targetFilmId: PropTypes.number.isRequired,
+  onLoadReviews: PropTypes.func.isRequired,
+  reviewsLoadingStatus: PropTypes.string.isRequired
 };
 
-export default FilmReviews;
+const mapStateToProps = (state) => ({
+  reviewsList: getReviewsListSelector(state),
+  reviewsLoadingStatus: getReviewsLoadingStatusSelector(state)
+});
+
+const mapDispatchToProps = {
+  onLoadReviews: fetchReviewsList
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FilmReviews);

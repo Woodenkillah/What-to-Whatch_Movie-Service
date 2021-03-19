@@ -1,18 +1,18 @@
-import {actionType} from './action-types';
+import {ActionType} from './action-types';
 
 export const ActionCreator = {
   handleChangeGenre: (genre) => ({
-    type: actionType.CHANGE_GENRE,
+    type: ActionType.CHANGE_GENRE,
     payload: genre
   }),
 
   loadFilms: (films) => ({
-    type: actionType.LOAD_FILMS,
+    type: ActionType.LOAD_FILMS,
     payload: films
   }),
 
   setLoading: (status) => ({
-    type: actionType.SET_LOADING,
+    type: ActionType.SET_LOADING,
     payload: status
   })
 };

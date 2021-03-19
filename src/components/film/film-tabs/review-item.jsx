@@ -1,15 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {getCurrentDate} from '../../../helpers';
 
-const ReviewItem = ({rating, text, date, user}) => {
+const ReviewItem = ({rating, comment, date, user}) => {
+
+  const currentDate = getCurrentDate(date);
+
   return (
     <div className="review">
       <blockquote className="review__quote">
-        <p className="review__text">{text}</p>
+        <p className="review__text">{comment}</p>
 
         <footer className="review__details">
           <cite className="review__author">{user}</cite>
-          <time className="review__date" dateTime="2016-12-24">{date}</time>
+          <time className="review__date" dateTime={date}>{currentDate}</time>
         </footer>
       </blockquote>
 
@@ -20,7 +24,7 @@ const ReviewItem = ({rating, text, date, user}) => {
 
 ReviewItem.propTypes = {
   rating: PropTypes.number.isRequired,
-  text: PropTypes.string.isRequired,
+  comment: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
   user: PropTypes.string.isRequired,
 };

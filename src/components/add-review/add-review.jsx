@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import {useHistory, useParams, Link} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/film/selectors';
+import {uploadUserReview} from '../../redux/reviews/api-actions';
+import browserHistory from '../../browser-history';
 
-const MONTHS_LIST = [`January`, `February`, `March`, `April`, `May`, `June`, `July`, `August`, `September`, `October`, `November`, `December`];
-
-const AddReview = ({filmsData, setReviews}) => {
+const AddReview = ({filmsData, onUploadUserReview}) => {
 
   const targetFilmId = parseInt((useParams().id), 10);
   const targetFilm = filmsData.find((item) => item.id === targetFilmId);
@@ -20,45 +20,31 @@ const AddReview = ({filmsData, setReviews}) => {
     return <Page404/>;
   }
 
-  const history = useHistory();
-
   const [formState, setFormState] = React.useState({
     rating: 1,
-    text: ``,
+    comment: ``,
     user: `Unknown author`
   });
 
   const handleReviewRating = (rating) => () => setFormState((prevState) => ({...prevState, rating}));
 
-  const handleReviewText = (evt) => {
-    const text = String(evt.target.value).trim();
-    setFormState((prevState) => ({...prevState, text}));
+  const handleReviewComment = (evt) => {
+    const comment = String(evt.target.value).trim();
+    setFormState((prevState) => ({...prevState, comment}));
   };
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
 
-    const rawDate = new Date(Date.now());
-    const monthNumber = rawDate.getMonth();
-    const day = rawDate.getDate();
-    const year = rawDate.getFullYear();
-    const currentDate = `${MONTHS_LIST[monthNumber]} ${day}, ${year}`;
-
     const newReview = {
+      id: targetFilmId,
       rating: formState.rating,
-      text: formState.text,
-      user: formState.user,
-      date: currentDate
+      comment: formState.comment
     };
 
-    setReviews((prevReviews) => {
-      const prevReviewPerFilm = prevReviews[targetFilmId] || [];
-      const reviewsList = [...prevReviewPerFilm, newReview];
+    onUploadUserReview(newReview);
 
-      return {...prevReviews, [targetFilmId]: reviewsList};
-    });
-
-    history.push({pathname: `/films/${targetFilmId}`});
+    browserHistory.push({pathname: `/films/${targetFilmId}`});
   };
 
   return (
@@ -95,7 +81,7 @@ const AddReview = ({filmsData, setReviews}) => {
 
       <ReviewForm
         onReviewRating={handleReviewRating}
-        onReviewText={handleReviewText}
+        onReviewComment={handleReviewComment}
         onFormSubmit={handleFormSubmit}
         formState={formState}
       />
@@ -107,11 +93,15 @@ AddReview.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  setReviews: PropTypes.func.isRequired
+  onUploadUserReview: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   filmsData: getFilmsDataSelector(state)
 });
 
-export default connect(mapStateToProps, null)(AddReview);
+const mapDispatchToProps = {
+  onUploadUserReview: uploadUserReview
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddReview);

@@ -1,17 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import {useParams, useHistory} from 'react-router-dom';
+import {useParams} from 'react-router-dom';
 import VideoElement from './video-element';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/film/selectors';
+import browserHistory from '../../browser-history';
 
 const Player = ({filmsData}) => {
 
-  const history = useHistory();
   const handlePlayerExit = () => {
-    history.go(-1);
+    browserHistory.go(-1);
   };
 
   const targetFilmId = parseInt((useParams().id), 10);

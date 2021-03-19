@@ -1,20 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import {useParams, useHistory, Link} from 'react-router-dom';
+import {useParams, Link} from 'react-router-dom';
 import classNames from 'classnames';
 import FilmOverview from './film-tabs/film-overview';
 import FilmDetails from './film-tabs/film-details';
 import FilmReviews from './film-tabs/film-reviews';
 import Logo from '../../aux-components/logo';
-import UserAvatar from '../../aux-components/user-avatar';
+import AuthHolder from '../auth-holder/auth-holder';
 import Footer from '../../aux-components/footer';
 import Tabs from '../../aux-components/tabs';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/film/selectors';
+import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
+import browserHistory from '../../browser-history';
+import {setFavorite} from '../../redux/favorites/api-actions';
+import {FavoriteStatuses, AuthStatuses} from '../../constants';
 
-const Film = ({filmsData, reviews}) => {
+const Film = ({filmsData, onSetFavorite, authorizationStatus}) => {
 
   const TAB_INDEX = {
     OVERVIEW: 0,
@@ -31,15 +35,17 @@ const Film = ({filmsData, reviews}) => {
 
   const [activeTab, setActiveTab] = React.useState(TAB_INDEX.OVERVIEW);
 
-  const history = useHistory();
-
   const handleFilmPlayerOpener = () => {
-    history.push({pathname: `/player/${targetFilmId}`});
+    browserHistory.push({pathname: `/player/${targetFilmId}`});
   };
 
   const handleTabChange = (tabIndex) => (evt) => {
     evt.preventDefault();
     setActiveTab(tabIndex);
+  };
+
+  const setFavoriteStatus = () => () => {
+    onSetFavorite(targetFilmId, FavoriteStatuses.ADD_FAVORITE);
   };
 
   return (
@@ -54,7 +60,7 @@ const Film = ({filmsData, reviews}) => {
 
           <header className="page-header movie-card__head">
             <Logo/>
-            <UserAvatar/>
+            <AuthHolder/>
           </header>
 
           <div className="movie-card__wrap">
@@ -66,13 +72,22 @@ const Film = ({filmsData, reviews}) => {
               </p>
 
               <div className="movie-card__buttons">
-                <button className="btn btn--play movie-card__button" type="button" onClick={handleFilmPlayerOpener}>
+                <button
+                  className="btn btn--play movie-card__button"
+                  type="button"
+                  onClick={handleFilmPlayerOpener}
+                >
                   <svg viewBox="0 0 19 19" width="19" height="19">
                     <use xlinkHref="#play-s"></use>
                   </svg>
                   <span>Play</span>
                 </button>
-                <button className="btn btn--list movie-card__button" type="button">
+                <button
+                  className="btn btn--list movie-card__button"
+                  type="button"
+                  onClick={setFavoriteStatus()}
+                  style={{display: (authorizationStatus === AuthStatuses.NO_AUTH ? `none` : `flex`)}}
+                >
                   <svg viewBox="0 0 19 20" width="19" height="20">
                     <use xlinkHref="#add"></use>
                   </svg>
@@ -125,7 +140,6 @@ const Film = ({filmsData, reviews}) => {
                 />
                 <FilmReviews
                   targetFilmId={targetFilmId}
-                  reviews={reviews}
                 />
               </Tabs>
             </div>
@@ -186,11 +200,17 @@ Film.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  reviews: PropTypes.objectOf(PropTypes.array).isRequired
+  onSetFavorite: PropTypes.func.isRequired,
+  authorizationStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsDataSelector(state)
+  filmsData: getFilmsDataSelector(state),
+  authorizationStatus: getAuthorizationStatusSelector(state)
 });
 
-export default connect(mapStateToProps, null)(Film);
+const mapDispatchToProps = {
+  onSetFavorite: setFavorite
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Film);
