@@ -7,11 +7,11 @@ import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
-import {getFilmsDataSelector} from '../../redux/film/selectors';
+import {getFilmsDataSelector} from '../../redux/films/selectors';
+import {getReviewsErrorTypeSelector} from '../../redux/reviews/selectors';
 import {uploadUserReview} from '../../redux/reviews/api-actions';
-import browserHistory from '../../browser-history';
 
-const AddReview = ({filmsData, onUploadUserReview}) => {
+const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
 
   const targetFilmId = parseInt((useParams().id), 10);
   const targetFilm = filmsData.find((item) => item.id === targetFilmId);
@@ -44,7 +44,6 @@ const AddReview = ({filmsData, onUploadUserReview}) => {
 
     onUploadUserReview(newReview);
 
-    browserHistory.push({pathname: `/films/${targetFilmId}`});
   };
 
   return (
@@ -84,6 +83,7 @@ const AddReview = ({filmsData, onUploadUserReview}) => {
         onReviewComment={handleReviewComment}
         onFormSubmit={handleFormSubmit}
         formState={formState}
+        reviewsErrorType={reviewsErrorType}
       />
     </section>
   );
@@ -93,11 +93,13 @@ AddReview.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  onUploadUserReview: PropTypes.func.isRequired
+  onUploadUserReview: PropTypes.func.isRequired,
+  reviewsErrorType: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsDataSelector(state)
+  filmsData: getFilmsDataSelector(state),
+  reviewsErrorType: getReviewsErrorTypeSelector(state)
 });
 
 const mapDispatchToProps = {

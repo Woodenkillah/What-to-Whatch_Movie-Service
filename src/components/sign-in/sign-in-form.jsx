@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import SignInMessage from './sign-in-message';
 import {connect} from 'react-redux';
 import {login} from '../../redux/auth/api-actions';
-import {getErrorTypeSelector} from '../../redux/auth/selectors';
+import {getAuthErrorTypeSelector} from '../../redux/auth/selectors';
 
 const SignInForm = ({onLogin, errorType}) => {
 
@@ -94,7 +94,7 @@ SignInForm.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  errorType: getErrorTypeSelector(state)
+  errorType: getAuthErrorTypeSelector(state)
 });
 
 const mapDispatchToProps = {

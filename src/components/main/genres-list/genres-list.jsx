@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GenreItem from './genre-item';
 import {connect} from 'react-redux';
-import {ActionCreator} from '../../../redux/film/actions';
-import {getActiveGenreSelector} from '../../../redux/film/selectors';
+import {ActionCreator} from '../../../redux/films/actions';
+import {getActiveGenreSelector} from '../../../redux/films/selectors';
 
 const GenresList = ({genresList, activeGenre, onChangeGenre}) => {
 

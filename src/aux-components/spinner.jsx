@@ -16,7 +16,7 @@ const Spinner = ({loadingStatus, children}) => {
 
 Spinner.propTypes = {
   loadingStatus: PropTypes.string.isRequired,
-  children: PropTypes.object.isRequired
+  children: PropTypes.oneOfType([PropTypes.object, PropTypes.array]).isRequired
 };
 
 export default Spinner;

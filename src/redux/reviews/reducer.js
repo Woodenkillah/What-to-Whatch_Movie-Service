@@ -5,7 +5,8 @@ const initialState = {
   reviews: {
     reviewsList: [],
     reviewsLoadingStatus: LoadingStatuses.PENDING
-  }
+  },
+  errorType: null
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -26,6 +27,12 @@ const reviewsReducer = (state = initialState, action) => {
           ...state.reviews,
           reviewsLoadingStatus: action.payload,
         }
+      };
+
+    case ActionType.SET_ERROR_TYPE:
+      return {
+        ...state,
+        errorType: action.payload
       };
 
     default:

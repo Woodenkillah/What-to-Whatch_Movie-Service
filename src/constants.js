@@ -5,9 +5,13 @@ export const HttpStatusCodes = {
   UNAUTHORIZED: 401
 };
 
-export const ErrorTypes = {
+export const AuthErrorTypes = {
   BAD_REQUEST: `auth/loginOrPasswordError`,
   UNAUTHORIZED: `auth/accessDenied`
+};
+
+export const ReviewsErrorTypes = {
+  BAD_REQUEST: `reviews/uploadReviewError`
 };
 
 export const LoadingStatuses = {

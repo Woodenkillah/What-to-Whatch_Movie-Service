@@ -11,7 +11,7 @@ import {connect} from 'react-redux';
 import {DEFAULT_GENRE} from '../../constants';
 import {getGenresList} from '../../helpers';
 import Spinner from '../../aux-components/spinner';
-import {getActiveGenreSelector, getFilmsLoadingSelector, getFilmsDataSelector} from '../../redux/film/selectors';
+import {getActiveGenreSelector, getFilmsLoadingSelector, getFilmsDataSelector} from '../../redux/films/selectors';
 import {getPromoLoadingSelector, getPromoDataSelector} from '../../redux/promo/selectors';
 
 const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadingStatus}) => {

@@ -34,11 +34,11 @@ const FilmOverview = ({description, rating, scoresCount, director, starring}) =>
 };
 
 FilmOverview.propTypes = {
-  description: PropTypes.string.isRequired,
-  rating: PropTypes.number.isRequired,
-  scoresCount: PropTypes.number.isRequired,
-  director: PropTypes.string.isRequired,
-  starring: PropTypes.array.isRequired
+  description: PropTypes.string,
+  rating: PropTypes.number,
+  scoresCount: PropTypes.number,
+  director: PropTypes.string,
+  starring: PropTypes.array
 };
 
 export default FilmOverview;
