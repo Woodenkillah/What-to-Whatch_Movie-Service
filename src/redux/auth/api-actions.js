@@ -2,7 +2,7 @@ import {ActionCreator} from './actions';
 import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions';
 import {AuthStatuses} from '../../constants';
 import {dataToUserInfoAdapter} from './adapters';
-import {AppRoutes, ApiRoutes, HttpStatusCodes, ErrorTypes} from '../../constants';
+import {AppRoutes, ApiRoutes, HttpStatusCodes, AuthErrorTypes} from '../../constants';
 
 export const login = (userData) => (dispatch, _getState, api) => {
   api.post(ApiRoutes.LOGIN, userData)
@@ -13,9 +13,9 @@ export const login = (userData) => (dispatch, _getState, api) => {
     })
     .catch(({response}) => {
       if (response.status === HttpStatusCodes.UNAUTHORIZED) {
-        dispatch(ActionCreator.setErrorType(ErrorTypes.UNAUTHORIZED));
+        dispatch(ActionCreator.setErrorType(AuthErrorTypes.UNAUTHORIZED));
       } else if (response.status === HttpStatusCodes.BAD_REQUEST) {
-        dispatch(ActionCreator.setErrorType(ErrorTypes.BAD_REQUEST));
+        dispatch(ActionCreator.setErrorType(AuthErrorTypes.BAD_REQUEST));
       }
     });
 };

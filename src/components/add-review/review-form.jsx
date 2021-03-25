@@ -18,7 +18,7 @@ const helpMessageStyles = {
   }
 };
 
-const ReviewForm = ({onReviewRating, onReviewComment, onFormSubmit, formState}) => {
+const ReviewForm = ({onReviewRating, onReviewComment, onFormSubmit, formState, reviewsErrorType}) => {
 
   const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const defaultCheckedStar = formState.rating;
@@ -67,7 +67,10 @@ const ReviewForm = ({onReviewRating, onReviewComment, onFormSubmit, formState}) 
 
         </div>
       </form>
-      <p style={helpMessageStyles.general}>Please note that your comment should contain from <span style={helpMessageStyles.important}>{COMMENTS_SIZES.MIN}</span> to <span style={helpMessageStyles.important}>{COMMENTS_SIZES.MAX}</span> signs.</p>
+      <p style={helpMessageStyles.general}>
+        Please note that your comment should contain from <span style={helpMessageStyles.important}>{COMMENTS_SIZES.MIN}</span> to <span style={helpMessageStyles.important}>{COMMENTS_SIZES.MAX}</span> signs.
+      </p>
+      {reviewsErrorType && <p style={helpMessageStyles.general}>Ooops! Something went wrong. Please check your network status or try again later.</p>}
     </div>
   );
 };
@@ -76,7 +79,8 @@ ReviewForm.propTypes = {
   onReviewRating: PropTypes.func.isRequired,
   onReviewComment: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
-  formState: PropTypes.object.isRequired
+  formState: PropTypes.object.isRequired,
+  reviewsErrorType: PropTypes.string
 };
 
 export default ReviewForm;

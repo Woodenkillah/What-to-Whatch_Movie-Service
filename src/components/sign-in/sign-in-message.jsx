@@ -1,11 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ErrorTypes} from '../../constants';
+import {AuthErrorTypes} from '../../constants';
 
 const SignInMessage = ({errorType}) => {
-  if (errorType === ErrorTypes.BAD_REQUEST) {
+  if (errorType === AuthErrorTypes.BAD_REQUEST) {
     return <p>Please enter a valid email address</p>;
-  } else if (errorType === ErrorTypes.UNAUTHORIZED) {
+  } else if (errorType === AuthErrorTypes.UNAUTHORIZED) {
     return <p>We can’t recognize this email <br/> and password combination. Please try again.</p>;
   } else {
     return null;
@@ -13,7 +13,7 @@ const SignInMessage = ({errorType}) => {
 };
 
 SignInMessage.propTypes = {
-  errorType: PropTypes.oneOfType([PropTypes.string, null]).isRequired
+  errorType: PropTypes.string
 };
 
 export default SignInMessage;

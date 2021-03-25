@@ -28,19 +28,14 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsLoadingSt
         />
       );
     });
-
   }
 
   return (
-    <div className="movie-card__reviews movie-card__row">
-      <div className="movie-card__reviews-col">
-        <Spinner loadingStatus={reviewsLoadingStatus}>
-          <ReviewsList>
-            {targetReviewsList}
-          </ReviewsList>
-        </Spinner>
-      </div>
-    </div>
+    <Spinner loadingStatus={reviewsLoadingStatus}>
+      <ReviewsList>
+        {targetReviewsList}
+      </ReviewsList>
+    </Spinner>
   );
 };
 

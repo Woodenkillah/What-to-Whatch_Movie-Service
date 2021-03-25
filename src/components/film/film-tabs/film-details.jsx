@@ -41,11 +41,11 @@ const FilmDetails = ({director, starring, runTime, genre, released}) => {
 };
 
 FilmDetails.propTypes = {
-  director: PropTypes.string.isRequired,
-  starring: PropTypes.array.isRequired,
-  runTime: PropTypes.number.isRequired,
-  genre: PropTypes.string.isRequired,
-  released: PropTypes.number.isRequired
+  director: PropTypes.string,
+  starring: PropTypes.array,
+  runTime: PropTypes.number,
+  genre: PropTypes.string,
+  released: PropTypes.number
 };
 
 export default FilmDetails;

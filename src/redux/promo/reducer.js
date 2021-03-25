@@ -24,7 +24,7 @@ const promoReducer = (state = initialState, action) => {
         ...state,
         promo: {
           ...state.promo,
-          isPromoLoaded: action.payload
+          promoLoadingStatus: action.payload
         }
       };
 

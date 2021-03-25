@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/app/app';
 import {Provider} from 'react-redux';
 import {store} from './redux/store/store';
-import {fetchFilmsList} from './redux/film/api-actions';
+import {fetchFilmsList} from './redux/films/api-actions';
 import {fetchPromoFilm} from './redux/promo/api-actions';
 import {checkAuth} from './redux/auth/api-actions';
 

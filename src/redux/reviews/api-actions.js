@@ -1,5 +1,6 @@
 import {ActionCreator} from './actions';
-import {LoadingStatuses, ApiRoutes} from '../../constants';
+import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions';
+import {LoadingStatuses, ApiRoutes, ReviewsErrorTypes} from '../../constants';
 
 export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
   dispatch(ActionCreator.setLoading(LoadingStatuses.LOADING));
@@ -16,9 +17,10 @@ export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
 export const uploadUserReview = ({id, rating, comment}) => (dispatch, _getState, api) => {
   api.post(`${ApiRoutes.COMMENTS}/${id}`, {rating, comment})
     .then(() => {
-      dispatch(ActionCreator.setLoading(LoadingStatuses.LOADED));
+      dispatch(ActionCreator.setErrorType(null));
+      dispatch(MiddlewaresActionCreator.redirectToRoute(`${ApiRoutes.FILMS}/${id}`));
     })
     .catch(() => {
-      dispatch(ActionCreator.setLoading(LoadingStatuses.FAILED));
+      dispatch(ActionCreator.setErrorType(ReviewsErrorTypes.BAD_REQUEST));
     });
 };

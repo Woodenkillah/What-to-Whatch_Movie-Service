@@ -1,5 +1,6 @@
 import {applyMiddleware, createStore} from 'redux';
-import {filmsReducer} from '../film/reducer';
+import {targetFilmReducer} from '../target-film/reducer';
+import {filmsReducer} from '../films/reducer';
 import {promoReducer} from '../promo/reducer';
 import {authReducer} from '../auth/reducer';
 import {reviewsReducer} from '../reviews/reducer';
@@ -17,6 +18,7 @@ const api = createAPI(() => store.dispatch(ActionCreator.setAuth(AuthStatuses.NO
 export const store = createStore(
     combineReducers({
       auth: authReducer,
+      targetFilm: targetFilmReducer,
       films: filmsReducer,
       promo: promoReducer,
       reviews: reviewsReducer,
