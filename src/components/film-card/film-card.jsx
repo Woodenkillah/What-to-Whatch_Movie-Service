@@ -52,7 +52,10 @@ FilmCard.propTypes = {
   posterImage: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   onFilmHover: PropTypes.func.isRequired,
-  activeFilmId: PropTypes.number
+  activeFilmId: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired
 };
 
 export default FilmCard;

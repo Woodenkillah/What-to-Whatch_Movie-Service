@@ -6,7 +6,7 @@ const initialState = {
     reviewsList: [],
     reviewsLoadingStatus: LoadingStatuses.PENDING
   },
-  errorType: null
+  errorType: ``
 };
 
 const reviewsReducer = (state = initialState, action) => {

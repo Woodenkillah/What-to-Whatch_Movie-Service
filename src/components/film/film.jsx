@@ -11,6 +11,8 @@ import AuthHolder from '../auth-holder/auth-holder';
 import Footer from '../../aux-components/footer';
 import Tabs from '../../aux-components/tabs';
 import Page404 from '../404-page/404-page';
+import Spinner from '../../aux-components/spinner';
+import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
@@ -18,8 +20,8 @@ import {getTargetFilmDataSelector, getTargetFilmLoadingSelector} from '../../red
 import browserHistory from '../../browser-history';
 import {setFavorite} from '../../redux/favorites/api-actions';
 import {fetchFilm} from '../../redux/target-film/api-actions';
-import {FavoriteStatuses, AuthStatuses} from '../../constants';
-import Spinner from '../../aux-components/spinner';
+import {FavoriteStatuses, AuthStatuses, LoadingStatuses} from '../../constants';
+import {getSimilarFilms} from '../../helpers';
 
 const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, onFetchFilm, targetFilmLoadingStatus}) => {
 
@@ -30,9 +32,8 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
   };
 
   const targetFilmId = parseInt((useParams().id), 10);
-  const targetFilm = filmsData.find(({id}) => id === targetFilmId);
 
-  if (!targetFilm) {
+  if (targetFilmLoadingStatus === LoadingStatuses.FAILED) {
     return <Page404/>;
   }
 
@@ -54,6 +55,8 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
   const setFavoriteStatus = () => () => {
     onSetFavorite(targetFilmId, FavoriteStatuses.ADD_FAVORITE);
   };
+
+  const similarFilmsList = getSimilarFilms(filmsData, targetFilmId, targetFilmData.genre);
 
   return (
     <Spinner loadingStatus={targetFilmLoadingStatus}>
@@ -161,43 +164,8 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
       <div className="page-content">
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
-
           <div className="catalog__movies-list">
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/fantastic-beasts-the-crimes-of-grindelwald.jpg" alt="Fantastic Beasts: The Crimes of Grindelwald" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Fantastic Beasts: The Crimes of Grindelwald</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/bohemian-rhapsody.jpg" alt="Bohemian Rhapsody" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Bohemian Rhapsody</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/macbeth.jpg" alt="Macbeth" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Macbeth</a>
-              </h3>
-            </article>
-
-            <article className="small-movie-card catalog__movies-card">
-              <div className="small-movie-card__image">
-                <img src="img/aviator.jpg" alt="Aviator" width="280" height="175" />
-              </div>
-              <h3 className="small-movie-card__title">
-                <a className="small-movie-card__link" href="movie-page.html">Aviator</a>
-              </h3>
-            </article>
+            <FilmsList filmsListData={similarFilmsList}/>
           </div>
         </section>
         <Footer/>
@@ -210,7 +178,7 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
 Film.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
-  ),
+  ).isRequired,
   onSetFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onFetchFilm: PropTypes.func.isRequired,

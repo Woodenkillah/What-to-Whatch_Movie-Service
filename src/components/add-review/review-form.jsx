@@ -80,7 +80,7 @@ ReviewForm.propTypes = {
   onReviewComment: PropTypes.func.isRequired,
   onFormSubmit: PropTypes.func.isRequired,
   formState: PropTypes.object.isRequired,
-  reviewsErrorType: PropTypes.string
+  reviewsErrorType: PropTypes.string.isRequired
 };
 
 export default ReviewForm;

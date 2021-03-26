@@ -5,7 +5,7 @@ import FilmCard from '../film-card/film-card';
 
 const FilmsList = ({filmsListData}) => {
 
-  const [activeFilmId, setActiveFilmId] = React.useState(null);
+  const [activeFilmId, setActiveFilmId] = React.useState(``);
   const handleFilmHover = (filmId) => () => setActiveFilmId(filmId);
 
   if (!filmsListData.length) {

@@ -1,4 +1,4 @@
-import {DEFAULT_GENRE} from './constants';
+import {DEFAULT_GENRE, SIMILAR_FILMS_LIMIT} from './constants';
 
 export const getGenresList = (films) => {
   const rawGenres = films.map(({genre}) => genre);
@@ -6,6 +6,18 @@ export const getGenresList = (films) => {
   const sortedGenres = Array.from(uniqueGenres).sort();
 
   return [DEFAULT_GENRE, ...sortedGenres];
+};
+
+export const getSimilarFilms = (films, targetFilmId, targetFilmGenre) => {
+  const allSimilarFilms = films.filter(({genre, id}) => genre === targetFilmGenre && id !== targetFilmId);
+
+  let limitedSimilarFilms = [];
+
+  if (allSimilarFilms.length > 0) {
+    limitedSimilarFilms = allSimilarFilms.slice(0, SIMILAR_FILMS_LIMIT);
+  }
+
+  return limitedSimilarFilms;
 };
 
 export const getFilmRating = (rating) => {

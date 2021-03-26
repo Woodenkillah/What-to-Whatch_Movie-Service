@@ -71,8 +71,8 @@ const UserAvatar = ({onLogout, userEmail, userAvatar}) => {
 
 UserAvatar.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  userEmail: PropTypes.string,
-  userAvatar: PropTypes.string
+  userEmail: PropTypes.string.isRequired,
+  userAvatar: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({

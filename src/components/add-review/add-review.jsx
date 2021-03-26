@@ -94,7 +94,7 @@ AddReview.propTypes = {
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   onUploadUserReview: PropTypes.func.isRequired,
-  reviewsErrorType: PropTypes.string
+  reviewsErrorType: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({

@@ -13,7 +13,7 @@ const SignInMessage = ({errorType}) => {
 };
 
 SignInMessage.propTypes = {
-  errorType: PropTypes.string
+  errorType: PropTypes.string.isRequired
 };
 
 export default SignInMessage;

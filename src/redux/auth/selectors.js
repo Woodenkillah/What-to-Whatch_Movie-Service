@@ -1,4 +1,7 @@
-export const getAuthorizationStatusSelector = (state) => state.auth.authorizationStatus;
-export const getUserEmailSelector = (state) => state.auth.user.email;
-export const getUserAvatarSelector = (state) => state.auth.user.avatar;
-export const getAuthErrorTypeSelector = (state) => state.auth.errorType;
+import {AuthStatuses} from '../../constants';
+import get from 'lodash/get';
+
+export const getAuthorizationStatusSelector = (state) => get(state, `auth.authorizationStatus`, AuthStatuses.NO_AUTH);
+export const getUserEmailSelector = (state) => get(state, `auth.user.email`, ``);
+export const getUserAvatarSelector = (state) => get(state, `auth.user.avatar`, ``);
+export const getAuthErrorTypeSelector = (state) => get(state, `auth.errorType`, ``);
