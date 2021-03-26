@@ -33,9 +33,9 @@ export const logout = () => (dispatch, _getState, api) => {
   api.get(ApiRoutes.LOGOUT)
   .then(() => {
     dispatch(ActionCreator.setAuth(AuthStatuses.NO_AUTH));
-    dispatch(ActionCreator.setUserData({email: null, avatar: null}));
+    dispatch(ActionCreator.setUserData({email: ``, avatar: ``}));
     dispatch(MiddlewaresActionCreator.redirectToRoute(AppRoutes.ROOT));
-    dispatch(ActionCreator.setErrorType(null));
+    dispatch(ActionCreator.setErrorType(``));
   })
   .catch(() => {});
 };

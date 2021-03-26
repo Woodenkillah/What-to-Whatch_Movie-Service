@@ -17,7 +17,7 @@ export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
 export const uploadUserReview = ({id, rating, comment}) => (dispatch, _getState, api) => {
   api.post(`${ApiRoutes.COMMENTS}/${id}`, {rating, comment})
     .then(() => {
-      dispatch(ActionCreator.setErrorType(null));
+      dispatch(ActionCreator.setErrorType(``));
       dispatch(MiddlewaresActionCreator.redirectToRoute(`${ApiRoutes.FILMS}/${id}`));
     })
     .catch(() => {

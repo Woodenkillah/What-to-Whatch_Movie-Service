@@ -1,6 +1,5 @@
-import {DEFAULT_GENRE} from '../../constants.js';
+import {DEFAULT_GENRE, LoadingStatuses} from '../../constants.js';
 import {ActionType} from './action-types.js';
-import {LoadingStatuses} from '../../constants';
 
 const initialState = {
   activeGenre: DEFAULT_GENRE,

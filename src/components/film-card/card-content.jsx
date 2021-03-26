@@ -32,7 +32,10 @@ CardContent.propTypes = {
   posterImage: PropTypes.string.isRequired,
   src: PropTypes.string.isRequired,
   isHovered: PropTypes.bool.isRequired,
-  activeFilmId: PropTypes.number
+  activeFilmId: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired
 };
 
 export default CardContent;

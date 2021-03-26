@@ -1,4 +1,5 @@
 export const DEFAULT_GENRE = `All genres`;
+export const SIMILAR_FILMS_LIMIT = 4;
 
 export const HttpStatusCodes = {
   BAD_REQUEST: 400,

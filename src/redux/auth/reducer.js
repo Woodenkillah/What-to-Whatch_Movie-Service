@@ -4,10 +4,10 @@ import {AuthStatuses} from '../../constants';
 const initialState = {
   authorizationStatus: AuthStatuses.NO_AUTH,
   user: {
-    email: null,
-    avatar: null
+    email: ``,
+    avatar: ``
   },
-  errorType: null
+  errorType: ``
 };
 
 const authReducer = (state = initialState, action) => {
