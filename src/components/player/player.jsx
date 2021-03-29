@@ -24,8 +24,9 @@ const Player = ({filmsData}) => {
   return (
     <div className="player">
       <VideoElement
-        src={targetFilm.video_link}
-        poster={targetFilm.poster_image}
+        src={targetFilm.videoLink}
+        poster={targetFilm.posterImage}
+        isPreview={false}
       />
 
       <button type="button" className="player__exit" onClick={handlePlayerExit}>Exit</button>

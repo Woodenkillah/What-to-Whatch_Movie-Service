@@ -1,10 +1,24 @@
 import {ActionType} from './action-types';
-import {LoadingStatuses} from '../../constants';
 
 const initialState = {
-  targetFilm: {
-    targetFilmData: {},
-    targetFilmLoadingStatus: LoadingStatuses.PENDING
+  targetFilmData: {
+    id: 0,
+    name: ``,
+    posterImage: ``,
+    previewImage: ``,
+    backgroundImage: ``,
+    backgroundColor: ``,
+    videoLink: ``,
+    previewVideoLink: ``,
+    description: ``,
+    rating: 0,
+    scoresCount: 0,
+    director: ``,
+    starring: [],
+    runTime: 0,
+    genre: ``,
+    released: 0,
+    isFavorite: false
   }
 };
 
@@ -13,19 +27,8 @@ const targetFilmReducer = (state = initialState, action) => {
     case ActionType.LOAD_FILM:
       return {
         ...state,
-        targetFilm: {
-          ...state.targetFilm,
-          targetFilmData: action.payload
-        }
-      };
+        targetFilmData: action.payload
 
-    case ActionType.SET_LOADING:
-      return {
-        ...state,
-        targetFilm: {
-          ...state.targetFilm,
-          targetFilmLoadingStatus: action.payload
-        }
       };
 
     default:

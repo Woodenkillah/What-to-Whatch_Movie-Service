@@ -1,26 +1,25 @@
 import {ActionCreator} from './actions';
+import {dataToReviewItemAdapter} from '../../adapters';
 import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions';
 import {LoadingStatuses, ApiRoutes, ReviewsErrorTypes} from '../../constants';
 
-export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.setLoading(LoadingStatuses.LOADING));
+export const fetchReviewsList = (id, setLoadingStatus) => (dispatch, _getState, api) => {
   api.get(`${ApiRoutes.COMMENTS}/${id}`)
     .then(({data}) => {
-      dispatch(ActionCreator.loadReviews(data));
-      dispatch(ActionCreator.setLoading(LoadingStatuses.LOADED));
+      dispatch(ActionCreator.loadReviews(dataToReviewItemAdapter(data)));
+      setLoadingStatus(LoadingStatuses.LOADED);
     })
     .catch(() => {
-      dispatch(ActionCreator.setLoading(LoadingStatuses.FAILED));
+      setLoadingStatus(LoadingStatuses.FAILED);
     });
 };
 
-export const uploadUserReview = ({id, rating, comment}) => (dispatch, _getState, api) => {
+export const uploadUserReview = ({id, rating, comment}, setErrorType) => (dispatch, _getState, api) => {
   api.post(`${ApiRoutes.COMMENTS}/${id}`, {rating, comment})
     .then(() => {
-      dispatch(ActionCreator.setErrorType(``));
       dispatch(MiddlewaresActionCreator.redirectToRoute(`${ApiRoutes.FILMS}/${id}`));
     })
     .catch(() => {
-      dispatch(ActionCreator.setErrorType(ReviewsErrorTypes.BAD_REQUEST));
+      setErrorType(ReviewsErrorTypes.BAD_REQUEST);
     });
 };

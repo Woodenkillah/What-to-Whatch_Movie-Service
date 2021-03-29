@@ -3,10 +3,8 @@ import {ActionType} from './action-types.js';
 
 const initialState = {
   activeGenre: DEFAULT_GENRE,
-  films: {
-    filmsData: [],
-    filmsLoadingStatus: LoadingStatuses.PENDING,
-  }
+  filmsData: [],
+  filmsLoadingStatus: LoadingStatuses.LOADING
 };
 
 const filmsReducer = (state = initialState, action) => {
@@ -20,19 +18,13 @@ const filmsReducer = (state = initialState, action) => {
     case ActionType.LOAD_FILMS:
       return {
         ...state,
-        films: {
-          ...state.films,
-          filmsData: action.payload,
-        }
+        filmsData: action.payload,
       };
 
     case ActionType.SET_LOADING:
       return {
         ...state,
-        films: {
-          ...state.films,
-          filmsLoadingStatus: action.payload,
-        }
+        filmsLoadingStatus: action.payload,
       };
 
     default:

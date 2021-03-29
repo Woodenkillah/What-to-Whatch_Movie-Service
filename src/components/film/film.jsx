@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import {useParams, Link} from 'react-router-dom';
@@ -16,14 +16,14 @@ import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
-import {getTargetFilmDataSelector, getTargetFilmLoadingSelector} from '../../redux/target-film/selectors';
+import {getTargetFilmDataSelector} from '../../redux/target-film/selectors';
 import browserHistory from '../../browser-history';
 import {setFavorite} from '../../redux/favorites/api-actions';
 import {fetchFilm} from '../../redux/target-film/api-actions';
 import {FavoriteStatuses, AuthStatuses, LoadingStatuses} from '../../constants';
 import {getSimilarFilms} from '../../helpers';
 
-const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, onFetchFilm, targetFilmLoadingStatus}) => {
+const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, onFetchFilm}) => {
 
   const TAB_INDEX = {
     OVERVIEW: 0,
@@ -33,15 +33,17 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
 
   const targetFilmId = parseInt((useParams().id), 10);
 
-  if (targetFilmLoadingStatus === LoadingStatuses.FAILED) {
+  const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
+
+  if (loadingStatus === LoadingStatuses.FAILED) {
     return <Page404/>;
   }
 
   useEffect(() => {
-    onFetchFilm(targetFilmId);
+    onFetchFilm(targetFilmId, setLoadingStatus);
   }, [targetFilmId]);
 
-  const [activeTab, setActiveTab] = React.useState(TAB_INDEX.OVERVIEW);
+  const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
 
   const handleFilmPlayerOpener = () => {
     browserHistory.push({pathname: `/player/${targetFilmId}`});
@@ -59,11 +61,11 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
   const similarFilmsList = getSimilarFilms(filmsData, targetFilmId, targetFilmData.genre);
 
   return (
-    <Spinner loadingStatus={targetFilmLoadingStatus}>
+    <Spinner loadingStatus={loadingStatus}>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
-            <img src={targetFilmData.background_image} alt={targetFilmData.name} />
+            <img src={targetFilmData.backgroundImage} alt={targetFilmData.name} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -116,7 +118,7 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
         <div className="movie-card__wrap movie-card__translate-top">
           <div className="movie-card__info">
             <div className="movie-card__poster movie-card__poster--big">
-              <img src={targetFilmData.poster_image} alt={targetFilmData.name} width="218" height="327" />
+              <img src={targetFilmData.posterImage} alt={targetFilmData.name} width="218" height="327" />
             </div>
 
             <div className="movie-card__desc">
@@ -141,14 +143,14 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
                 <FilmOverview
                   description={targetFilmData.description}
                   rating={targetFilmData.rating}
-                  scoresCount={targetFilmData.scores_count}
+                  scoresCount={targetFilmData.scoresCount}
                   director={targetFilmData.director}
                   starring={targetFilmData.starring}
                 />
                 <FilmDetails
                   director={targetFilmData.director}
                   starring={targetFilmData.starring}
-                  runTime={targetFilmData.run_time}
+                  runTime={targetFilmData.runTime}
                   genre={targetFilmData.genre}
                   released={targetFilmData.released}
                 />
@@ -182,15 +184,13 @@ Film.propTypes = {
   onSetFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onFetchFilm: PropTypes.func.isRequired,
-  targetFilmData: PropTypes.object.isRequired,
-  targetFilmLoadingStatus: PropTypes.string.isRequired
+  targetFilmData: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatusSelector(state),
   filmsData: getFilmsDataSelector(state),
-  targetFilmData: getTargetFilmDataSelector(state),
-  targetFilmLoadingStatus: getTargetFilmLoadingSelector(state)
+  targetFilmData: getTargetFilmDataSelector(state)
 });
 
 const mapDispatchToProps = {

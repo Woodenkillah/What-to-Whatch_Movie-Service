@@ -1,16 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReviewItem from './review-item';
 import ReviewsList from './reviews-list';
 import Spinner from '../../../aux-components/spinner';
 import {connect} from 'react-redux';
 import {fetchReviewsList} from '../../../redux/reviews/api-actions';
-import {getReviewsListSelector, getReviewsLoadingStatusSelector} from '../../../redux/reviews/selectors';
+import {getReviewsListSelector} from '../../../redux/reviews/selectors';
+import {LoadingStatuses} from '../../../constants';
 
-const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsLoadingStatus}) => {
+const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList}) => {
+
+  const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
 
   useEffect(() => {
-    onLoadReviews(targetFilmId);
+    onLoadReviews(targetFilmId, setLoadingStatus);
   }, [targetFilmId]);
 
   let targetReviewsList = [];
@@ -31,7 +34,7 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsLoadingSt
   }
 
   return (
-    <Spinner loadingStatus={reviewsLoadingStatus}>
+    <Spinner loadingStatus={loadingStatus}>
       <ReviewsList>
         {targetReviewsList}
       </ReviewsList>
@@ -42,13 +45,11 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsLoadingSt
 FilmReviews.propTypes = {
   reviewsList: PropTypes.array.isRequired,
   targetFilmId: PropTypes.number.isRequired,
-  onLoadReviews: PropTypes.func.isRequired,
-  reviewsLoadingStatus: PropTypes.string.isRequired
+  onLoadReviews: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  reviewsList: getReviewsListSelector(state),
-  reviewsLoadingStatus: getReviewsLoadingStatusSelector(state)
+  reviewsList: getReviewsListSelector(state)
 });
 
 const mapDispatchToProps = {

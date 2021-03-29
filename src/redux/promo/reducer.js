@@ -2,10 +2,26 @@ import {ActionType} from './action-types';
 import {LoadingStatuses} from '../../constants';
 
 const initialState = {
-  promo: {
-    promoData: {},
-    promoLoadingStatus: LoadingStatuses.PENDING
-  }
+  promoData: {
+    id: 0,
+    name: ``,
+    posterImage: ``,
+    previewImage: ``,
+    backgroundImage: ``,
+    backgroundColor: ``,
+    videoLink: ``,
+    previewVideoLink: ``,
+    description: ``,
+    rating: 0,
+    scoresCount: 0,
+    director: ``,
+    starring: [],
+    runTime: 0,
+    genre: ``,
+    released: 0,
+    isFavorite: false
+  },
+  promoLoadingStatus: LoadingStatuses.LOADING
 };
 
 const promoReducer = (state = initialState, action) => {
@@ -13,19 +29,13 @@ const promoReducer = (state = initialState, action) => {
     case ActionType.LOAD_PROMO:
       return {
         ...state,
-        promo: {
-          ...state.promo,
-          promoData: action.payload
-        }
+        promoData: action.payload
       };
 
     case ActionType.SET_LOADING:
       return {
         ...state,
-        promo: {
-          ...state.promo,
-          promoLoadingStatus: action.payload
-        }
+        promoLoadingStatus: action.payload
       };
 
     default:

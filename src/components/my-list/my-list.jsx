@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
@@ -7,13 +7,16 @@ import UserAvatar from '../../aux-components/user-avatar';
 import Footer from '../../aux-components/footer';
 import Spinner from '../../aux-components/spinner';
 import {connect} from 'react-redux';
-import {getFavoritesDataSelector, getFavoritesLoadingStatus} from '../../redux/favorites/selectors';
+import {getFavoritesDataSelector} from '../../redux/favorites/selectors';
 import {fetchFavoritesList} from '../../redux/favorites/api-actions';
+import {LoadingStatuses} from '../../constants';
 
-const MyList = ({favoritesData, onLoadFavorites, favoritesLoadingStatus}) => {
+const MyList = ({favoritesData, onLoadFavorites}) => {
+
+  const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
 
   useEffect(() => {
-    onLoadFavorites();
+    onLoadFavorites(setLoadingStatus);
   }, []);
 
   return (
@@ -26,7 +29,8 @@ const MyList = ({favoritesData, onLoadFavorites, favoritesLoadingStatus}) => {
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
-          <Spinner loadingStatus={favoritesLoadingStatus}>
+          <Spinner loadingStatus={loadingStatus}>
+
             <FilmsList filmsListData={favoritesData}/>
           </Spinner>
         </div>
@@ -42,14 +46,11 @@ MyList.propTypes = {
   favoritesData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  onLoadFavorites: PropTypes.func.isRequired,
-  getFavoritesLoadingStatus: PropTypes.bool.isRequired,
-  favoritesLoadingStatus: PropTypes.string.isRequired
+  onLoadFavorites: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
   favoritesData: getFavoritesDataSelector(state),
-  favoritesLoadingStatus: getFavoritesLoadingStatus(state)
 });
 
 const mapDispatchToProps = {

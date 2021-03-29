@@ -4,6 +4,7 @@ import {connect} from 'react-redux';
 import {logout} from '../redux/auth/api-actions';
 import {getUserEmailSelector, getUserAvatarSelector} from '../redux/auth/selectors';
 import browserHistory from '../browser-history';
+import {AppRoutes} from '../constants';
 
 const userEmailBlockStyles = {
   containerStyle: {
@@ -39,7 +40,7 @@ const {containerStyle, avatarStyle, authInfoStyle, linkStyle, textStyle} = userE
 const UserAvatar = ({onLogout, userEmail, userAvatar}) => {
 
   const handleMylistOpener = () => {
-    browserHistory.push({pathname: `/mylist`});
+    browserHistory.push({pathname: AppRoutes.MY_LIST});
   };
 
   return (

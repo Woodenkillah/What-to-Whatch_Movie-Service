@@ -40,7 +40,7 @@ const VideoElement = ({src, poster, isPreview}) => {
 VideoElement.propTypes = {
   src: PropTypes.string.isRequired,
   poster: PropTypes.string.isRequired,
-  isPreview: PropTypes.bool
+  isPreview: PropTypes.bool.isRequired
 };
 
 export default VideoElement;
