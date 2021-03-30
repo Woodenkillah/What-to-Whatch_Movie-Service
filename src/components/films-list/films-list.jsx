@@ -16,9 +16,9 @@ const FilmsList = ({filmsListData}) => {
     return (
       <FilmCard
         name={item.name}
-        posterImage={item.poster_image}
+        posterImage={item.posterImage}
         id={item.id}
-        src={item.preview_video_link}
+        src={item.previewVideoLink}
         key={item.id + index}
         onFilmHover={handleFilmHover}
         activeFilmId={activeFilmId}

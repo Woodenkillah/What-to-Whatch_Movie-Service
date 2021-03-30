@@ -1,21 +1,21 @@
 import PropTypes from 'prop-types';
 
 export const generalPropValidation = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  posterImage: PropTypes.string,
-  previewImage: PropTypes.string,
-  backgroundImage: PropTypes.string,
-  backgroundColor: PropTypes.string,
-  videoLink: PropTypes.string,
-  previewVideoLink: PropTypes.string,
-  description: PropTypes.string,
-  rating: PropTypes.number,
-  scoresCount: PropTypes.number,
-  director: PropTypes.string,
-  starring: PropTypes.array,
-  runTime: PropTypes.number,
-  gerne: PropTypes.string,
-  released: PropTypes.number,
-  isFavorite: PropTypes.bool
+  id: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  posterImage: PropTypes.string.isRequired,
+  previewImage: PropTypes.string.isRequired,
+  backgroundImage: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  videoLink: PropTypes.string.isRequired,
+  previewVideoLink: PropTypes.string.isRequired,
+  description: PropTypes.string.isRequired,
+  rating: PropTypes.number.isRequired,
+  scoresCount: PropTypes.number.isRequired,
+  director: PropTypes.string.isRequired,
+  starring: PropTypes.array.isRequired,
+  runTime: PropTypes.number.isRequired,
+  genre: PropTypes.string.isRequired,
+  released: PropTypes.number.isRequired,
+  isFavorite: PropTypes.bool.isRequired
 };

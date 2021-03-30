@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
@@ -7,8 +7,9 @@ import Logo from '../../aux-components/logo';
 import AuthHolder from '../auth-holder/auth-holder';
 import Footer from '../../aux-components/footer';
 import GenresList from './genres-list/genres-list';
+import ShowMore from './show-more/show-more';
 import {connect} from 'react-redux';
-import {DEFAULT_GENRE} from '../../constants';
+import {DEFAULT_GENRE, DEFAULT_PAGE, FILMS_PER_PAGE} from '../../constants';
 import {getGenresList} from '../../helpers';
 import Spinner from '../../aux-components/spinner';
 import {getActiveGenreSelector, getFilmsLoadingSelector, getFilmsDataSelector} from '../../redux/films/selectors';
@@ -16,11 +17,16 @@ import {getPromoLoadingSelector, getPromoDataSelector} from '../../redux/promo/s
 
 const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadingStatus}) => {
 
+  const [page, setPage] = useState(DEFAULT_PAGE);
+
+  const genresList = getGenresList(filmsData);
+  const handleShowMore = () => setPage((currentPage) => currentPage + 1);
+
   const filteredFilms = activeGenre === DEFAULT_GENRE
     ? filmsData
     : filmsData.filter(({genre}) => genre === activeGenre);
 
-  const genresList = getGenresList(filmsData);
+  const limitedFilteredFilms = filteredFilms.slice(0, page * FILMS_PER_PAGE);
 
   return (
     <React.Fragment>
@@ -53,13 +59,12 @@ const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadi
 
           <div className="catalog__movies-list">
             <Spinner loadingStatus={filmsLoadingStatus}>
-              <FilmsList filmsListData={filteredFilms}/>
+              <FilmsList filmsListData={limitedFilteredFilms}/>
             </Spinner>
           </div>
 
-          <div className="catalog__more">
-            <button className="catalog__button" type="button">Show more</button>
-          </div>
+          <ShowMore onShowMore={handleShowMore} isInvisible={limitedFilteredFilms.length === filteredFilms.length}/>
+
         </section>
 
         <Footer/>

@@ -10,7 +10,7 @@ import {getAuthorizationStatusSelector} from '../../../redux/auth/selectors';
 
 const PromoFilm = ({promoData, onSetFavorite, authorizationStatus}) => {
 
-  if (!promoData) {
+  if (Object.keys(promoData).length === 0) {
     return <h2>There is no promo film currently available.</h2>;
   }
 
@@ -27,7 +27,7 @@ const PromoFilm = ({promoData, onSetFavorite, authorizationStatus}) => {
   return (
     <div className="movie-card__info">
 
-      <PromoPoster name={promoData.name} posterImage={promoData.poster_image}/>
+      <PromoPoster name={promoData.name} posterImage={promoData.posterImage}/>
 
       <div className="movie-card__desc">
         <h2 className="movie-card__title">{promoData.name}</h2>

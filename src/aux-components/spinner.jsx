@@ -5,7 +5,7 @@ import LoadingFail from './loading-fail';
 import {LoadingStatuses} from '../constants';
 
 const Spinner = ({loadingStatus, children}) => {
-  if (loadingStatus === LoadingStatuses.LOADING || loadingStatus === LoadingStatuses.PENDING) {
+  if (loadingStatus === LoadingStatuses.LOADING) {
     return <LoadingProcess/>;
   } else if (loadingStatus === LoadingStatuses.FAILED) {
     return <LoadingFail/>;

@@ -1,4 +1,7 @@
 export const DEFAULT_GENRE = `All genres`;
+export const DEFAULT_PAGE = 1;
+export const FILMS_PER_PAGE = 8;
+
 export const SIMILAR_FILMS_LIMIT = 4;
 
 export const HttpStatusCodes = {
@@ -16,7 +19,6 @@ export const ReviewsErrorTypes = {
 };
 
 export const LoadingStatuses = {
-  PENDING: `load/pending`,
   LOADING: `load/loading`,
   LOADED: `load/loaded`,
   FAILED: `load/failed`

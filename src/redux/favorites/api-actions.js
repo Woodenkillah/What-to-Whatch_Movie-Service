@@ -1,15 +1,15 @@
 import {ActionCreator} from './actions';
+import {dataToFilmsArrayAdapter} from '../../adapters';
 import {LoadingStatuses, ApiRoutes} from '../../constants';
 
-export const fetchFavoritesList = () => (dispatch, _getState, api) => {
-  dispatch(ActionCreator.setLoading(LoadingStatuses.LOADING));
+export const fetchFavoritesList = (setLoadingStatus) => (dispatch, _getState, api) => {
   api.get(ApiRoutes.FAVORITES)
     .then(({data}) => {
-      dispatch(ActionCreator.loadFavorites(data));
-      dispatch(ActionCreator.setLoading(LoadingStatuses.LOADED));
+      dispatch(ActionCreator.loadFavorites(dataToFilmsArrayAdapter(data)));
+      setLoadingStatus(LoadingStatuses.LOADED);
     })
     .catch(() => {
-      dispatch(ActionCreator.setLoading(LoadingStatuses.FAILED));
+      setLoadingStatus(LoadingStatuses.FAILED);
     });
 };
 

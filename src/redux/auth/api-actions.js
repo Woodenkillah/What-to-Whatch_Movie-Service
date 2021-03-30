@@ -1,7 +1,7 @@
 import {ActionCreator} from './actions';
 import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions';
 import {AuthStatuses} from '../../constants';
-import {dataToUserInfoAdapter} from './adapters';
+import {dataToUserInfoAdapter} from '../../adapters';
 import {AppRoutes, ApiRoutes, HttpStatusCodes, AuthErrorTypes} from '../../constants';
 
 export const login = (userData) => (dispatch, _getState, api) => {

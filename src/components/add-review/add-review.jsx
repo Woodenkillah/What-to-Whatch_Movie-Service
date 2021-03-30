@@ -1,26 +1,24 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
-import {useParams, Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Logo from '../../aux-components/logo';
 import UserAvatar from '../../aux-components/user-avatar';
 import ReviewForm from './review-form';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
-import {getFilmsDataSelector} from '../../redux/films/selectors';
-import {getReviewsErrorTypeSelector} from '../../redux/reviews/selectors';
+import {getTargetFilmDataSelector} from '../../redux/target-film/selectors';
 import {uploadUserReview} from '../../redux/reviews/api-actions';
 
-const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
+const AddReview = ({targetFilmData, onUploadUserReview}) => {
 
-  const targetFilmId = parseInt((useParams().id), 10);
-  const targetFilm = filmsData.find((item) => item.id === targetFilmId);
-
-  if (!targetFilm) {
+  if (Object.keys(targetFilmData) === 0) {
     return <Page404/>;
   }
 
-  const [formState, setFormState] = React.useState({
+  const [errorType, setErrorType] = useState(``);
+
+  const [formState, setFormState] = useState({
     rating: 1,
     comment: ``,
     user: `Unknown author`
@@ -37,12 +35,12 @@ const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
     evt.preventDefault();
 
     const newReview = {
-      id: targetFilmId,
+      id: targetFilmData.id,
       rating: formState.rating,
       comment: formState.comment
     };
 
-    onUploadUserReview(newReview);
+    onUploadUserReview(newReview, setErrorType);
 
   };
 
@@ -50,7 +48,7 @@ const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
     <section className="movie-card movie-card--full">
       <div className="movie-card__header">
         <div className="movie-card__bg">
-          <img src={targetFilm.background_image} alt={targetFilm.name} />
+          <img src={targetFilmData.backgroundImage} alt={targetFilmData.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -62,7 +60,7 @@ const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={{pathname: `/films/${targetFilmId}`}} className="breadcrumbs__link">{targetFilm.name}</Link>
+                <Link to={{pathname: `/films/${targetFilmData.id}`}} className="breadcrumbs__link">{targetFilmData.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>
@@ -74,7 +72,7 @@ const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
         </header>
 
         <div className="movie-card__poster movie-card__poster--small">
-          <img src={targetFilm.poster_image} alt={`${targetFilm.name} poster`} width="218" height="327" />
+          <img src={targetFilmData.posterImage} alt={`${targetFilmData.name} poster`} width="218" height="327" />
         </div>
       </div>
 
@@ -83,7 +81,7 @@ const AddReview = ({filmsData, onUploadUserReview, reviewsErrorType}) => {
         onReviewComment={handleReviewComment}
         onFormSubmit={handleFormSubmit}
         formState={formState}
-        reviewsErrorType={reviewsErrorType}
+        reviewsErrorType={errorType}
       />
     </section>
   );
@@ -93,13 +91,12 @@ AddReview.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  onUploadUserReview: PropTypes.func.isRequired,
-  reviewsErrorType: PropTypes.string.isRequired
+  targetFilmData: PropTypes.object.isRequired,
+  onUploadUserReview: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  filmsData: getFilmsDataSelector(state),
-  reviewsErrorType: getReviewsErrorTypeSelector(state)
+  targetFilmData: getTargetFilmDataSelector(state)
 });
 
 const mapDispatchToProps = {
