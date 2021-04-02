@@ -1,13 +1,10 @@
 import axios from 'axios';
-import {HttpStatusCodes} from '../constants';
-
-const BASE_URL = `https://6.react.pages.academy/wtw`;
-const TIMEOUT = 5000;
+import {AxiosSettings, HttpStatusCodes} from '../constants';
 
 export const createAPI = (unAuthorized) => {
   const api = axios.create({
-    baseURL: BASE_URL,
-    timeout: TIMEOUT,
+    baseURL: AxiosSettings.BASE_URL,
+    timeout: AxiosSettings.TIMEOUT,
     withCredentials: true
   });
 

@@ -1,0 +1,36 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correct content depending on place of render Render 'AddReview' at route '/films/:id/review' url for authorized user 1`] = `
+<div>
+  <div
+    class="small-movie-card__image"
+  >
+    <img
+      alt="test"
+      height="175"
+      src="img/the-grand-budapest-hotel-poster.jpg"
+      width="280"
+    />
+  </div>
+  <h3
+    class="small-movie-card__title"
+  >
+    <a
+      class="small-movie-card__link"
+      href="/films/1"
+    >
+      test
+    </a>
+  </h3>
+</div>
+`;
+
+exports[`Should render correct content depending on place of render Render 'UserAvatar' at for authorized user 1`] = `
+<div>
+  <video
+    class="player__video"
+    poster="img/the-grand-budapest-hotel-poster.jpg"
+    src="img/the-grand-budapest-hotel-poster.jpg"
+  />
+</div>
+`;

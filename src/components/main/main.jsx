@@ -2,29 +2,25 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
-import PromoFilm from './promo-film/promo-film';
-import Logo from '../../aux-components/logo';
+import PromoFilm from '../promo-film/promo-film';
+import Logo from '../aux-components/logo/logo';
 import AuthHolder from '../auth-holder/auth-holder';
-import Footer from '../../aux-components/footer';
-import GenresList from './genres-list/genres-list';
-import ShowMore from './show-more/show-more';
+import Footer from '../aux-components/footer/footer';
+import GenresList from '../genres-list/genres-list';
+import ShowMore from '../show-more/show-more';
 import {connect} from 'react-redux';
-import {DEFAULT_GENRE, DEFAULT_PAGE, FILMS_PER_PAGE} from '../../constants';
+import {DEFAULT_PAGE, FILMS_PER_PAGE} from '../../constants';
 import {getGenresList} from '../../helpers';
-import Spinner from '../../aux-components/spinner';
-import {getActiveGenreSelector, getFilmsLoadingSelector, getFilmsDataSelector} from '../../redux/films/selectors';
+import Spinner from '../aux-components/spinner/spinner';
+import {getFilmsLoadingSelector, getFilmsDataSelector, getFilteredFilmsDataSelector} from '../../redux/films/selectors';
 import {getPromoLoadingSelector, getPromoDataSelector} from '../../redux/promo/selectors';
 
-const Main = ({activeGenre, filmsData, promoData, promoLoadingStatus, filmsLoadingStatus}) => {
+const Main = ({filmsData, promoData, promoLoadingStatus, filmsLoadingStatus, filteredFilms}) => {
 
   const [page, setPage] = useState(DEFAULT_PAGE);
 
   const genresList = getGenresList(filmsData);
   const handleShowMore = () => setPage((currentPage) => currentPage + 1);
-
-  const filteredFilms = activeGenre === DEFAULT_GENRE
-    ? filmsData
-    : filmsData.filter(({genre}) => genre === activeGenre);
 
   const limitedFilteredFilms = filteredFilms.slice(0, page * FILMS_PER_PAGE);
 
@@ -79,18 +75,20 @@ Main.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  activeGenre: PropTypes.string.isRequired,
+  filteredFilms: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ),
   promoData: PropTypes.shape(generalPropValidation).isRequired,
   promoLoadingStatus: PropTypes.string.isRequired,
   filmsLoadingStatus: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  activeGenre: getActiveGenreSelector(state),
   filmsLoadingStatus: getFilmsLoadingSelector(state),
   filmsData: getFilmsDataSelector(state),
   promoLoadingStatus: getPromoLoadingSelector(state),
-  promoData: getPromoDataSelector(state)
+  promoData: getPromoDataSelector(state),
+  filteredFilms: getFilteredFilmsDataSelector(state)
 });
 
 export default connect(mapStateToProps, null)(Main);

@@ -3,7 +3,7 @@ import {dataToFilmsArrayAdapter} from '../../adapters';
 import {LoadingStatuses, ApiRoutes} from '../../constants';
 
 export const fetchFavoritesList = (setLoadingStatus) => (dispatch, _getState, api) => {
-  api.get(ApiRoutes.FAVORITES)
+  return api.get(ApiRoutes.FAVORITES)
     .then(({data}) => {
       dispatch(ActionCreator.loadFavorites(dataToFilmsArrayAdapter(data)));
       setLoadingStatus(LoadingStatuses.LOADED);
@@ -14,5 +14,5 @@ export const fetchFavoritesList = (setLoadingStatus) => (dispatch, _getState, ap
 };
 
 export const setFavorite = (id, status) => (_dispatch, _getState, api) => {
-  api.post(`${ApiRoutes.FAVORITES}/${id}/${status}`);
+  return api.post(`${ApiRoutes.FAVORITES}/${id}/${status}`);
 };

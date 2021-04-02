@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <div
+    class="review"
+  >
+    <blockquote
+      class="review__quote"
+    >
+      <p
+        class="review__text"
+      >
+        test
+      </p>
+      <footer
+        class="review__details"
+      >
+        <cite
+          class="review__author"
+        >
+          test
+        </cite>
+        <time
+          class="review__date"
+          datetime="test"
+        >
+          undefined NaN, NaN
+        </time>
+      </footer>
+    </blockquote>
+    <div
+      class="review__rating"
+    >
+      1
+    </div>
+  </div>
+</div>
+`;

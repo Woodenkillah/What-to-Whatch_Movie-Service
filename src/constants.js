@@ -4,6 +4,16 @@ export const FILMS_PER_PAGE = 8;
 
 export const SIMILAR_FILMS_LIMIT = 4;
 
+export const COMMENTS_SIZES = {
+  MIN: 50,
+  MAX: 400
+};
+
+export const AxiosSettings = {
+  BASE_URL: `https://6.react.pages.academy/wtw`,
+  TIMEOUT: 5000
+};
+
 export const HttpStatusCodes = {
   BAD_REQUEST: 400,
   UNAUTHORIZED: 401
@@ -11,7 +21,7 @@ export const HttpStatusCodes = {
 
 export const AuthErrorTypes = {
   BAD_REQUEST: `auth/loginOrPasswordError`,
-  UNAUTHORIZED: `auth/accessDenied`
+  UNAUTHORIZED: `auth/accessDenied`,
 };
 
 export const ReviewsErrorTypes = {

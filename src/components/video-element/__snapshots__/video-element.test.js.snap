@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <video
+    class="player__video"
+    poster="img/the-grand-budapest-hotel-poster.jpg"
+    src="img/the-grand-budapest-hotel-poster.jpg"
+  />
+</div>
+`;

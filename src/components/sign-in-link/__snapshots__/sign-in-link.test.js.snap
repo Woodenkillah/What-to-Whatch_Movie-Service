@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <a
+    href="/login"
+    style="color: rgb(217, 205, 141); text-align: right; text-decoration: none; margin-left: auto; padding: 5px; border: 1px solid #d9cd8d; border-radius: 10px;"
+  >
+    <h2>
+      Sign in
+    </h2>
+  </a>
+</div>
+`;

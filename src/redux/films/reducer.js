@@ -32,4 +32,4 @@ const filmsReducer = (state = initialState, action) => {
   }
 };
 
-export {filmsReducer};
+export {filmsReducer, initialState};

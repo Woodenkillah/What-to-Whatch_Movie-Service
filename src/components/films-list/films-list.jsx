@@ -6,7 +6,7 @@ import FilmCard from '../film-card/film-card';
 const FilmsList = ({filmsListData}) => {
 
   const [activeFilmId, setActiveFilmId] = React.useState(``);
-  const handleFilmHover = (filmId) => () => setActiveFilmId(filmId);
+  const handleFilmHover = React.useCallback((filmId) => () => setActiveFilmId(filmId), []);
 
   if (!filmsListData.length) {
     return <h2>The were no films added yet.</h2>;

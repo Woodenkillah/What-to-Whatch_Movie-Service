@@ -43,4 +43,4 @@ const promoReducer = (state = initialState, action) => {
   }
 };
 
-export {promoReducer};
+export {promoReducer, initialState};

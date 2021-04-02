@@ -5,11 +5,12 @@ import {dataToUserInfoAdapter} from '../../adapters';
 import {AppRoutes, ApiRoutes, HttpStatusCodes, AuthErrorTypes} from '../../constants';
 
 export const login = (userData) => (dispatch, _getState, api) => {
-  api.post(ApiRoutes.LOGIN, userData)
+  return api.post(ApiRoutes.LOGIN, userData)
     .then(({data}) => {
       dispatch(ActionCreator.setAuth(AuthStatuses.AUTH));
       dispatch(ActionCreator.setUserData(dataToUserInfoAdapter(data)));
       dispatch(MiddlewaresActionCreator.redirectToRoute(AppRoutes.ROOT));
+      dispatch(ActionCreator.setErrorType(``));
     })
     .catch(({response}) => {
       if (response.status === HttpStatusCodes.UNAUTHORIZED) {
@@ -21,7 +22,7 @@ export const login = (userData) => (dispatch, _getState, api) => {
 };
 
 export const checkAuth = () => (dispatch, _getState, api) => {
-  api.get(ApiRoutes.LOGIN)
+  return api.get(ApiRoutes.LOGIN)
     .then(({data}) => {
       dispatch(ActionCreator.setAuth(AuthStatuses.AUTH));
       dispatch(ActionCreator.setUserData(dataToUserInfoAdapter(data)));
@@ -30,12 +31,11 @@ export const checkAuth = () => (dispatch, _getState, api) => {
 };
 
 export const logout = () => (dispatch, _getState, api) => {
-  api.get(ApiRoutes.LOGOUT)
+  return api.get(ApiRoutes.LOGOUT)
   .then(() => {
     dispatch(ActionCreator.setAuth(AuthStatuses.NO_AUTH));
     dispatch(ActionCreator.setUserData({email: ``, avatar: ``}));
     dispatch(MiddlewaresActionCreator.redirectToRoute(AppRoutes.ROOT));
-    dispatch(ActionCreator.setErrorType(``));
   })
   .catch(() => {});
 };

@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <article
+    class="small-movie-card catalog__movies-card"
+  >
+    <div
+      class="small-movie-card__image"
+    >
+      <img
+        alt="test"
+        height="175"
+        src="img/the-grand-budapest-hotel-poster.jpg"
+        width="280"
+      />
+    </div>
+    <h3
+      class="small-movie-card__title"
+    >
+      <a
+        class="small-movie-card__link"
+        href="/films/1"
+      >
+        test
+      </a>
+    </h3>
+  </article>
+</div>
+`;

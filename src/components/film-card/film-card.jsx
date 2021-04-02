@@ -1,5 +1,5 @@
 import React from 'react';
-import CardContent from './card-content';
+import CardContent from '../card-content/card-content';
 import PropTypes from 'prop-types';
 import browserHistory from '../../browser-history';
 
@@ -58,4 +58,4 @@ FilmCard.propTypes = {
   ]).isRequired
 };
 
-export default FilmCard;
+export default React.memo(FilmCard);
