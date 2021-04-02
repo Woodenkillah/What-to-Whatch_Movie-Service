@@ -3,15 +3,14 @@ import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import {useParams, Link} from 'react-router-dom';
 import classNames from 'classnames';
-import FilmOverview from './film-tabs/film-overview';
-import FilmDetails from './film-tabs/film-details';
-import FilmReviews from './film-tabs/film-reviews';
-import Logo from '../../aux-components/logo';
+import FilmOverview from '../film-overview/film-overview';
+import FilmDetails from '../film-details/film-details';
+import FilmReviews from '../film-reviews/film-reviews';
+import Logo from '../aux-components/logo/logo';
 import AuthHolder from '../auth-holder/auth-holder';
-import Footer from '../../aux-components/footer';
-import Tabs from '../../aux-components/tabs';
+import Footer from '../aux-components/footer/footer';
+import Tabs from '../aux-components/tabs/tabs';
 import Page404 from '../404-page/404-page';
-import Spinner from '../../aux-components/spinner';
 import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
@@ -31,19 +30,18 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
     REVIEW: 2
   };
 
-  const targetFilmId = parseInt((useParams().id), 10);
-
+  const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
   const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
 
-  if (loadingStatus === LoadingStatuses.FAILED) {
-    return <Page404/>;
-  }
+  const targetFilmId = parseInt((useParams().id), 10);
 
   useEffect(() => {
     onFetchFilm(targetFilmId, setLoadingStatus);
   }, [targetFilmId]);
 
-  const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
+  if (loadingStatus === LoadingStatuses.FAILED) {
+    return <Page404/>;
+  }
 
   const handleFilmPlayerOpener = () => {
     browserHistory.push({pathname: `/player/${targetFilmId}`});
@@ -61,7 +59,7 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
   const similarFilmsList = getSimilarFilms(filmsData, targetFilmId, targetFilmData.genre);
 
   return (
-    <Spinner loadingStatus={loadingStatus}>
+    <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
@@ -172,7 +170,7 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
         </section>
         <Footer/>
       </div>
-    </Spinner>
+    </React.Fragment>
   );
 
 };

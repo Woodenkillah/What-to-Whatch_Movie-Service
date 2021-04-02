@@ -36,4 +36,4 @@ const targetFilmReducer = (state = initialState, action) => {
   }
 };
 
-export {targetFilmReducer};
+export {targetFilmReducer, initialState};

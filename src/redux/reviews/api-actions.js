@@ -4,7 +4,7 @@ import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions'
 import {LoadingStatuses, ApiRoutes, ReviewsErrorTypes} from '../../constants';
 
 export const fetchReviewsList = (id, setLoadingStatus) => (dispatch, _getState, api) => {
-  api.get(`${ApiRoutes.COMMENTS}/${id}`)
+  return api.get(`${ApiRoutes.COMMENTS}/${id}`)
     .then(({data}) => {
       dispatch(ActionCreator.loadReviews(dataToReviewItemAdapter(data)));
       setLoadingStatus(LoadingStatuses.LOADED);
@@ -15,7 +15,7 @@ export const fetchReviewsList = (id, setLoadingStatus) => (dispatch, _getState, 
 };
 
 export const uploadUserReview = ({id, rating, comment}, setErrorType) => (dispatch, _getState, api) => {
-  api.post(`${ApiRoutes.COMMENTS}/${id}`, {rating, comment})
+  return api.post(`${ApiRoutes.COMMENTS}/${id}`, {rating, comment})
     .then(() => {
       dispatch(MiddlewaresActionCreator.redirectToRoute(`${ApiRoutes.FILMS}/${id}`));
     })

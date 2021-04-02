@@ -1,8 +1,7 @@
 import {ActionType} from './action-types';
 
 const initialState = {
-  reviewsList: [],
-  errorType: ``
+  reviewsList: []
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -18,4 +17,4 @@ const reviewsReducer = (state = initialState, action) => {
   }
 };
 
-export {reviewsReducer};
+export {reviewsReducer, initialState};

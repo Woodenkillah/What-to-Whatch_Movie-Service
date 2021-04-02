@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <h2
+    style="color: rgb(238, 229, 181);"
+  >
+    Loading data...
+  </h2>
+</div>
+`;
