@@ -1,6 +1,6 @@
 import {ActionCreator} from './actions';
 import {ActionType} from './action-types';
-import {mockSimpleObjsArr} from '../../test-mock';
+import {mockSimpleObjsArr, mockBoolean} from '../../test-mock';
 
 describe(`Reviews action creators work correctly`, () => {
   it(`Action creator returns correct action upon setting loaded reviews object array`, () => {
@@ -10,6 +10,15 @@ describe(`Reviews action creators work correctly`, () => {
     };
 
     expect(ActionCreator.loadReviews(mockSimpleObjsArr)).toEqual(expectedAction);
+  });
+
+  it(`Action creator returns correct action upon setting loading status`, () => {
+    const expectedAction = {
+      type: ActionType.SET_IS_LOADING,
+      payload: mockBoolean
+    };
+
+    expect(ActionCreator.setIsLoading(mockBoolean)).toEqual(expectedAction);
   });
 
 });

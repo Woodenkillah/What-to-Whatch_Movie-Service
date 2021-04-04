@@ -1,7 +1,9 @@
 import {ActionType} from './action-types';
 
 const initialState = {
-  reviewsList: []
+  reviewsList: [],
+  isLoading: false,
+  isLoadingError: false
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -10,6 +12,18 @@ const reviewsReducer = (state = initialState, action) => {
       return {
         ...state,
         reviewsList: action.payload
+      };
+
+    case ActionType.SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
+      };
+
+    case ActionType.SET_IS_LOADING_ERROR:
+      return {
+        ...state,
+        isLoadingError: action.payload,
       };
 
     default:

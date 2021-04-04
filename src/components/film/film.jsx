@@ -15,31 +15,24 @@ import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
-import {getTargetFilmDataSelector} from '../../redux/target-film/selectors';
+import {getTargetFilmDataSelector, getTargetFilmIsLoadingSelector} from '../../redux/target-film/selectors';
 import browserHistory from '../../browser-history';
 import {setFavorite} from '../../redux/favorites/api-actions';
 import {fetchFilm} from '../../redux/target-film/api-actions';
-import {FavoriteStatuses, AuthStatuses, LoadingStatuses} from '../../constants';
+import {FavoriteStatuses, AuthStatuses, TAB_INDEX} from '../../constants';
 import {getSimilarFilms} from '../../helpers';
 
 const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, onFetchFilm}) => {
 
-  const TAB_INDEX = {
-    OVERVIEW: 0,
-    DETAILS: 1,
-    REVIEW: 2
-  };
-
   const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
-  const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
 
   const targetFilmId = parseInt((useParams().id), 10);
 
   useEffect(() => {
-    onFetchFilm(targetFilmId, setLoadingStatus);
+    onFetchFilm(targetFilmId);
   }, [targetFilmId]);
 
-  if (loadingStatus === LoadingStatuses.FAILED) {
+  if (!targetFilmData.name) {
     return <Page404/>;
   }
 
@@ -182,13 +175,15 @@ Film.propTypes = {
   onSetFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onFetchFilm: PropTypes.func.isRequired,
-  targetFilmData: PropTypes.object.isRequired
+  targetFilmData: PropTypes.object.isRequired,
+  targetFilmIsLoading: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatusSelector(state),
   filmsData: getFilmsDataSelector(state),
-  targetFilmData: getTargetFilmDataSelector(state)
+  targetFilmData: getTargetFilmDataSelector(state),
+  targetFilmIsLoading: getTargetFilmIsLoadingSelector(state)
 });
 
 const mapDispatchToProps = {

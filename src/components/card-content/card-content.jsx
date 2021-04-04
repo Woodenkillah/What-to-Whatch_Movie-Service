@@ -16,7 +16,7 @@ const CardContent = ({id, name, posterImage, src, isHovered, activeFilmId}) => {
 
   return (
     <React.Fragment>
-      <div className="small-movie-card__image">
+      <div style={{cursor: `pointer`}} className="small-movie-card__image">
         <img src={posterImage} alt={name} width="280" height="175"/>
       </div>
       <h3 className="small-movie-card__title">

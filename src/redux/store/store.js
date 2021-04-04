@@ -9,7 +9,7 @@ import {combineReducers} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import {redirect} from '../middlewares/redirect';
-import {createAPI} from '../../axios/axios';
+import {createAPI} from '../../services/api';
 import {ActionCreator} from '../auth/actions';
 import {AuthStatuses} from '../../constants';
 

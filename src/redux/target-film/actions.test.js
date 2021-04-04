@@ -1,6 +1,6 @@
 import {ActionCreator} from './actions';
 import {ActionType} from './action-types';
-import {mockSimpleObj} from '../../test-mock';
+import {mockSimpleObj, mockBoolean} from '../../test-mock';
 
 describe(`Target film action creators work correctly`, () => {
   it(`Action creator returns correct action upon setting loaded film object`, () => {
@@ -10,6 +10,15 @@ describe(`Target film action creators work correctly`, () => {
     };
 
     expect(ActionCreator.loadFilm(mockSimpleObj)).toEqual(expectedAction);
+  });
+
+  it(`Action creator returns correct action upon setting loading status`, () => {
+    const expectedAction = {
+      type: ActionType.SET_IS_LOADING,
+      payload: mockBoolean
+    };
+
+    expect(ActionCreator.setIsLoading(mockBoolean)).toEqual(expectedAction);
   });
 
 });

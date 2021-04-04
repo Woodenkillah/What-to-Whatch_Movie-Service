@@ -1,10 +1,10 @@
 import MockAdapter from 'axios-mock-adapter';
-import {createAPI} from '../../axios/axios';
+import {createAPI} from '../../services/api';
 import {fetchReviewsList, uploadUserReview} from './api-actions';
 import {ActionType} from './action-types';
 import {ActionType as MiddlewareActionType} from '../middlewares/action-types';
 import {mockUserReview, mockFilmReviewsData} from '../../test-mock';
-import {ApiRoutes, LoadingStatuses, ReviewsErrorTypes} from '../../constants';
+import {ApiRoutes, ReviewsErrorTypes} from '../../constants';
 
 const api = createAPI(() => {});
 
@@ -13,8 +13,7 @@ describe(`Async api-actions work correctly`, () => {
     const apiMock = new MockAdapter(api);
     const {id} = mockUserReview;
     const dispatch = jest.fn();
-    const setLoadingStatus = jest.fn(() => LoadingStatuses.LOADED);
-    const fetchReviewsListAction = fetchReviewsList(id, setLoadingStatus);
+    const fetchReviewsListAction = fetchReviewsList(id);
 
     apiMock
       .onGet(`${ApiRoutes.COMMENTS}/${id}`)
@@ -22,12 +21,19 @@ describe(`Async api-actions work correctly`, () => {
 
     return fetchReviewsListAction(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
+          type: ActionType.SET_IS_LOADING,
+          payload: true
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_REVIEWS,
           payload: mockFilmReviewsData.adapted
         });
-        expect(setLoadingStatus).toHaveBeenCalledTimes(1);
+        expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: ActionType.SET_IS_LOADING,
+          payload: false
+        });
       });
 
   });

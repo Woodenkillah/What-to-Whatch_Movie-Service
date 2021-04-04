@@ -1,19 +1,16 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReviewItem from '../review-item/review-item';
 import ReviewsList from '../reviews-list/reviews-list';
 import Spinner from '../aux-components/spinner/spinner';
 import {connect} from 'react-redux';
 import {fetchReviewsList} from '../../redux/reviews/api-actions';
-import {getReviewsListSelector} from '../../redux/reviews/selectors';
-import {LoadingStatuses} from '../../constants';
+import {getReviewsListSelector, getReviewsIsLoadingSelector, getReviewsIsLoadingErrorSelector} from '../../redux/reviews/selectors';
 
-const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList}) => {
-
-  const [loadingStatus, setLoadingStatus] = useState(LoadingStatuses.LOADING);
+const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsIsloading, reviewsIsLoadingError}) => {
 
   useEffect(() => {
-    onLoadReviews(targetFilmId, setLoadingStatus);
+    onLoadReviews(targetFilmId);
   }, [targetFilmId]);
 
   let targetReviewsList = [];
@@ -34,7 +31,7 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList}) => {
   }
 
   return (
-    <Spinner loadingStatus={loadingStatus}>
+    <Spinner loadingStatus={reviewsIsloading} isLoadingError={reviewsIsLoadingError}>
       <ReviewsList>
         {targetReviewsList}
       </ReviewsList>
@@ -45,11 +42,15 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList}) => {
 FilmReviews.propTypes = {
   reviewsList: PropTypes.array.isRequired,
   targetFilmId: PropTypes.number.isRequired,
-  onLoadReviews: PropTypes.func.isRequired
+  onLoadReviews: PropTypes.func.isRequired,
+  reviewsIsloading: PropTypes.bool.isRequired,
+  reviewsIsLoadingError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  reviewsList: getReviewsListSelector(state)
+  reviewsList: getReviewsListSelector(state),
+  reviewsIsloading: getReviewsIsLoadingSelector(state),
+  reviewsIsLoadingError: getReviewsIsLoadingErrorSelector(state)
 });
 
 const mapDispatchToProps = {

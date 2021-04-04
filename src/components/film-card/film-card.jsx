@@ -22,6 +22,7 @@ const FilmCard = ({id, name, posterImage, src, onFilmHover, activeFilmId}) => {
 
   const handleFilmCardOpener = () => {
     clearTimeout(previewVideoTimeout);
+    window.scrollTo({top: 0, behavior: `smooth`});
     browserHistory.push({pathname: `/films/${id}`});
   };
 

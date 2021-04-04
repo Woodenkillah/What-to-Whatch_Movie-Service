@@ -12,15 +12,18 @@ import {connect} from 'react-redux';
 import {DEFAULT_PAGE, FILMS_PER_PAGE} from '../../constants';
 import {getGenresList} from '../../helpers';
 import Spinner from '../aux-components/spinner/spinner';
-import {getFilmsLoadingSelector, getFilmsDataSelector, getFilteredFilmsDataSelector} from '../../redux/films/selectors';
-import {getPromoLoadingSelector, getPromoDataSelector} from '../../redux/promo/selectors';
+import {getFilmsIsLoadingSelector, getFilmsDataSelector, getFilteredFilmsDataSelector, getFilmsIsLoadingErrorSelector} from '../../redux/films/selectors';
+import {getPromoIsLoadingSelector, getPromoDataSelector, getPromoIsLoadingErrorSelector} from '../../redux/promo/selectors';
 
-const Main = ({filmsData, promoData, promoLoadingStatus, filmsLoadingStatus, filteredFilms}) => {
+const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilms, filmsIsLoadingError, promoIsLoadingError}) => {
 
   const [page, setPage] = useState(DEFAULT_PAGE);
 
   const genresList = getGenresList(filmsData);
-  const handleShowMore = () => setPage((currentPage) => currentPage + 1);
+  const handleShowMore = () => setPage((currentPage) => {
+    window.scrollTo({top: 0, behavior: `smooth`});
+    return currentPage + 1;
+  });
 
   const limitedFilteredFilms = filteredFilms.slice(0, page * FILMS_PER_PAGE);
 
@@ -39,7 +42,7 @@ const Main = ({filmsData, promoData, promoLoadingStatus, filmsLoadingStatus, fil
         </header>
 
         <div className="movie-card__wrap">
-          <Spinner loadingStatus={promoLoadingStatus}>
+          <Spinner loadingStatus={promoIsLoading} isLoadingError={promoIsLoadingError}>
             <PromoFilm promoData={promoData}/>
           </Spinner>
         </div>
@@ -54,7 +57,7 @@ const Main = ({filmsData, promoData, promoLoadingStatus, filmsLoadingStatus, fil
           </ul>
 
           <div className="catalog__movies-list">
-            <Spinner loadingStatus={filmsLoadingStatus}>
+            <Spinner loadingStatus={filmIsLoading} isLoadingError={filmsIsLoadingError}>
               <FilmsList filmsListData={limitedFilteredFilms}/>
             </Spinner>
           </div>
@@ -79,16 +82,20 @@ Main.propTypes = {
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   promoData: PropTypes.shape(generalPropValidation).isRequired,
-  promoLoadingStatus: PropTypes.string.isRequired,
-  filmsLoadingStatus: PropTypes.string.isRequired
+  promoIsLoading: PropTypes.bool.isRequired,
+  filmIsLoading: PropTypes.bool.isRequired,
+  filmsIsLoadingError: PropTypes.bool.isRequired,
+  promoIsLoadingError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  filmsLoadingStatus: getFilmsLoadingSelector(state),
+  filmIsLoading: getFilmsIsLoadingSelector(state),
   filmsData: getFilmsDataSelector(state),
-  promoLoadingStatus: getPromoLoadingSelector(state),
+  promoIsLoading: getPromoIsLoadingSelector(state),
   promoData: getPromoDataSelector(state),
-  filteredFilms: getFilteredFilmsDataSelector(state)
+  filteredFilms: getFilteredFilmsDataSelector(state),
+  filmsIsLoadingError: getFilmsIsLoadingErrorSelector(state),
+  promoIsLoadingError: getPromoIsLoadingErrorSelector(state),
 });
 
 export default connect(mapStateToProps, null)(Main);
