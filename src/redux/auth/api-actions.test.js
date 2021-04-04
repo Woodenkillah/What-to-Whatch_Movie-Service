@@ -1,5 +1,5 @@
 import MockAdapter from 'axios-mock-adapter';
-import {createAPI} from '../../axios/axios';
+import {createAPI} from '../../services/api';
 import {login, checkAuth, logout} from './api-actions';
 import {ActionType} from './action-types';
 import {ActionType as MiddlewareActionType} from '../middlewares/action-types';

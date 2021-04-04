@@ -1,5 +1,4 @@
 import {ActionType} from './action-types';
-import {LoadingStatuses} from '../../constants';
 
 const initialState = {
   promoData: {
@@ -21,7 +20,8 @@ const initialState = {
     released: 0,
     isFavorite: false
   },
-  promoLoadingStatus: LoadingStatuses.LOADING
+  isLoading: false,
+  isLoadingError: false
 };
 
 const promoReducer = (state = initialState, action) => {
@@ -32,10 +32,16 @@ const promoReducer = (state = initialState, action) => {
         promoData: action.payload
       };
 
-    case ActionType.SET_LOADING:
+    case ActionType.SET_IS_LOADING:
       return {
         ...state,
-        promoLoadingStatus: action.payload
+        isLoading: action.payload
+      };
+
+    case ActionType.SET_IS_LOADING_ERROR:
+      return {
+        ...state,
+        isLoadingError: action.payload,
       };
 
     default:

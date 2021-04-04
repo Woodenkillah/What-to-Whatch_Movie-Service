@@ -1,11 +1,12 @@
-import {DEFAULT_GENRE, SIMILAR_FILMS_LIMIT} from './constants';
+import {DEFAULT_GENRE, GENRES_LIST_LIMIT, SIMILAR_FILMS_LIMIT} from './constants';
 
 export const getGenresList = (films) => {
   const rawGenres = films.map(({genre}) => genre);
   const uniqueGenres = new Set([...rawGenres]);
   const sortedGenres = Array.from(uniqueGenres).sort();
+  const limitedSortedGenres = sortedGenres.slice(0, GENRES_LIST_LIMIT);
 
-  return [DEFAULT_GENRE, ...sortedGenres];
+  return [DEFAULT_GENRE, ...limitedSortedGenres];
 };
 
 export const getSimilarFilms = (films, targetFilmId, targetFilmGenre) => {

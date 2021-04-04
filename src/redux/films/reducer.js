@@ -1,10 +1,11 @@
-import {DEFAULT_GENRE, LoadingStatuses} from '../../constants.js';
+import {DEFAULT_GENRE} from '../../constants.js';
 import {ActionType} from './action-types.js';
 
 const initialState = {
   activeGenre: DEFAULT_GENRE,
   filmsData: [],
-  filmsLoadingStatus: LoadingStatuses.LOADING
+  isLoading: false,
+  isLoadingError: false
 };
 
 const filmsReducer = (state = initialState, action) => {
@@ -21,10 +22,16 @@ const filmsReducer = (state = initialState, action) => {
         filmsData: action.payload,
       };
 
-    case ActionType.SET_LOADING:
+    case ActionType.SET_IS_LOADING:
       return {
         ...state,
-        filmsLoadingStatus: action.payload,
+        isLoading: action.payload,
+      };
+
+    case ActionType.SET_IS_LOADING_ERROR:
+      return {
+        ...state,
+        isLoadingError: action.payload,
       };
 
     default:

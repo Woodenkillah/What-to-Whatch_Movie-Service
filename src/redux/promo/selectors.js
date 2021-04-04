@@ -1,5 +1,5 @@
-import {LoadingStatuses} from '../../constants.js';
 import get from 'lodash/get';
 
-export const getPromoLoadingSelector = (state) => get(state, `promo.promoLoadingStatus`, LoadingStatuses.PENDING);
+export const getPromoIsLoadingSelector = (state) => get(state, `promo.isLoading`, false);
 export const getPromoDataSelector = (state) => get(state, `promo.promoData`, {});
+export const getPromoIsLoadingErrorSelector = (state) => get(state, `favorites.isLoadingError`, [false]);

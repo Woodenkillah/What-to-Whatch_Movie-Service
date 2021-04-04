@@ -19,7 +19,8 @@ const initialState = {
     genre: ``,
     released: 0,
     isFavorite: false
-  }
+  },
+  isLoading: false
 };
 
 const targetFilmReducer = (state = initialState, action) => {
@@ -29,6 +30,12 @@ const targetFilmReducer = (state = initialState, action) => {
         ...state,
         targetFilmData: action.payload
 
+      };
+
+    case ActionType.SET_IS_LOADING:
+      return {
+        ...state,
+        isLoading: action.payload
       };
 
     default:

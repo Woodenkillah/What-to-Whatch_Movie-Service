@@ -1,14 +1,15 @@
 import {ActionCreator} from './actions';
-import {dataToSingleFilmAdapter} from '../../adapters';
-import {LoadingStatuses, ApiRoutes} from '../../constants';
+import {dataToSingleFilmAdapter} from '../../services/adapters';
+import {ApiRoutes} from '../../constants';
 
-export const fetchFilm = (id, setLoadingStatus) => (dispatch, _getState, api) => {
+export const fetchFilm = (id) => (dispatch, _getState, api) => {
   return api.get(`${ApiRoutes.FILMS}/${id}`)
     .then(({data}) => {
+      dispatch(ActionCreator.setIsLoading(true));
       dispatch(ActionCreator.loadFilm(dataToSingleFilmAdapter(data)));
-      setLoadingStatus(LoadingStatuses.LOADED);
+      dispatch(ActionCreator.setIsLoading(false));
     })
     .catch(() => {
-      setLoadingStatus(LoadingStatuses.FAILED);
+      dispatch(ActionCreator.setIsLoading(false));
     });
 };

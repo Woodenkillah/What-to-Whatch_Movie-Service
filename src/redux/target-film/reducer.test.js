@@ -1,6 +1,6 @@
 import {targetFilmReducer, initialState} from './reducer';
 import {ActionCreator} from './actions';
-import {mockSimpleObj} from '../../test-mock';
+import {mockSimpleObj, mockBoolean} from '../../test-mock';
 
 describe(`reviewsReducer works correctly`, () => {
 
@@ -11,6 +11,15 @@ describe(`reviewsReducer works correctly`, () => {
     };
 
     expect(targetFilmReducer(undefined, ActionCreator.loadFilm(mockSimpleObj))).toEqual(expectedState);
+  });
+
+  it(`Reducer should set loading status with setIsLoading action creator`, () => {
+    const expectedState = {
+      ...initialState,
+      isLoading: mockBoolean
+    };
+
+    expect(targetFilmReducer(undefined, ActionCreator.setIsLoading(mockBoolean))).toEqual(expectedState);
   });
 
   it(`Reducer should return initial state in case of empty payload action`, () => {

@@ -1,8 +1,16 @@
 export const DEFAULT_GENRE = `All genres`;
+export const GENRES_LIST_LIMIT = 9;
+
 export const DEFAULT_PAGE = 1;
 export const FILMS_PER_PAGE = 8;
 
 export const SIMILAR_FILMS_LIMIT = 4;
+
+export const TAB_INDEX = {
+  OVERVIEW: 0,
+  DETAILS: 1,
+  REVIEW: 2
+};
 
 export const COMMENTS_SIZES = {
   MIN: 50,
@@ -26,12 +34,6 @@ export const AuthErrorTypes = {
 
 export const ReviewsErrorTypes = {
   BAD_REQUEST: `reviews/uploadReviewError`
-};
-
-export const LoadingStatuses = {
-  LOADING: `load/loading`,
-  LOADED: `load/loaded`,
-  FAILED: `load/failed`
 };
 
 export const AuthStatuses = {
