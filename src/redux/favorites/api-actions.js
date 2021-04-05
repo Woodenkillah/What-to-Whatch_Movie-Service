@@ -1,5 +1,5 @@
 import {ActionCreator} from './actions';
-import {dataToFilmsArrayAdapter} from '../../services/adapters';
+import {dataToFilmsArrayAdapter, dataToSingleFilmAdapter} from '../../services/adapters';
 import {ApiRoutes} from '../../constants';
 
 export const fetchFavoritesList = () => (dispatch, _getState, api) => {
@@ -15,6 +15,14 @@ export const fetchFavoritesList = () => (dispatch, _getState, api) => {
     });
 };
 
-export const setFavorite = (id, status) => (_dispatch, _getState, api) => {
-  return api.post(`${ApiRoutes.FAVORITES}/${id}/${status}`);
+export const setFavorite = (id, status) => (dispatch, _getState, api) => {
+  return api.post(`${ApiRoutes.FAVORITES}/${id}/${status}`)
+    .then(({data}) => {
+      if (status) {
+        dispatch(ActionCreator.addFavorite(dataToSingleFilmAdapter(data)));
+      } else {
+        dispatch(ActionCreator.removeFavorite(dataToSingleFilmAdapter(data)));
+      }
+    })
+    .catch(() => {});
 };

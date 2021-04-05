@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
@@ -10,11 +10,7 @@ import {connect} from 'react-redux';
 import {getFavoritesDataSelector, getIsLoadingSelector, getIsLoadingErrorSelector} from '../../redux/favorites/selectors';
 import {fetchFavoritesList} from '../../redux/favorites/api-actions';
 
-const MyList = ({favoritesData, onLoadFavorites, favoritesIsLoading, favoritesIsLoadingError}) => {
-
-  useEffect(() => {
-    onLoadFavorites();
-  }, []);
+const MyList = ({favoritesData, favoritesIsLoading, favoritesIsLoadingError}) => {
 
   return (
     <div className="user-page">

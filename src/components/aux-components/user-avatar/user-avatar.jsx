@@ -40,7 +40,7 @@ const {containerStyle, avatarStyle, authInfoStyle, linkStyle, textStyle} = userE
 const UserAvatar = ({onLogout, userEmail, userAvatar}) => {
 
   const handleMylistOpener = () => {
-    browserHistory.push({pathname: AppRoutes.MY_LIST});
+    browserHistory.push(AppRoutes.MY_LIST);
   };
 
   return (

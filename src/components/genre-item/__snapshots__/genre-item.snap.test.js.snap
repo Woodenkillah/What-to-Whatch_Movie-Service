@@ -3,13 +3,13 @@
 exports[`Should render correctly 1`] = `
 <div>
   <li
-    class="catalog__genres-item"
+    class="catalog__genres-item catalog__genres-item--active"
   >
     <a
       class="catalog__genres-link"
       href="#"
     >
-      1
+      test
     </a>
   </li>
 </div>

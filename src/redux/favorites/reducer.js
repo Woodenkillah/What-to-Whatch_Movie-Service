@@ -14,6 +14,24 @@ const favoritesReducer = (state = initialState, action) => {
         favoritesData: action.payload,
       };
 
+    case ActionType.CLEAR_FAVORITES:
+      return {
+        ...state,
+        favoritesData: action.payload,
+      };
+
+    case ActionType.ADD_FAVORITE:
+      return {
+        ...state,
+        favoritesData: [...state.favoritesData, action.payload]
+      };
+
+    case ActionType.REMOVE_FAVORITE:
+      return {
+        ...state,
+        favoritesData: state.favoritesData.filter(({id}) => id !== action.payload.id)
+      };
+
     case ActionType.SET_IS_LOADING:
       return {
         ...state,

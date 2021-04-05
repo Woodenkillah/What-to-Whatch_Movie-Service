@@ -12,14 +12,14 @@ const FilmsList = ({filmsListData}) => {
     return <h2>The were no films added yet.</h2>;
   }
 
-  return filmsListData.map((item, index) => {
+  return filmsListData.map((item) => {
     return (
       <FilmCard
         name={item.name}
         posterImage={item.posterImage}
         id={item.id}
         src={item.previewVideoLink}
-        key={item.id + index}
+        key={`${item.id}-${item.name}`}
         onFilmHover={handleFilmHover}
         activeFilmId={activeFilmId}
       />

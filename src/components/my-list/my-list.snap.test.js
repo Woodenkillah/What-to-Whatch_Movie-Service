@@ -4,8 +4,8 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import GenreItem from './genre-item';
-import {mockStringValue, mockInitialStoreData} from '../../test-mock';
+import MyList from './my-list';
+import {mockFilmsListData, mockInitialStoreData, mockBoolean} from '../../test-mock';
 
 const mockStore = configureStore({});
 
@@ -17,10 +17,10 @@ it(`Should render correctly`, () => {
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <GenreItem
-            title={mockStringValue}
-            onChangeGenre={jest.fn()}
-            activeGenre={mockStringValue}
+          <MyList
+            favoritesData={mockFilmsListData.adapted}
+            favoritesIsLoading={mockBoolean}
+            favoritesIsLoadingError={mockBoolean}
           />
         </Router>
       </redux.Provider>

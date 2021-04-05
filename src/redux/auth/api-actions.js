@@ -1,5 +1,7 @@
 import {ActionCreator} from './actions';
 import {ActionCreator as MiddlewaresActionCreator} from '../middlewares/actions';
+import {fetchFavoritesList} from '../favorites/api-actions';
+import {ActionCreator as FavoritesActonCreator} from '../favorites/actions';
 import {AuthStatuses} from '../../constants';
 import {dataToUserInfoAdapter} from '../../services/adapters';
 import {AppRoutes, ApiRoutes, HttpStatusCodes, AuthErrorTypes} from '../../constants';
@@ -9,6 +11,7 @@ export const login = (userData) => (dispatch, _getState, api) => {
     .then(({data}) => {
       dispatch(ActionCreator.setAuth(AuthStatuses.AUTH));
       dispatch(ActionCreator.setUserData(dataToUserInfoAdapter(data)));
+      dispatch(fetchFavoritesList());
       dispatch(MiddlewaresActionCreator.redirectToRoute(AppRoutes.ROOT));
       dispatch(ActionCreator.setErrorType(``));
     })
@@ -26,6 +29,7 @@ export const checkAuth = () => (dispatch, _getState, api) => {
     .then(({data}) => {
       dispatch(ActionCreator.setAuth(AuthStatuses.AUTH));
       dispatch(ActionCreator.setUserData(dataToUserInfoAdapter(data)));
+      dispatch(fetchFavoritesList());
     })
     .catch(() => {});
 };
@@ -35,6 +39,7 @@ export const logout = () => (dispatch, _getState, api) => {
   .then(() => {
     dispatch(ActionCreator.setAuth(AuthStatuses.NO_AUTH));
     dispatch(ActionCreator.setUserData({email: ``, avatar: ``}));
+    dispatch(FavoritesActonCreator.clearFavorites());
     dispatch(MiddlewaresActionCreator.redirectToRoute(AppRoutes.ROOT));
   })
   .catch(() => {});

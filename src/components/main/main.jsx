@@ -42,7 +42,7 @@ const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilm
         </header>
 
         <div className="movie-card__wrap">
-          <Spinner loadingStatus={promoIsLoading} isLoadingError={promoIsLoadingError}>
+          <Spinner isLoading={promoIsLoading} isLoadingError={promoIsLoadingError}>
             <PromoFilm promoData={promoData}/>
           </Spinner>
         </div>
@@ -57,7 +57,7 @@ const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilm
           </ul>
 
           <div className="catalog__movies-list">
-            <Spinner loadingStatus={filmIsLoading} isLoadingError={filmsIsLoadingError}>
+            <Spinner isLoading={filmIsLoading} isLoadingError={filmsIsLoadingError}>
               <FilmsList filmsListData={limitedFilteredFilms}/>
             </Spinner>
           </div>

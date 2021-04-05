@@ -3,6 +3,7 @@ import {createAPI} from '../../services/api';
 import {login, checkAuth, logout} from './api-actions';
 import {ActionType} from './action-types';
 import {ActionType as MiddlewareActionType} from '../middlewares/action-types';
+import {ActionType as FavoritesActonType} from '../favorites/action-types';
 import {mockUserData, mockLoginUserData, mockLogoutUserData} from '../../test-mock';
 import {ApiRoutes, AppRoutes, AuthStatuses} from '../../constants';
 
@@ -20,7 +21,7 @@ describe(`Async api-actions work correctly`, () => {
 
     return loginAction(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(4);
+        expect(dispatch).toHaveBeenCalledTimes(5);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_AUTH,
           payload: AuthStatuses.AUTH
@@ -29,11 +30,11 @@ describe(`Async api-actions work correctly`, () => {
           type: ActionType.SET_USER_DATA,
           payload: mockLoginUserData.adapted
         });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: MiddlewareActionType.REDIRECT_TO_ROUTE,
           payload: AppRoutes.ROOT
         });
-        expect(dispatch).toHaveBeenNthCalledWith(4, {
+        expect(dispatch).toHaveBeenNthCalledWith(5, {
           type: ActionType.SET_ERROR_TYPE,
           payload: ``
         });
@@ -51,7 +52,7 @@ describe(`Async api-actions work correctly`, () => {
 
     return checkAuthAction(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(2);
+        expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_AUTH,
           payload: AuthStatuses.AUTH
@@ -74,7 +75,7 @@ describe(`Async api-actions work correctly`, () => {
 
     return logoutAction(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(4);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
           type: ActionType.SET_AUTH,
           payload: AuthStatuses.NO_AUTH
@@ -84,6 +85,10 @@ describe(`Async api-actions work correctly`, () => {
           payload: mockLogoutUserData
         });
         expect(dispatch).toHaveBeenNthCalledWith(3, {
+          type: FavoritesActonType.CLEAR_FAVORITES,
+          payload: []
+        });
+        expect(dispatch).toHaveBeenNthCalledWith(4, {
           type: MiddlewareActionType.REDIRECT_TO_ROUTE,
           payload: AppRoutes.ROOT
         });

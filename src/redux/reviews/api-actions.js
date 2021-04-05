@@ -12,6 +12,7 @@ export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
     })
     .catch(() => {
       dispatch(ActionCreator.setIsLoading(false));
+      dispatch(ActionCreator.setIsLoadingError(true));
     });
 };
 

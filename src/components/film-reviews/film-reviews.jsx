@@ -31,7 +31,7 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsIsloading
   }
 
   return (
-    <Spinner loadingStatus={reviewsIsloading} isLoadingError={reviewsIsLoadingError}>
+    <Spinner isLoading={reviewsIsloading} isLoadingError={reviewsIsLoadingError}>
       <ReviewsList>
         {targetReviewsList}
       </ReviewsList>

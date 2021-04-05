@@ -20,7 +20,8 @@ const initialState = {
     released: 0,
     isFavorite: false
   },
-  isLoading: false
+  isLoading: false,
+  isLoadingError: false
 };
 
 const targetFilmReducer = (state = initialState, action) => {
@@ -36,6 +37,12 @@ const targetFilmReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload
+      };
+
+    case ActionType.SET_IS_LOADING_ERROR:
+      return {
+        ...state,
+        isLoadingError: action.payload,
       };
 
     default:

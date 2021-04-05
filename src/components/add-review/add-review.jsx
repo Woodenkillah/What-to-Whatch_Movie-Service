@@ -9,6 +9,7 @@ import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
 import {getTargetFilmDataSelector} from '../../redux/target-film/selectors';
 import {uploadUserReview} from '../../redux/reviews/api-actions';
+import {AppRoutes} from '../../constants';
 
 const AddReview = ({targetFilmData, onUploadUserReview}) => {
 
@@ -60,7 +61,7 @@ const AddReview = ({targetFilmData, onUploadUserReview}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={{pathname: `/films/${targetFilmData.id}`}} className="breadcrumbs__link">{targetFilmData.name}</Link>
+                <Link to={`${AppRoutes.FILMS}/${targetFilmData.id}`} className="breadcrumbs__link">{targetFilmData.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

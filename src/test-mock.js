@@ -256,7 +256,8 @@ export const mockInitialStoreData = {
     films: {
       activeGenre: `All genres`,
       filmsData: [],
-      filmsLoadingStatus: `load/loading`
+      isLoading: false,
+      isLoadingError: false
     },
     promo: {
       promoData: {

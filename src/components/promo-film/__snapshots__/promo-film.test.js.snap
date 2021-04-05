@@ -59,7 +59,6 @@ exports[`Should render correctly 1`] = `
         </button>
         <button
           class="btn btn--list movie-card__button"
-          style="display: none;"
           type="button"
         >
           <svg

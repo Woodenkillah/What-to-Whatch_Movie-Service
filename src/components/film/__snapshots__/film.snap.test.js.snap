@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correectly 1`] = `
+<div>
+  <div
+    class="user-page"
+  >
+    <header
+      class="page-header user-page__head"
+    >
+      <div
+        class="logo"
+      >
+        <a
+          aria-current="page"
+          class="logo__link active"
+          href="/"
+        >
+          <span
+            class="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            class="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            class="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <h1
+        class="page-title user-page__title"
+      >
+        404 - Page is not found!
+      </h1>
+      <p
+        style="color: rgb(201, 179, 126); position: absolute; left: 200px; right: 200px; text-align: center; top: 75%;"
+      >
+        Please check the correctness of URL or contact to an administrator, whoever he is...
+      </p>
+      <a
+        href="/"
+        style="color: rgb(201, 179, 126); position: absolute; left: 200px; right: 200px; text-align: center; bottom: -100px; cursor: pointer; font-size: 24px;"
+      >
+        Return to home page
+      </a>
+    </header>
+  </div>
+</div>
+`;
