@@ -1,7 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const FilmDetails = ({director, starring, runTime, genre, released}) => {
+const FilmDetails = ({
+  director,
+  starring,
+  runTime,
+  genre,
+  released
+}) => {
 
   const starringList = starring.join(`, `);
 

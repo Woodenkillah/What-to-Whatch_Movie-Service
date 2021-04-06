@@ -43,8 +43,8 @@ export const mockLoginUserData = {
 };
 
 export const mockLogoutUserData = {
-  email: ``,
-  avatar: ``
+  email: null,
+  avatar: null
 };
 
 export const mockUserReview = {

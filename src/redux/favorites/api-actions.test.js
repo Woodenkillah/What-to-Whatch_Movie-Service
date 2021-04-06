@@ -8,16 +8,16 @@ import {ApiRoutes} from '../../constants';
 const api = createAPI(() => {});
 
 describe(`Async api-actions work correctly`, () => {
-  it(`Should make a correct API call to /favorites for receiving favorites list`, () => {
+  it(`Should make a correct API call to /favorite for receiving film reviews`, () => {
     const apiMock = new MockAdapter(api);
     const dispatch = jest.fn();
-    const fetchFavoritesAction = fetchFavoritesList();
+    const fetchFavoritesListAction = fetchFavoritesList();
 
     apiMock
       .onGet(ApiRoutes.FAVORITES)
       .reply(200, mockFilmsListData.api);
 
-    return fetchFavoritesAction(dispatch, () => {}, api)
+    return fetchFavoritesListAction(dispatch, () => {}, api)
       .then(() => {
         expect(dispatch).toHaveBeenCalledTimes(3);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
@@ -33,6 +33,8 @@ describe(`Async api-actions work correctly`, () => {
           payload: false
         });
       });
+
   });
+
 
 });

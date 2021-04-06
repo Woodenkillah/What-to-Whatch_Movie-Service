@@ -58,8 +58,10 @@ exports[`Should render correctly 1`] = `
     <div
       class="movie-card__wrap"
     >
-      <h2>
-        There is no promo film currently available.
+      <h2
+        style="color: rgb(238, 229, 181);"
+      >
+        Loading data...
       </h2>
     </div>
   </section>

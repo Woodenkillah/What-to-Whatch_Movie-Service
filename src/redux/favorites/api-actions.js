@@ -7,11 +7,12 @@ export const fetchFavoritesList = () => (dispatch, _getState, api) => {
     .then(({data}) => {
       dispatch(ActionCreator.setIsLoading(true));
       dispatch(ActionCreator.loadFavorites(dataToFilmsArrayAdapter(data)));
-      dispatch(ActionCreator.setIsLoading(false));
     })
     .catch(() => {
-      dispatch(ActionCreator.setIsLoading(false));
       dispatch(ActionCreator.setIsLoadingError(true));
+    })
+    .finally(() => {
+      dispatch(ActionCreator.setIsLoading(false));
     });
 };
 

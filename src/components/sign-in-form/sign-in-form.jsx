@@ -90,7 +90,7 @@ const SignInForm = ({onLogin, errorType}) => {
 
 SignInForm.propTypes = {
   onLogin: PropTypes.func.isRequired,
-  errorType: PropTypes.string.isRequired
+  errorType: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

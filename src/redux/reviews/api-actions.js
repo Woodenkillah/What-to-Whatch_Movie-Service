@@ -6,13 +6,13 @@ import {ApiRoutes} from '../../constants';
 export const fetchReviewsList = (id) => (dispatch, _getState, api) => {
   return api.get(`${ApiRoutes.COMMENTS}/${id}`)
     .then(({data}) => {
-      dispatch(ActionCreator.setIsLoading(true));
       dispatch(ActionCreator.loadReviews(dataToReviewItemAdapter(data)));
-      dispatch(ActionCreator.setIsLoading(false));
     })
     .catch(() => {
-      dispatch(ActionCreator.setIsLoading(false));
       dispatch(ActionCreator.setIsLoadingError(true));
+    })
+    .finally(() => {
+      dispatch(ActionCreator.setIsLoading(false));
     });
 };
 

@@ -3,16 +3,20 @@ import PropTypes from 'prop-types';
 import LoadingProcess from '../loading-process/loading-process';
 import LoadingFail from '../loading-fail/loading-fail';
 
-const Spinner = ({isLoading, isLoadingError, children}) => {
+const Spinner = ({isLoading, isLoadingError, loadedData, children}) => {
 
-  if (isLoading && !isLoadingError) {
-    return <LoadingProcess/>;
-  } else if (!isLoading && !isLoadingError) {
-    return children;
+  if (!loadedData) {
+    if (!isLoadingError && (isLoading || !isLoading)) {
+      return <LoadingProcess/>;
+    } else {
+      return <LoadingFail/>;
+    }
   } else {
-    return <LoadingFail/>;
+    return children;
   }
+
 };
+
 
 Spinner.propTypes = {
   isLoading: PropTypes.bool.isRequired,

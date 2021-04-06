@@ -1,25 +1,7 @@
 import {ActionType} from './action-types';
 
 const initialState = {
-  targetFilmData: {
-    id: 0,
-    name: ``,
-    posterImage: ``,
-    previewImage: ``,
-    backgroundImage: ``,
-    backgroundColor: ``,
-    videoLink: ``,
-    previewVideoLink: ``,
-    description: ``,
-    rating: 0,
-    scoresCount: 0,
-    director: ``,
-    starring: [],
-    runTime: 0,
-    genre: ``,
-    released: 0,
-    isFavorite: false
-  },
+  targetFilmData: null,
   isLoading: false,
   isLoadingError: false
 };

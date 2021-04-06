@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getCurrentDate} from '../../helpers';
 
-const ReviewItem = ({rating, comment, date, user}) => {
+const ReviewItem = ({
+  rating,
+  comment,
+  date,
+  user
+}) => {
 
   const currentDate = getCurrentDate(date);
 

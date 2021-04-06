@@ -36,7 +36,7 @@ describe(`Async api-actions work correctly`, () => {
         });
         expect(dispatch).toHaveBeenNthCalledWith(5, {
           type: ActionType.SET_ERROR_TYPE,
-          payload: ``
+          payload: null
         });
       });
   });

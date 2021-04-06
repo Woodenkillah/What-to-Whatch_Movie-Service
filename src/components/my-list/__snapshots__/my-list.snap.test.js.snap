@@ -79,10 +79,8 @@ exports[`Should render correctly 1`] = `
       <div
         class="catalog__movies-list"
       >
-        <h2
-          style="color: rgb(238, 229, 181);"
-        >
-          Loading data...
+        <h2>
+          The were no films added yet.
         </h2>
       </div>
     </section>

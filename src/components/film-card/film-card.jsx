@@ -6,7 +6,14 @@ import {AppRoutes} from '../../constants';
 
 let previewVideoTimeout = null;
 
-const FilmCard = ({id, name, posterImage, src, onFilmHover, activeFilmId}) => {
+const FilmCard = ({
+  id,
+  name,
+  posterImage,
+  src,
+  onFilmHover,
+  activeFilmId
+}) => {
 
   const [isHovered, setIsHovered] = React.useState(false);
 

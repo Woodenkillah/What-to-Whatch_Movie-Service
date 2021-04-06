@@ -8,10 +8,17 @@ import {setFavorite} from '../../redux/favorites/api-actions';
 import {AuthStatuses, AppRoutes} from '../../constants';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
 import {getFavoritesDataSelector} from '../../redux/favorites/selectors';
+import {getPromoIsLoadingErrorSelector} from '../../redux/promo/selectors';
 
-const PromoFilm = ({promoData, favoritesData, onSetFavorite, authorizationStatus}) => {
+const PromoFilm = ({
+  promoData,
+  favoritesData,
+  onSetFavorite,
+  authorizationStatus,
+  promoIsLoadingError
+}) => {
 
-  if (Object.keys(promoData).length === 0) {
+  if (!promoData || promoIsLoadingError) {
     return <h2>There is no promo film currently available.</h2>;
   }
 
@@ -73,17 +80,19 @@ const PromoFilm = ({promoData, favoritesData, onSetFavorite, authorizationStatus
 
 
 PromoFilm.propTypes = {
-  promoData: PropTypes.shape(generalPropValidation).isRequired,
+  promoData: PropTypes.shape(generalPropValidation),
   favoritesData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
   onSetFavorite: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
+  promoIsLoadingError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatusSelector(state),
-  favoritesData: getFavoritesDataSelector(state)
+  favoritesData: getFavoritesDataSelector(state),
+  promoIsLoadingError: getPromoIsLoadingErrorSelector(state)
 });
 
 const mapDispatchToProps = {

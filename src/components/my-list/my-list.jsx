@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
-import Logo from '../aux-components/logo/logo';
-import UserAvatar from '../aux-components/user-avatar/user-avatar';
-import Footer from '../aux-components/footer/footer';
-import Spinner from '../aux-components/spinner/spinner';
+import Logo from '../UI-components/logo/logo';
+import UserAvatar from '../UI-components/user-avatar/user-avatar';
+import Footer from '../UI-components/footer/footer';
+import Spinner from '../UI-components/spinner/spinner';
 import {connect} from 'react-redux';
 import {getFavoritesDataSelector, getIsLoadingSelector, getIsLoadingErrorSelector} from '../../redux/favorites/selectors';
 import {fetchFavoritesList} from '../../redux/favorites/api-actions';
@@ -23,7 +23,7 @@ const MyList = ({favoritesData, favoritesIsLoading, favoritesIsLoadingError}) =>
       <section className="catalog">
         <h2 className="catalog__title visually-hidden">Catalog</h2>
         <div className="catalog__movies-list">
-          <Spinner isLoading={favoritesIsLoading} isLoadingError={favoritesIsLoadingError}>
+          <Spinner isLoading={favoritesIsLoading} isLoadingError={favoritesIsLoadingError} loadedData={favoritesData}>
             <FilmsList filmsListData={favoritesData}/>
           </Spinner>
         </div>

@@ -6,25 +6,33 @@ import classNames from 'classnames';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetails from '../film-details/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
-import Logo from '../aux-components/logo/logo';
+import Logo from '../UI-components/logo/logo';
 import AuthHolder from '../auth-holder/auth-holder';
-import Footer from '../aux-components/footer/footer';
-import Tabs from '../aux-components/tabs/tabs';
-import Spinner from '../aux-components/spinner/spinner';
+import Footer from '../UI-components/footer/footer';
+import Tabs from '../UI-components/tabs/tabs';
 import Page404 from '../404-page/404-page';
 import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
-import {getTargetFilmDataSelector, getTargetFilmIsLoadingSelector, getTargetFilmIsLoadingErrorSelector} from '../../redux/target-film/selectors';
+import {getTargetFilmDataSelector, getTargetFilmIsLoadingErrorSelector} from '../../redux/target-film/selectors';
 import {getFavoritesDataSelector} from '../../redux/favorites/selectors';
 import browserHistory from '../../browser-history';
 import {setFavorite} from '../../redux/favorites/api-actions';
 import {fetchFilm} from '../../redux/target-film/api-actions';
 import {AppRoutes, AuthStatuses, TAB_INDEX} from '../../constants';
 import {getSimilarFilms} from '../../helpers';
+import LoadingProcess from '../UI-components/loading-process/loading-process';
 
-const Film = ({filmsData, targetFilmData, favoritesData, onSetFavorite, authorizationStatus, onFetchFilm, targetFilmIsLoading, targetFilmIsLoadingError}) => {
+const Film = ({
+  filmsData,
+  targetFilmData,
+  favoritesData,
+  onSetFavorite,
+  authorizationStatus,
+  onFetchFilm,
+  targetFilmIsLoadingError
+}) => {
 
   const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
 
@@ -34,8 +42,12 @@ const Film = ({filmsData, targetFilmData, favoritesData, onSetFavorite, authoriz
     onFetchFilm(targetFilmId);
   }, [targetFilmId]);
 
-  if (!targetFilmData.name) {
-    return <Page404/>;
+  if (!targetFilmData) {
+    if (targetFilmIsLoadingError) {
+      return <Page404/>;
+    } else {
+      return <LoadingProcess/>;
+    }
   }
 
   const handleFilmPlayerOpener = () => {
@@ -59,7 +71,7 @@ const Film = ({filmsData, targetFilmData, favoritesData, onSetFavorite, authoriz
   const similarFilmsList = getSimilarFilms(filmsData, targetFilmId, targetFilmData.genre);
 
   return (
-    <Spinner isLoading={targetFilmIsLoading} isLoadingError={targetFilmIsLoadingError}>
+    <React.Fragment>
       <section className="movie-card movie-card--full">
         <div className="movie-card__hero">
           <div className="movie-card__bg">
@@ -170,7 +182,7 @@ const Film = ({filmsData, targetFilmData, favoritesData, onSetFavorite, authoriz
         </section>
         <Footer/>
       </div>
-    </Spinner>
+    </React.Fragment>
   );
 
 };
@@ -185,8 +197,7 @@ Film.propTypes = {
   onSetFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onFetchFilm: PropTypes.func.isRequired,
-  targetFilmData: PropTypes.object.isRequired,
-  targetFilmIsLoading: PropTypes.bool.isRequired,
+  targetFilmData: PropTypes.object,
   targetFilmIsLoadingError: PropTypes.bool.isRequired,
 };
 
@@ -194,7 +205,6 @@ const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatusSelector(state),
   filmsData: getFilmsDataSelector(state),
   targetFilmData: getTargetFilmDataSelector(state),
-  targetFilmIsLoading: getTargetFilmIsLoadingSelector(state),
   favoritesData: getFavoritesDataSelector(state),
   targetFilmIsLoadingError: getTargetFilmIsLoadingErrorSelector(state)
 });

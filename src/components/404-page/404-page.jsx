@@ -1,7 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
 import {AppRoutes} from '../../constants';
-import Logo from '../aux-components/logo/logo';
+import Logo from '../UI-components/logo/logo';
 
 const message404 = {
   color: `#C9B37E`,

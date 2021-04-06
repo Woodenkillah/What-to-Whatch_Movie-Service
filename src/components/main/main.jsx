@@ -3,19 +3,27 @@ import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import FilmsList from '../films-list/films-list';
 import PromoFilm from '../promo-film/promo-film';
-import Logo from '../aux-components/logo/logo';
+import Logo from '../UI-components/logo/logo';
 import AuthHolder from '../auth-holder/auth-holder';
-import Footer from '../aux-components/footer/footer';
+import Footer from '../UI-components/footer/footer';
 import GenresList from '../genres-list/genres-list';
 import ShowMore from '../show-more/show-more';
 import {connect} from 'react-redux';
 import {DEFAULT_PAGE, FILMS_PER_PAGE} from '../../constants';
 import {getGenresList} from '../../helpers';
-import Spinner from '../aux-components/spinner/spinner';
+import Spinner from '../UI-components/spinner/spinner';
 import {getFilmsIsLoadingSelector, getFilmsDataSelector, getFilteredFilmsDataSelector, getFilmsIsLoadingErrorSelector} from '../../redux/films/selectors';
 import {getPromoIsLoadingSelector, getPromoDataSelector, getPromoIsLoadingErrorSelector} from '../../redux/promo/selectors';
 
-const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilms, filmsIsLoadingError, promoIsLoadingError}) => {
+const Main = ({
+  filmsData,
+  promoData,
+  filmIsLoading,
+  promoIsLoading,
+  filteredFilms,
+  filmsIsLoadingError,
+  promoIsLoadingError
+}) => {
 
   const [page, setPage] = useState(DEFAULT_PAGE);
 
@@ -42,7 +50,7 @@ const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilm
         </header>
 
         <div className="movie-card__wrap">
-          <Spinner isLoading={promoIsLoading} isLoadingError={promoIsLoadingError}>
+          <Spinner isLoading={promoIsLoading} isLoadingError={promoIsLoadingError} loadedData={promoData}>
             <PromoFilm promoData={promoData}/>
           </Spinner>
         </div>
@@ -57,7 +65,7 @@ const Main = ({filmsData, promoData, filmIsLoading, promoIsLoading, filteredFilm
           </ul>
 
           <div className="catalog__movies-list">
-            <Spinner isLoading={filmIsLoading} isLoadingError={filmsIsLoadingError}>
+            <Spinner isLoading={filmIsLoading} isLoadingError={filmsIsLoadingError} loadedData={limitedFilteredFilms}>
               <FilmsList filmsListData={limitedFilteredFilms}/>
             </Spinner>
           </div>
@@ -81,7 +89,7 @@ Main.propTypes = {
   filteredFilms: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ),
-  promoData: PropTypes.shape(generalPropValidation).isRequired,
+  promoData: PropTypes.shape(generalPropValidation),
   promoIsLoading: PropTypes.bool.isRequired,
   filmIsLoading: PropTypes.bool.isRequired,
   filmsIsLoadingError: PropTypes.bool.isRequired,

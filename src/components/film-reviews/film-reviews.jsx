@@ -2,12 +2,18 @@ import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import ReviewItem from '../review-item/review-item';
 import ReviewsList from '../reviews-list/reviews-list';
-import Spinner from '../aux-components/spinner/spinner';
+import Spinner from '../UI-components/spinner/spinner';
 import {connect} from 'react-redux';
 import {fetchReviewsList} from '../../redux/reviews/api-actions';
 import {getReviewsListSelector, getReviewsIsLoadingSelector, getReviewsIsLoadingErrorSelector} from '../../redux/reviews/selectors';
 
-const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsIsloading, reviewsIsLoadingError}) => {
+const FilmReviews = ({
+  targetFilmId,
+  onLoadReviews,
+  reviewsList,
+  reviewsIsloading,
+  reviewsIsLoadingError
+}) => {
 
   useEffect(() => {
     onLoadReviews(targetFilmId);
@@ -31,8 +37,8 @@ const FilmReviews = ({targetFilmId, onLoadReviews, reviewsList, reviewsIsloading
   }
 
   return (
-    <Spinner isLoading={reviewsIsloading} isLoadingError={reviewsIsLoadingError}>
-      <ReviewsList>
+    <Spinner isLoading={reviewsIsloading} isLoadingError={reviewsIsLoadingError} loadedData={targetReviewsList}>
+      <ReviewsList isLoadingError={reviewsIsLoadingError}>
         {targetReviewsList}
       </ReviewsList>
     </Spinner>

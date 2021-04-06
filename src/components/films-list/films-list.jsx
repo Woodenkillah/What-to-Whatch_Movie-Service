@@ -8,7 +8,7 @@ const FilmsList = ({filmsListData}) => {
   const [activeFilmId, setActiveFilmId] = React.useState(``);
   const handleFilmHover = React.useCallback((filmId) => () => setActiveFilmId(filmId), []);
 
-  if (!filmsListData.length) {
+  if (filmsListData.length === 0) {
     return <h2>The were no films added yet.</h2>;
   }
 
