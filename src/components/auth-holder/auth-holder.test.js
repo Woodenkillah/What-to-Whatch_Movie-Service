@@ -7,7 +7,7 @@ import configureStore from 'redux-mock-store';
 import {mockInitialStoreData, mockFullStoreData} from '../../test-mock';
 import AuthHolder from './auth-holder';
 import SignInLink from '../sign-in-link/sign-in-link';
-import UserAvatar from '../aux-components/user-avatar/user-avatar';
+import UserAvatar from '../UI-components/user-avatar/user-avatar';
 
 const mockStore = configureStore({});
 

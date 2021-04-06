@@ -1,0 +1,148 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should render correctly 1`] = `
+<div>
+  <section
+    class="movie-card"
+  >
+    <div
+      class="movie-card__bg"
+    >
+      <img
+        alt="The Grand Budapest Hotel"
+        src="img/bg-the-grand-budapest-hotel.jpg"
+      />
+    </div>
+    <h1
+      class="visually-hidden"
+    >
+      WTW
+    </h1>
+    <header
+      class="page-header movie-card__head"
+    >
+      <div
+        class="logo"
+      >
+        <a
+          aria-current="page"
+          class="logo__link active"
+          href="/"
+        >
+          <span
+            class="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            class="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            class="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <a
+        href="/login"
+        style="color: rgb(217, 205, 141); text-align: right; text-decoration: none; margin-left: auto; padding: 5px; border: 1px solid #d9cd8d; border-radius: 10px;"
+      >
+        <h2>
+          Sign in
+        </h2>
+      </a>
+    </header>
+    <div
+      class="movie-card__wrap"
+    >
+      <h2
+        style="color: rgb(238, 229, 181);"
+      >
+        Loading data...
+      </h2>
+    </div>
+  </section>
+  <div
+    class="page-content"
+  >
+    <section
+      class="catalog"
+    >
+      <h2
+        class="catalog__title visually-hidden"
+      >
+        Catalog
+      </h2>
+      <ul
+        class="catalog__genres-list"
+      >
+        <li
+          class="catalog__genres-item catalog__genres-item--active"
+        >
+          <a
+            class="catalog__genres-link"
+            href="#"
+          >
+            All genres
+          </a>
+        </li>
+      </ul>
+      <div
+        class="catalog__movies-list"
+      >
+        <h2>
+          The were no films added yet.
+        </h2>
+      </div>
+      <div
+        class="catalog__more"
+      >
+        <button
+          class="catalog__button"
+          style="display: none;"
+          type="button"
+        >
+          Show more
+        </button>
+      </div>
+    </section>
+    <footer
+      class="page-footer"
+    >
+      <div
+        class="logo"
+      >
+        <a
+          class="logo__link logo__link--light"
+        >
+          <span
+            class="logo__letter logo__letter--1"
+          >
+            W
+          </span>
+          <span
+            class="logo__letter logo__letter--2"
+          >
+            T
+          </span>
+          <span
+            class="logo__letter logo__letter--3"
+          >
+            W
+          </span>
+        </a>
+      </div>
+      <div
+        class="copyright"
+      >
+        <p>
+          © 2021 What to watch Ltd.
+        </p>
+      </div>
+    </footer>
+  </div>
+</div>
+`;

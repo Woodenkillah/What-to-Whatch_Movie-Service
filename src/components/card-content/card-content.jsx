@@ -3,7 +3,14 @@ import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
 import VideoElement from '../video-element/video-element';
 
-const CardContent = ({id, name, posterImage, src, isHovered, activeFilmId}) => {
+const CardContent = ({
+  id,
+  name,
+  posterImage,
+  src,
+  isHovered,
+  activeFilmId
+}) => {
 
   if (isHovered && activeFilmId === id) {
     return (

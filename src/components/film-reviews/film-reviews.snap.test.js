@@ -4,23 +4,23 @@ import {Router} from 'react-router-dom';
 import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
-import VideoElement from './video-element';
-import {mockFullStoreData, mockStringSrc, mockBoolean} from '../../test-mock';
+import FilmReviews from './film-reviews';
+import {mockNumValue, mockInitialStoreData, mockFilmReviewsData} from '../../test-mock';
 
 const mockStore = configureStore({});
 
 it(`Should render correctly`, () => {
 
   const history = createMemoryHistory();
-  const store = mockStore(mockFullStoreData);
+  const store = mockStore(mockInitialStoreData);
   store.dispatch = () => {};
   const {container} = render(
       <redux.Provider store={store}>
         <Router history={history}>
-          <VideoElement
-            src={mockStringSrc}
-            poster={mockStringSrc}
-            isPreview={mockBoolean}
+          <FilmReviews
+            targetFilmId={mockNumValue}
+            onLoadReviews={jest.fn()}
+            reviewsList={mockFilmReviewsData.adapted}
           />
         </Router>
       </redux.Provider>

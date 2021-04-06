@@ -43,8 +43,8 @@ export const mockLoginUserData = {
 };
 
 export const mockLogoutUserData = {
-  email: ``,
-  avatar: ``
+  email: null,
+  avatar: null
 };
 
 export const mockUserReview = {
@@ -256,7 +256,8 @@ export const mockInitialStoreData = {
     films: {
       activeGenre: `All genres`,
       filmsData: [],
-      filmsLoadingStatus: `load/loading`
+      isLoading: false,
+      isLoadingError: false
     },
     promo: {
       promoData: {

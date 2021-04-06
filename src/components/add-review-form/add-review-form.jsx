@@ -14,7 +14,13 @@ const helpMessageStyles = {
   }
 };
 
-const AddReviewForm = ({onReviewRating, onReviewComment, onFormSubmit, formState, reviewsErrorType}) => {
+const AddReviewForm = ({
+  onReviewRating,
+  onReviewComment,
+  onFormSubmit,
+  formState,
+  reviewsErrorType
+}) => {
 
   const stars = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const defaultCheckedStar = formState.rating;

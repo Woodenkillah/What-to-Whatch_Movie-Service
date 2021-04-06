@@ -2,10 +2,18 @@ import React from 'react';
 import CardContent from '../card-content/card-content';
 import PropTypes from 'prop-types';
 import browserHistory from '../../browser-history';
+import {AppRoutes} from '../../constants';
 
 let previewVideoTimeout = null;
 
-const FilmCard = ({id, name, posterImage, src, onFilmHover, activeFilmId}) => {
+const FilmCard = ({
+  id,
+  name,
+  posterImage,
+  src,
+  onFilmHover,
+  activeFilmId
+}) => {
 
   const [isHovered, setIsHovered] = React.useState(false);
 
@@ -23,7 +31,7 @@ const FilmCard = ({id, name, posterImage, src, onFilmHover, activeFilmId}) => {
   const handleFilmCardOpener = () => {
     clearTimeout(previewVideoTimeout);
     window.scrollTo({top: 0, behavior: `smooth`});
-    browserHistory.push({pathname: `/films/${id}`});
+    browserHistory.push(`${AppRoutes.FILMS}/${id}`);
   };
 
   return (

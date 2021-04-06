@@ -35,12 +35,18 @@ const userEmailBlockStyles = {
   }
 };
 
-const {containerStyle, avatarStyle, authInfoStyle, linkStyle, textStyle} = userEmailBlockStyles;
+const {
+  containerStyle,
+  avatarStyle,
+  authInfoStyle,
+  linkStyle,
+  textStyle
+} = userEmailBlockStyles;
 
 const UserAvatar = ({onLogout, userEmail, userAvatar}) => {
 
   const handleMylistOpener = () => {
-    browserHistory.push({pathname: AppRoutes.MY_LIST});
+    browserHistory.push(AppRoutes.MY_LIST);
   };
 
   return (
@@ -72,8 +78,8 @@ const UserAvatar = ({onLogout, userEmail, userAvatar}) => {
 
 UserAvatar.propTypes = {
   onLogout: PropTypes.func.isRequired,
-  userEmail: PropTypes.string.isRequired,
-  userAvatar: PropTypes.string.isRequired
+  userEmail: PropTypes.string,
+  userAvatar: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

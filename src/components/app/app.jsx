@@ -7,7 +7,7 @@ import Film from '../film/film';
 import AddReview from '../add-review/add-review';
 import Player from '../player/player';
 import Page404 from '../404-page/404-page';
-import PrivateRoute from '../aux-components/private-route/private-route';
+import PrivateRoute from '../private-route/private-route';
 import {AppRoutes} from '../../constants';
 
 const App = () => {

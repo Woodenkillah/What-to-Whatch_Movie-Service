@@ -16,8 +16,8 @@ export const ActionCreator = {
     payload: status
   }),
 
-  setLoadingError: (status) => ({
-    type: ActionType.SET_LOADING_ERROR,
+  setIsLoadingError: (status) => ({
+    type: ActionType.SET_IS_LOADING_ERROR,
     payload: status
   })
 };

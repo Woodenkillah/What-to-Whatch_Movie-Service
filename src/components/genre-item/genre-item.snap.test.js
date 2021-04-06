@@ -5,7 +5,7 @@ import {createMemoryHistory} from 'history';
 import configureStore from 'redux-mock-store';
 import * as redux from 'react-redux';
 import GenreItem from './genre-item';
-import {mockNumValue, mockStringValue, mockInitialStoreData} from '../../test-mock';
+import {mockStringValue, mockInitialStoreData} from '../../test-mock';
 
 const mockStore = configureStore({});
 
@@ -18,7 +18,7 @@ it(`Should render correctly`, () => {
       <redux.Provider store={store}>
         <Router history={history}>
           <GenreItem
-            title={mockNumValue}
+            title={mockStringValue}
             onChangeGenre={jest.fn()}
             activeGenre={mockStringValue}
           />

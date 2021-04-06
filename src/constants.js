@@ -57,8 +57,3 @@ export const ApiRoutes = {
   COMMENTS: `/comments`,
   FAVORITES: `/favorite`
 };
-
-export const FavoriteStatuses = {
-  ADD_FAVORITE: 1,
-  REMOVE_FAVORITE: 0
-};

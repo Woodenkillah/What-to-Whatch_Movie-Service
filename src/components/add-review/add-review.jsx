@@ -2,13 +2,14 @@ import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import {generalPropValidation} from '../../props-validation/props-validation';
 import {Link} from 'react-router-dom';
-import Logo from '../aux-components/logo/logo';
-import UserAvatar from '../aux-components/user-avatar/user-avatar';
+import Logo from '../UI-components/logo/logo';
+import UserAvatar from '../UI-components/user-avatar/user-avatar';
 import AddReviewForm from '../add-review-form/add-review-form';
 import Page404 from '../404-page/404-page';
 import {connect} from 'react-redux';
 import {getTargetFilmDataSelector} from '../../redux/target-film/selectors';
 import {uploadUserReview} from '../../redux/reviews/api-actions';
+import {AppRoutes} from '../../constants';
 
 const AddReview = ({targetFilmData, onUploadUserReview}) => {
 
@@ -60,7 +61,7 @@ const AddReview = ({targetFilmData, onUploadUserReview}) => {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <Link to={{pathname: `/films/${targetFilmData.id}`}} className="breadcrumbs__link">{targetFilmData.name}</Link>
+                <Link to={`${AppRoutes.FILMS}/${targetFilmData.id}`} className="breadcrumbs__link">{targetFilmData.name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

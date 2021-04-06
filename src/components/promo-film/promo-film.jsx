@@ -5,23 +5,35 @@ import PromoPoster from '../promo-poster/promo-poster';
 import browserHistory from '../../browser-history';
 import {connect} from 'react-redux';
 import {setFavorite} from '../../redux/favorites/api-actions';
-import {FavoriteStatuses, AuthStatuses} from '../../constants';
+import {AuthStatuses, AppRoutes} from '../../constants';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
+import {getFavoritesDataSelector} from '../../redux/favorites/selectors';
+import {getPromoIsLoadingErrorSelector} from '../../redux/promo/selectors';
 
-const PromoFilm = ({promoData, onSetFavorite, authorizationStatus}) => {
+const PromoFilm = ({
+  promoData,
+  favoritesData,
+  onSetFavorite,
+  authorizationStatus,
+  promoIsLoadingError
+}) => {
 
-  if (Object.keys(promoData).length === 0) {
+  if (!promoData || promoIsLoadingError) {
     return <h2>There is no promo film currently available.</h2>;
   }
 
   const promoFilmId = promoData.id;
+  const isFavorite = favoritesData.find(({id}) => id === promoFilmId);
 
   const handleFilmPlayerOpener = () => {
-    browserHistory.push({pathname: `/player/${promoFilmId}`});
+    browserHistory.push(`${AppRoutes.PLAYER}/${promoFilmId}`);
   };
 
-  const setFavoriteStatus = () => () => {
-    onSetFavorite(promoFilmId, FavoriteStatuses.ADD_FAVORITE);
+  const handleAddFavoriteBtn = (status) => () => {
+    if (authorizationStatus === AuthStatuses.NO_AUTH) {
+      browserHistory.push(AppRoutes.LOGIN);
+    }
+    onSetFavorite(promoFilmId, Number(!status));
   };
 
   return (
@@ -50,12 +62,13 @@ const PromoFilm = ({promoData, onSetFavorite, authorizationStatus}) => {
           <button
             className="btn btn--list movie-card__button"
             type="button"
-            onClick={setFavoriteStatus()}
-            style={{display: (authorizationStatus === AuthStatuses.NO_AUTH ? `none` : `flex`)}}
+            onClick={handleAddFavoriteBtn(isFavorite)}
           >
-            <svg viewBox="0 0 19 20" width="19" height="20">
-              <use xlinkHref="#add"></use>
-            </svg>
+            {
+              isFavorite
+                && <svg viewBox="0 0 18 14" width="18" height="14"><use xlinkHref="#in-list"></use></svg>
+                || <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use></svg>
+            }
             <span>My list</span>
           </button>
         </div>
@@ -67,13 +80,19 @@ const PromoFilm = ({promoData, onSetFavorite, authorizationStatus}) => {
 
 
 PromoFilm.propTypes = {
-  promoData: PropTypes.shape(generalPropValidation).isRequired,
+  promoData: PropTypes.shape(generalPropValidation),
+  favoritesData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ),
   onSetFavorite: PropTypes.func.isRequired,
-  authorizationStatus: PropTypes.string.isRequired
+  authorizationStatus: PropTypes.string.isRequired,
+  promoIsLoadingError: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  authorizationStatus: getAuthorizationStatusSelector(state)
+  authorizationStatus: getAuthorizationStatusSelector(state),
+  favoritesData: getFavoritesDataSelector(state),
+  promoIsLoadingError: getPromoIsLoadingErrorSelector(state)
 });
 
 const mapDispatchToProps = {

@@ -20,16 +20,12 @@ describe(`Async api-actions work correctly`, () => {
 
     return fetchFilmAction(dispatch, () => {}, api)
       .then(() => {
-        expect(dispatch).toHaveBeenCalledTimes(3);
+        expect(dispatch).toHaveBeenCalledTimes(2);
         expect(dispatch).toHaveBeenNthCalledWith(1, {
-          type: ActionType.SET_IS_LOADING,
-          payload: true
-        });
-        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.LOAD_FILM,
           payload: mockSingleFilmData.adapted
         });
-        expect(dispatch).toHaveBeenNthCalledWith(3, {
+        expect(dispatch).toHaveBeenNthCalledWith(2, {
           type: ActionType.SET_IS_LOADING,
           payload: false
         });

@@ -6,23 +6,33 @@ import classNames from 'classnames';
 import FilmOverview from '../film-overview/film-overview';
 import FilmDetails from '../film-details/film-details';
 import FilmReviews from '../film-reviews/film-reviews';
-import Logo from '../aux-components/logo/logo';
+import Logo from '../UI-components/logo/logo';
 import AuthHolder from '../auth-holder/auth-holder';
-import Footer from '../aux-components/footer/footer';
-import Tabs from '../aux-components/tabs/tabs';
+import Footer from '../UI-components/footer/footer';
+import Tabs from '../UI-components/tabs/tabs';
 import Page404 from '../404-page/404-page';
 import FilmsList from '../films-list/films-list';
 import {connect} from 'react-redux';
 import {getFilmsDataSelector} from '../../redux/films/selectors';
 import {getAuthorizationStatusSelector} from '../../redux/auth/selectors';
-import {getTargetFilmDataSelector, getTargetFilmIsLoadingSelector} from '../../redux/target-film/selectors';
+import {getTargetFilmDataSelector, getTargetFilmIsLoadingErrorSelector} from '../../redux/target-film/selectors';
+import {getFavoritesDataSelector} from '../../redux/favorites/selectors';
 import browserHistory from '../../browser-history';
 import {setFavorite} from '../../redux/favorites/api-actions';
 import {fetchFilm} from '../../redux/target-film/api-actions';
-import {FavoriteStatuses, AuthStatuses, TAB_INDEX} from '../../constants';
+import {AppRoutes, AuthStatuses, TAB_INDEX} from '../../constants';
 import {getSimilarFilms} from '../../helpers';
+import LoadingProcess from '../UI-components/loading-process/loading-process';
 
-const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, onFetchFilm}) => {
+const Film = ({
+  filmsData,
+  targetFilmData,
+  favoritesData,
+  onSetFavorite,
+  authorizationStatus,
+  onFetchFilm,
+  targetFilmIsLoadingError
+}) => {
 
   const [activeTab, setActiveTab] = useState(TAB_INDEX.OVERVIEW);
 
@@ -32,12 +42,16 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
     onFetchFilm(targetFilmId);
   }, [targetFilmId]);
 
-  if (!targetFilmData.name) {
-    return <Page404/>;
+  if (!targetFilmData) {
+    if (targetFilmIsLoadingError) {
+      return <Page404/>;
+    } else {
+      return <LoadingProcess/>;
+    }
   }
 
   const handleFilmPlayerOpener = () => {
-    browserHistory.push({pathname: `/player/${targetFilmId}`});
+    browserHistory.push(`${AppRoutes.PLAYER}/${targetFilmId}`);
   };
 
   const handleTabChange = (tabIndex) => (evt) => {
@@ -45,8 +59,13 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
     setActiveTab(tabIndex);
   };
 
-  const setFavoriteStatus = () => () => {
-    onSetFavorite(targetFilmId, FavoriteStatuses.ADD_FAVORITE);
+  const isFavorite = favoritesData.find(({id}) => id === targetFilmId);
+
+  const handleAddFavoriteBtn = (status) => () => {
+    if (authorizationStatus === AuthStatuses.NO_AUTH) {
+      browserHistory.push(AppRoutes.LOGIN);
+    }
+    onSetFavorite(targetFilmId, Number(!status));
   };
 
   const similarFilmsList = getSimilarFilms(filmsData, targetFilmId, targetFilmData.genre);
@@ -88,18 +107,18 @@ const Film = ({filmsData, targetFilmData, onSetFavorite, authorizationStatus, on
                 <button
                   className="btn btn--list movie-card__button"
                   type="button"
-                  onClick={setFavoriteStatus()}
-                  style={{display: (authorizationStatus === AuthStatuses.NO_AUTH ? `none` : `flex`)}}
+                  onClick={handleAddFavoriteBtn(isFavorite)}
                 >
-                  <svg viewBox="0 0 19 20" width="19" height="20">
-                    <use xlinkHref="#add"></use>
-                  </svg>
+                  {
+                    isFavorite
+                      && <svg viewBox="0 0 18 14" width="18" height="14"><use xlinkHref="#in-list"></use></svg>
+                      || <svg viewBox="0 0 19 20" width="19" height="20"><use xlinkHref="#add"></use></svg>
+                  }
                   <span>My list</span>
                 </button>
                 <Link
-                  to={{pathname: `/films/${targetFilmId}/review`}}
+                  to={`${AppRoutes.FILMS}/${targetFilmId}/review`}
                   className="btn movie-card__button"
-                  style={{display: (authorizationStatus === AuthStatuses.NO_AUTH ? `none` : `flex`)}}
                 >Add review</Link>
               </div>
             </div>
@@ -172,18 +191,22 @@ Film.propTypes = {
   filmsData: PropTypes.arrayOf(
       PropTypes.shape(generalPropValidation).isRequired,
   ).isRequired,
+  favoritesData: PropTypes.arrayOf(
+      PropTypes.shape(generalPropValidation).isRequired,
+  ),
   onSetFavorite: PropTypes.func.isRequired,
   authorizationStatus: PropTypes.string.isRequired,
   onFetchFilm: PropTypes.func.isRequired,
-  targetFilmData: PropTypes.object.isRequired,
-  targetFilmIsLoading: PropTypes.bool.isRequired
+  targetFilmData: PropTypes.object,
+  targetFilmIsLoadingError: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   authorizationStatus: getAuthorizationStatusSelector(state),
   filmsData: getFilmsDataSelector(state),
   targetFilmData: getTargetFilmDataSelector(state),
-  targetFilmIsLoading: getTargetFilmIsLoadingSelector(state)
+  favoritesData: getFavoritesDataSelector(state),
+  targetFilmIsLoadingError: getTargetFilmIsLoadingErrorSelector(state)
 });
 
 const mapDispatchToProps = {

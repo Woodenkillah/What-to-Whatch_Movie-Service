@@ -2,7 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {getFilmRating} from '../../helpers';
 
-const FilmOverview = ({description, rating, scoresCount, director, starring}) => {
+const FilmOverview = ({
+  description,
+  rating,
+  scoresCount,
+  director,
+  starring
+}) => {
 
   const starringList = starring.join(`, `);
   const textFilmRating = getFilmRating(rating);
